@@ -32,11 +32,14 @@ Main goal: Design an app with current responsive user interface, so that everyon
     - Notepad++
 
 
-### Libries Used
+### Libraries Used
 
 Free Libries used in this project:
 
 * [Retrofit] - A type-safe HTTP client for Android and Java
+* [Glide] - Glide is a fast and efficient image loading library for Android focused on smooth scrolling.
+* [Calligraphy] - Custom fonts in Android.
+* [Joda Time] - Joda-Time provides a quality replacement for the Java date and time classes.
 * [...] - Description
 
 ### Database Model
@@ -66,4 +69,7 @@ FSU License
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
    [Retrofit]: <http://angularjs.org>
+   [Glide]: <https://github.com/bumptech/glide>
+   [Calligraphy]: <https://github.com/chrisjenx/Calligraphy>
+   [Joda Time]: <https://github.com/dlew/joda-time-android>
    
