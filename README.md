@@ -1,5 +1,5 @@
 # Entire News (Android News App)
----
+
 [![N|Solid](https://a.fsdn.com/sd/topics/android_64.png)](https://www.android.com/)
 
 An app, that will show current and recent news from all over the world. A nice, clean and simple user interface that is easy to use. Will show user live news feed from various and trusted news sources (free API available at https://newsapi.org).
@@ -20,12 +20,12 @@ An app, that will show current and recent news from all over the world. A nice, 
 Main goal: Design an app with current responsive user interface, so that everyone can use it without the need to learn new stuff. As soon as the user opens the app, it will collect and display the user with fresh and trending news.
 
 ### Requirements -
-- Language 
+- Language
     - Java / Kotlin & XML
     - Python
     - Python
     - MongoDB Syntax
-- IDE 
+- IDE
     - Android Studio (version 3+ & Java JDK 8+)
     - PyCharm (with Python 3+)
     - WebStorm
@@ -41,11 +41,20 @@ Free Libries used in this project:
 
 ### Database Model
 
-| Field Name | Data Type | Length |
-| ------ | ------ | ------ |
-| _id | hash string | 64 |
-| title | string | 256 |
-| ... | ... | ... |
+| Field Name | Data Type | Length | Example Data |
+| ------ | ------ | ------ | ------ |
+| _id | hash | 64 | 507f1f77bcf86cd799439011 |
+| title | string | 1024 | Maria Expected to... |
+| datetime | string | 32 | 2017-09-16T10:09:22Z |
+| source | string | 1024 | http://www.bbc.com/news/uk-41292528 |
+| cover | string | 1024 | https://ichef.bbci.co.uk/images/ic/1024x576/p05g9f0r.jpg |
+| article | string | ∞ | Tropical Storm Maria will threaten portions... |
+| slug | string | 1024 | maria-expected-to... |
+| saves | number |  | 654 |
+| views | number |  | 4532 |
+| published | boolean |  | true |
+| deleted | boolean |  | false |
+
 
 License
 ----
