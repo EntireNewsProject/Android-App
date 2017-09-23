@@ -23,7 +23,6 @@ Main goal: Design an app with current responsive user interface, so that everyon
 - Language
     - Java / Kotlin & XML
     - Python
-    - Python
     - MongoDB Syntax
 - IDE
     - Android Studio (version 3+ & Java JDK 8+)
