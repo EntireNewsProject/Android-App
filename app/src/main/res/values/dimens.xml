@@ -4,7 +4,21 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
-    <dimen name="margin_full">8dp</dimen>
-    <dimen name="margin_zero">8dp</dimen>
-    <dimen name="margin_default">8dp</dimen>
+
+    <dimen name="margin_quadruple">64dp</dimen>
+    <dimen name="margin_triple">48dp</dimen>
+    <dimen name="margin_double">32dp</dimen>
+    <dimen name="margin_full_half">24dp</dimen>
+    <dimen name="margin_full">16dp</dimen>
+    <dimen name="margin_forth">12dp</dimen>
+    <dimen name="margin_half">8dp</dimen>
+    <dimen name="margin_third">6dp</dimen>
+    <dimen name="margin_quarter">4dp</dimen>
+    <dimen name="margin_three">3dp</dimen>
+    <dimen name="margin_small">2dp</dimen>
+    <dimen name="margin_one">1dp</dimen>
+    <dimen name="margin_zero">0dp</dimen>
+    <dimen name="margin_small_neg">-2dp</dimen>
+    <dimen name="margin_third_neg">-6dp</dimen>
+    <dimen name="margin_half_neg">-8dp</dimen>
 </resources>
