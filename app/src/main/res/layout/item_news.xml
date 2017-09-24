@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/iv_cover"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
         android:layout_marginEnd="@dimen/margin_full"
         android:layout_marginTop="@dimen/margin_full"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,5 +47,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         tools:text="Subtitle goes here, Subtitle goes here, Subtitle goes here, Subtitle goes here." />
+
+    <ImageButton
+        android:id="@+id/ib_Save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_cover" />
 
 </android.support.constraint.ConstraintLayout>
