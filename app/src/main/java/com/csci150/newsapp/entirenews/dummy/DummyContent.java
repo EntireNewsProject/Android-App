@@ -1,6 +1,6 @@
-package com.csci117.newsapp.entirenews.dummy;
+package com.csci150.newsapp.entirenews.dummy;
 
-import com.csci117.newsapp.entirenews.NewsItem;
+import com.csci150.newsapp.entirenews.NewsItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +40,14 @@ public class DummyContent {
     }
 
     private static NewsItem createDummyItem(int position) {
-        return new NewsItem("Title " + String.valueOf(position), "Subtitle " + position, makeDetails(position));
+        return new NewsItem("Lorem Ipsum is simply dummy text of the printing industry.",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" +
+                        " tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " +
+                        "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea" +
+                        " commodo consequat. Duis aute irure dolor in reprehenderit in voluptate" +
+                        " velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint " +
+                        "occaecat cupidatat non proident, sunt in culpa qui officia deserunt" +
+                        " mollit anim id est laborum.", makeDetails(position));
     }
 
     private static String makeDetails(int position) {

@@ -1,4 +1,4 @@
-package com.csci117.newsapp.entirenews;
+package com.csci150.newsapp.entirenews;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

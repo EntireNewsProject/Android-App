@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
-    tools:context="com.csci117.newsapp.entirenews.NewsItemFragment">
+    tools:context="com.csci150.newsapp.entirenews.NewsItemFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_layout"

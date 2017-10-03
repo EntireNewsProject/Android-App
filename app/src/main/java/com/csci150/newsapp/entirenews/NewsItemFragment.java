@@ -1,4 +1,4 @@
-package com.csci117.newsapp.entirenews;
+package com.csci150.newsapp.entirenews;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.csci117.newsapp.entirenews.dummy.DummyContent;
+import com.csci150.newsapp.entirenews.dummy.DummyContent;
 
 /**
  * A fragment representing a list of Items.

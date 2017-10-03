@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toStartOf="@id/iv_cover"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Title goes here, title goes here, title goes here, title goes here." />
+        tools:text="Title goes here." />
 
     <TextView
         android:id="@+id/tv_subtitle"
@@ -41,12 +41,12 @@
         android:layout_marginTop="@dimen/margin_third"
         android:ellipsize="end"
         android:maxLines="4"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toBottomOf="@id/iv_cover"
         app:layout_constraintEnd_toStartOf="@id/iv_cover"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        tools:text="Subtitle goes here, Subtitle goes here, Subtitle goes here, Subtitle goes here, Subtitle goes here, Subtitle goes here, Subtitle goes here." />
+        tools:text="Subtitle goes here." />
 
     <ImageButton
         android:id="@+id/ib_save"
@@ -60,7 +60,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_cover"
-        app:srcCompat="@drawable/ic_star_solid_24dp" />
+        app:srcCompat="@drawable/ic_star_24dp" />
 
     <TextView
         android:id="@+id/tv_date"
@@ -72,13 +72,31 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:padding="@dimen/margin_quarter"
-        android:text="Yesterday"
+        android:text="October 2, 2017"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toBottomOf="@+id/ib_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/ib_save"
         app:layout_constraintTop_toTopOf="@+id/ib_save" />
+
+    <TextView
+        android:id="@+id/tv_views"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/margin_full"
+        android:background="@drawable/rounded_corners_date"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="@dimen/margin_quarter"
+        android:text="@string/views"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@id/ib_save"
+        app:layout_constraintEnd_toStartOf="@id/tv_date"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/ib_save"
+        app:layout_constraintTop_toTopOf="@id/ib_save" />
 
     <View
         android:layout_width="match_parent"

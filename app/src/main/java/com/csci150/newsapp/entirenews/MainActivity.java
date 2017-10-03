@@ -1,4 +1,4 @@
-package com.csci117.newsapp.entirenews;
+package com.csci150.newsapp.entirenews;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
