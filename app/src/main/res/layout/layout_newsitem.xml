@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toStartOf="@id/iv_cover"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        tools:text="Subtitle goes here." />
+        tools:text="Las Vegas shooter's girlfriend: Who is Marilou Danley? Marilou Danley had been out of the country while her boyfriend, Stephen Paddock, opened fire during a Las Vegas music festival, killing at least 59 people. ... Marilou Danley was overseas during the Las Vegas shooting." />
 
     <ImageButton
         android:id="@+id/ib_save"
@@ -77,8 +77,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/ib_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/ib_save"
-        app:layout_constraintTop_toTopOf="@+id/ib_save" />
+        app:layout_constraintStart_toEndOf="@id/ib_save"
+        app:layout_constraintTop_toTopOf="@id/ib_save" />
 
     <TextView
         android:id="@+id/tv_views"
