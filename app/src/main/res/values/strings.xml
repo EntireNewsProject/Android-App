@@ -7,7 +7,10 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="save">Save</string>
     <string name="views">120 Views</string>
-
+    <string name="recent_news">Las Vegas Incident</string>
+    <string name="in_news">Las Veas Incident update: Sept 09, 2017 - Stephen Paddock, who sent bullets and terror down on thousands attending a Jason Aldean concert in Las Vegas, had an arsenal in his 32nd-floor hotel room and at his home 80 miles away, officials said.
+        Police recovered 23 guns from his Las Vegas hotel room and another 19 guns from Paddock's home. In the hours after the retired accountant committed the shooting, authorities rolled out frightening new details, including the discovery of scopes on rifles at the resort and explosives at his home. </string>
+    <string name="publish_date">10-6-2017 12:13:14</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
