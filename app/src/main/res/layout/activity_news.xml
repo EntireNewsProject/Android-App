@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.csci150.newsapp.entirenews.MainActivity">
+    tools:context="com.csci150.newsapp.entirenews.NewsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -33,18 +33,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="@string/large_text" />
-
-    </android.support.v4.widget.NestedScrollView>
+    <include layout="@layout/content_news" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -53,5 +42,5 @@
         android:layout_margin="@dimen/margin_full"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/ic_star_24dp" />
 </android.support.design.widget.CoordinatorLayout>

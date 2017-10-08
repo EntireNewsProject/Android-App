@@ -21,5 +21,4 @@
     <dimen name="margin_small_neg">-2dp</dimen>
     <dimen name="margin_third_neg">-6dp</dimen>
     <dimen name="margin_half_neg">-8dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
 </resources>
