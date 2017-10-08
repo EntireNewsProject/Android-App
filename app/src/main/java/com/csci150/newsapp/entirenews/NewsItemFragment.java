@@ -1,8 +1,8 @@
 package com.csci150.newsapp.entirenews;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,9 +59,9 @@ public class NewsItemFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.list);
         // Set the adapter
         if (mColumnCount <= 1) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), mColumnCount));
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), mColumnCount));
         }
         recyclerView.setAdapter(new NewsItemAdapter(DummyContent.ITEMS, mListener));
         return view;
