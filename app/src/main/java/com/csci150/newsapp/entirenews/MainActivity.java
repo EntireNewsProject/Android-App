@@ -9,7 +9,11 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toolbar;
+
+import com.csci150.newsapp.entirenews.utils.AnimUtils;
 
 public class MainActivity extends Activity implements OnListFragmentInteractionListener {
 
@@ -27,14 +31,17 @@ public class MainActivity extends Activity implements OnListFragmentInteractionL
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setActionBar(toolbar);
+        if (savedInstanceState == null)
+            animateToolbar();
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -47,6 +54,21 @@ public class MainActivity extends Activity implements OnListFragmentInteractionL
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+    }
+
+    private void animateToolbar() {
+        View view = toolbar.getChildAt(0);
+        if (view != null && view instanceof TextView) {
+            TextView title = (TextView) view;
+            title.setAlpha(0f);
+            title.setScaleX(0.7f);
+            title.animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .setStartDelay(300)
+                    .setDuration(900)
+                    .setInterpolator(AnimUtils.getFastOutSlowInInterpolator(this));
+        }
     }
 
 
