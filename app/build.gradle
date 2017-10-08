@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
     defaultConfig {
-        applicationId "com.csci117.newsapp.entirenews"
+        applicationId "com.csci150.newsapp.entirenews"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
