@@ -1,8 +1,21 @@
 <resources>
     <string name="app_name">Entire News</string>
-    <string name="tab_text_1">BBC</string>
-    <string name="tab_text_2">ABC</string>
-    <string name="tab_text_3">CNN</string>
+
+    <string name="tab_text_abc">ABC</string>
+    <string name="tab_text_bbc">BBC</string>
+    <string name="tab_text_bloomberg">Bloomberg</string>
+    <string name="tab_text_businessinsider">Business Insider</string>
+    <string name="tab_text_buzzfeed">Buzzfeed</string>
+    <string name="tab_text_cnn">CNN</string>
+    <string name="tab_text_cnbc">CNBC</string>
+    <string name="tab_text_hacker">Hacker News</string>
+    <string name="tab_text_reuters">Reuters</string>
+    <string name="tab_text_techcrunch">TechCrunch</string>
+    <string name="tab_text_nytimes">The New York Times</string>
+    <string name="tab_text_verge">The Verge</string>
+    <string name="tab_text_time">Time</string>
+    <string name="tab_text_today">USA Today</string>
+
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="save">Save</string>

@@ -22,6 +22,16 @@
             android:background="@android:color/transparent"
             android:clipToPadding="false"
             app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/layout_newsitem" />
+            tools:listitem="@layout/layout_newsitem_wide" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <!--ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="?android:colorAccent"
+        android:indeterminateTintMode="src_in"
+        tools:targetApi="lollipop" /-->
 </FrameLayout>

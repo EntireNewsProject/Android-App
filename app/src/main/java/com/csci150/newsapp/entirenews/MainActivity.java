@@ -1,6 +1,5 @@
 package com.csci150.newsapp.entirenews;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -9,13 +8,9 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toolbar;
+import android.view.ViewGroup;
 
-import com.csci150.newsapp.entirenews.utils.AnimUtils;
-
-public class MainActivity extends Activity implements OnListFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -31,7 +26,7 @@ public class MainActivity extends Activity implements OnListFragmentInteractionL
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private Toolbar toolbar;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +34,10 @@ public class MainActivity extends Activity implements OnListFragmentInteractionL
         setContentView(R.layout.activity_main);
 
         toolbar = findViewById(R.id.toolbar);
-        setActionBar(toolbar);
-        if (savedInstanceState == null)
-            animateToolbar();
+        setupToolbar(false, true);
+        // if (savedInstanceState == null)
+        animateToolbar();
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -50,26 +46,40 @@ public class MainActivity extends Activity implements OnListFragmentInteractionL
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout = findViewById(R.id.tabs);
+
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_abc));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_bbc));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_bloomberg));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_businessinsider));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_buzzfeed));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_cnn));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_cnbc));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_hacker));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_reuters));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_techcrunch));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_nytimes));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_verge));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_time));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_today));
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        tabLayout.post(tabLayoutConfig);
     }
 
-    private void animateToolbar() {
-        View view = toolbar.getChildAt(0);
-        if (view != null && view instanceof TextView) {
-            TextView title = (TextView) view;
-            title.setAlpha(0f);
-            title.setScaleX(0.7f);
-            title.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .setStartDelay(300)
-                    .setDuration(900)
-                    .setInterpolator(AnimUtils.getFastOutSlowInInterpolator(this));
+    private Runnable tabLayoutConfig = new Runnable() {
+        @Override
+        public void run() {
+            if (tabLayout.getWidth() < MainActivity.this.getResources().getDisplayMetrics().widthPixels) {
+                tabLayout.setTabMode(TabLayout.MODE_FIXED);
+                ViewGroup.LayoutParams mParams = tabLayout.getLayoutParams();
+                mParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                tabLayout.setLayoutParams(mParams);
+            } else
+                tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
-    }
+    };
 
 
     @Override
