@@ -1,33 +1,31 @@
 package com.csci150.newsapp.entirenews;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.widget.Toolbar;
 
-public class NewsActivity extends Activity {
+public class NewsActivity extends BaseActivity implements View.OnClickListener {
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setActionBar(toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        setupToolbar(false, true);
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(this);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fab:
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-            }
-        });
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 }

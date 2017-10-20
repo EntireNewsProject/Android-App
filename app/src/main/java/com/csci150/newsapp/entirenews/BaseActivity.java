@@ -1,5 +1,6 @@
 package com.csci150.newsapp.entirenews;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,11 +41,11 @@ public abstract class BaseActivity extends Activity {
 
     protected void setupToolbar(boolean showTitle, boolean homeAsUp) {
         setActionBar(toolbar);
-
-        if (getActionBar() != null) {
-            getActionBar().setDisplayShowTitleEnabled(showTitle);
-            getActionBar().setDisplayHomeAsUpEnabled(homeAsUp);
-            getActionBar().setDisplayShowHomeEnabled(homeAsUp);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(showTitle);
+            actionBar.setDisplayHomeAsUpEnabled(homeAsUp);
+            actionBar.setDisplayShowHomeEnabled(homeAsUp);
         }
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

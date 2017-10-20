@@ -3,7 +3,10 @@
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#FFAB40</color>
+    <color name="colorAccentDark">#de7d02</color>
     <color name="date_color">#ececec</color>
+    <color name="source_color">#e29393</color>
     <color name="divider_color">#F0F0F0</color>
-    <color name="bg">#fafafa</color>
+    <color name="bg">@color/white</color>
+    <color name="white">#fafafa</color>
 </resources>

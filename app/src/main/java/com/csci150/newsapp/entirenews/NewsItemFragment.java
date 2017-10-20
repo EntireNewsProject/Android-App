@@ -63,7 +63,7 @@ public class NewsItemFragment extends Fragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), mColumnCount));
         }
-        recyclerView.setAdapter(new NewsItemAdapter(DummyContent.ITEMS, mListener));
+        recyclerView.setAdapter(new NewsItemAdapter(getActivity(), DummyContent.ITEMS, mListener));
         return view;
     }
 

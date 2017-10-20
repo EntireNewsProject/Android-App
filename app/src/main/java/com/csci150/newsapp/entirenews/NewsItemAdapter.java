@@ -1,5 +1,6 @@
 package com.csci150.newsapp.entirenews;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +15,18 @@ import java.util.List;
  * TODO: Replace the implementation with code for your data type.
  */
 public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHolder> {
+    private static final String TAG = "NewsItemAdapter";
 
-    private final List<NewsItem> mValues;
+    // we need to hold on to an activity ref for the shared element transitions :/
+    final Activity host;
+    private final List<NewsItem> mItems;
     private final OnListFragmentInteractionListener mListener;
 
-    NewsItemAdapter(List<NewsItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    NewsItemAdapter(Activity hostActivity, List<NewsItem> items, OnListFragmentInteractionListener listener) {
+        host = hostActivity;
+        mItems = items;
         mListener = listener;
+        setHasStableIds(true);
     }
 
     @Override
@@ -32,9 +38,11 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mItem = mItems.get(position);
+        holder.tvTitle.setText(mItems.get(position).title);
+        holder.tvSubtitle.setText(mItems.get(position).subtitle);
+        holder.tvViews.setText(mItems.get(position).views);
+        holder.tvDate.setText(mItems.get(position).date);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,25 +58,26 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mItems.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
-        final TextView mIdView;
-        private final TextView mContentView;
+        private final TextView tvTitle, tvSubtitle, tvViews, tvDate;
         NewsItem mItem;
 
         ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = view.findViewById(R.id.tv_title);
-            mContentView = view.findViewById(R.id.tv_subtitle);
+            tvTitle = view.findViewById(R.id.tv_title);
+            tvSubtitle = view.findViewById(R.id.tv_subtitle);
+            tvViews = view.findViewById(R.id.tv_views);
+            tvDate = view.findViewById(R.id.tv_date);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + tvTitle.getText() + "'";
         }
     }
 }

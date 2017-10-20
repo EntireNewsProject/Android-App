@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
     android:fitsSystemWindows="true"
     tools:context="com.csci150.newsapp.entirenews.NewsActivity">
 
@@ -20,19 +21,17 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            <!--app:toolbarId="@+id/toolbar"-->
 
             <Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                app:layout_collapseMode="pin"
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="1dp"
                 android:outlineProvider="none"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
-
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -41,11 +40,81 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_full"
-            android:text="@string/large_text" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_full"
+                android:lineSpacingExtra="@dimen/margin_three"
+                android:paddingEnd="@dimen/margin_quadruple"
+                android:paddingStart="@dimen/margin_zero"
+                android:text="@string/small_text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_full"
+                android:layout_marginStart="@dimen/margin_full"
+                android:layout_marginTop="@dimen/margin_half"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="@dimen/margin_quarter"
+                android:text="@string/source"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/colorAccentDark"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+
+            <TextView
+                android:id="@+id/tv_views"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_full"
+                android:background="@drawable/rounded_corners_date"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="@dimen/margin_quarter"
+                android:text="@string/views"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_source" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_full"
+                android:background="@drawable/rounded_corners_date"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="@dimen/margin_quarter"
+                android:text="@string/date"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintStart_toEndOf="@+id/tv_views"
+                app:layout_constraintTop_toBottomOf="@+id/tv_source" />
+
+            <TextView
+                android:id="@+id/tv_article"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_full"
+                android:lineSpacingExtra="@dimen/margin_one"
+                android:text="@string/large_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_views" />
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
@@ -55,5 +124,5 @@
         android:layout_margin="@dimen/margin_full"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_star_24dp" />
+        app:srcCompat="@drawable/ic_star_white_32dp" />
 </android.support.design.widget.CoordinatorLayout>

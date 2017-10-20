@@ -20,7 +20,13 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="save">Save</string>
     <string name="views">120 Views</string>
+    <string name="date">October 2, 2017</string>
 
+
+    <string name="source">- by The New York Times</string>
+    <string name="small_text">
+        Components may have different resting elevations across platforms, depending on the depth
+        of the environment theory of a rationalized space and a system of motion.</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
