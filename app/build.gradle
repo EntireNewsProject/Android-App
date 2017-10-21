@@ -28,7 +28,7 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.github.bumptech.glide:glide:4.1.1'
+    implementation 'com.github.bumptech.glide:glide:4.2.0'
 
     implementation 'com.android.support:support-v4:26.1.0'
     testImplementation 'junit:junit:4.12'
@@ -37,6 +37,5 @@ dependencies {
     })
 
     //Add Library
-    compile 'com.github.medyo:android-about-page:1.1.1'
-
+    implementation 'com.github.medyo:android-about-page:1.2'
 }

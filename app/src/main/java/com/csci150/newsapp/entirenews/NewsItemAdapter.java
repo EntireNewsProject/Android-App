@@ -82,8 +82,6 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         });
     }
 
-
-
     @Override
     public int getItemCount() {
         return mItems.size();
