@@ -30,7 +30,7 @@ public class DummyContent {
     static {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
+            addItem(createDummyItem());
         }
     }
 
@@ -39,7 +39,7 @@ public class DummyContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    private static NewsItem createDummyItem(int position) {
+    private static NewsItem createDummyItem() {
         return new NewsItem("Lorem Ipsum is simply dummy text of the printing industry.",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" +
                         " tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " +
@@ -47,7 +47,10 @@ public class DummyContent {
                         " commodo consequat. Duis aute irure dolor in reprehenderit in voluptate" +
                         " velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint " +
                         "occaecat cupidatat non proident, sunt in culpa qui officia deserunt" +
-                        " mollit anim id est laborum.", makeDetails(position));
+                        " mollit anim id est laborum.",
+                "https://cbsnews2.cbsistatic.com/hub/i/r/2016/10/11/4a8c782f-b02e-486c-" +
+                        "a3a9-f15049617512/thumbnail/620x350/c8c9686798e52f059876c8b897cacc6c/" +
+                        "istock-67470795-large.jpg");
     }
 
     private static String makeDetails(int position) {

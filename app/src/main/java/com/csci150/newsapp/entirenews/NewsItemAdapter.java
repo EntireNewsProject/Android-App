@@ -5,7 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -39,10 +43,15 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mItems.get(position);
-        holder.tvTitle.setText(mItems.get(position).title);
-        holder.tvSubtitle.setText(mItems.get(position).subtitle);
-        holder.tvViews.setText(mItems.get(position).views);
-        holder.tvDate.setText(mItems.get(position).date);
+        holder.tvTitle.setText(holder.mItem.title);
+        holder.tvSubtitle.setText(holder.mItem.subtitle);
+        holder.tvViews.setText(String.valueOf(holder.mItem.views));
+        holder.tvDate.setText(holder.mItem.date);
+
+        Glide.with(host)
+                .load(holder.mItem.cover)
+                .apply(new RequestOptions().centerCrop().error(R.drawable.sample))
+                .into(holder.ivCover);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +73,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
         private final TextView tvTitle, tvSubtitle, tvViews, tvDate;
+        private final ImageView ivCover;
         NewsItem mItem;
 
         ViewHolder(View view) {
@@ -73,6 +83,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
             tvSubtitle = view.findViewById(R.id.tv_subtitle);
             tvViews = view.findViewById(R.id.tv_views);
             tvDate = view.findViewById(R.id.tv_date);
+            ivCover = view.findViewById(R.id.iv_cover);
         }
 
         @Override

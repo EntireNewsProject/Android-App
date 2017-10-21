@@ -48,11 +48,11 @@ public class NewsItem {
     @Expose
     public List<String> tags;
 
-    public NewsItem(String id, String title, String article) {
-        this.id = id;
+    public NewsItem(String title, String article, String cover) {
         this.title = title;
         this.subtitle = article.substring(0, Math.min(article.length(), 100));
         this.article = article;
+        this.cover = cover;
     }
 
     @Override
