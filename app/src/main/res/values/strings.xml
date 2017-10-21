@@ -117,4 +117,11 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_news">NewsActivity</string>
+
+
+
+    <!-- transition shared elements -->
+    <string name="transition_news" translatable="false">news</string>
+    <string name="transition_news_title" translatable="false">news_title</string>
+    <string name="transition_news_background" translatable="false">news_background</string>
 </resources>

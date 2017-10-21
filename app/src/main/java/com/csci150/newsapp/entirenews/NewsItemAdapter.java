@@ -1,7 +1,10 @@
 package com.csci150.newsapp.entirenews;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,9 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_newsitem_wide, parent, false);
+
+
+
         return new ViewHolder(view);
     }
 
@@ -53,17 +59,30 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 .apply(new RequestOptions().centerCrop().error(R.drawable.sample))
                 .into(holder.ivCover);
 
+        holder.ivCover.setTransitionName(holder.mItem.id);
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
+                Intent intent = new Intent();
+                intent.setClass(host, NewsActivity.class);
+                //setGridItemContentTransitions(holder.ivCover);
+                ActivityOptions options =
+                        ActivityOptions.makeSceneTransitionAnimation(host,
+                                Pair.create(view, host.getString(R.string.transition_news)),
+                                Pair.create(view, host.getString(R.string.transition_news_background)));
+                host.startActivityForResult(intent, 100, options.toBundle());
+
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {
