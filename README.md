@@ -1,4 +1,5 @@
 # Entire News (Android News App)
+## Read [Software Requirements Specification] (WiKi)
 
 [![N|Solid](https://a.fsdn.com/sd/topics/android_64.png)](https://www.android.com/)
 
@@ -63,10 +64,11 @@ License
 
 FSU License
 
-**Made with love from Fresno, CA**
+**Made with love from Fresno, CA**  💗
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
+   [Software Requirements Specification]: <https://github.com/EntireNewsProject/Android-App/wiki>
    [Retrofit]: <http://angularjs.org>
    [Glide]: <https://github.com/bumptech/glide>
    [Calligraphy]: <https://github.com/chrisjenx/Calligraphy>
