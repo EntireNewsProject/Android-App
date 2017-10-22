@@ -18,7 +18,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,7 @@
         <activity
             android:name=".NewsActivity"
             android:label="@string/title_activity_news"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.Translucent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.csci150.newsapp.entirenews.MainActivity" />
@@ -41,7 +41,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.csci150.newsapp.entirenews.MainActivity" />
 
-            <!--HERE-->
+            <!-- HERE -->
 
         </activity>
         <activity
@@ -50,8 +50,17 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <!--HERE-->
+            <!-- HERE -->
 
+        </activity>
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.Translucent">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.csci150.newsapp.entirenews.MainActivity" />
         </activity>
     </application>
 

@@ -3,6 +3,8 @@ package com.csci150.newsapp.entirenews;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -25,7 +27,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     private static final String TAG = "NewsItemAdapter";
 
     // we need to hold on to an activity ref for the shared element transitions :/
-    final Activity host;
+    private final Activity host;
     private final List<NewsItem> mItems;
     private final OnListFragmentInteractionListener mListener;
 
@@ -40,9 +42,6 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_newsitem_wide, parent, false);
-
-
-
         return new ViewHolder(view);
     }
 
@@ -59,7 +58,8 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 .apply(new RequestOptions().centerCrop().error(R.drawable.sample))
                 .into(holder.ivCover);
 
-        holder.ivCover.setTransitionName(holder.mItem.id);
+        holder.ivCover.setBackground(new ColorDrawable(Color.DKGRAY));
+        holder.ivCover.setTransitionName(holder.mItem.title);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,16 +70,23 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
                 Intent intent = new Intent();
-                intent.setClass(host, NewsActivity.class);
+                intent.setClass(host, ScrollingActivity.class);
+                intent.putExtra(NewsActivity.EXTRA_NEWS_ITEM,
+                        getItem(holder.getAdapterPosition()));
                 //setGridItemContentTransitions(holder.ivCover);
                 ActivityOptions options =
                         ActivityOptions.makeSceneTransitionAnimation(host,
-                                Pair.create(view, host.getString(R.string.transition_news)),
-                                Pair.create(view, host.getString(R.string.transition_news_background)));
+                                Pair.create((View) holder.ivCover, host.getString(R.string.transition_news)),
+                                Pair.create(holder.vBody, host.getString(R.string.transition_news_background)));
                 host.startActivityForResult(intent, 100, options.toBundle());
 
             }
         });
+    }
+
+    private NewsItem getItem(int position) {
+        if (position < 0 || position >= mItems.size()) return null;
+        return mItems.get(position);
     }
 
     @Override
@@ -91,11 +98,13 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         final View mView;
         private final TextView tvTitle, tvSubtitle, tvViews, tvDate;
         private final ImageView ivCover;
+        private final View vBody;
         NewsItem mItem;
 
         ViewHolder(View view) {
             super(view);
             mView = view;
+            vBody = view.findViewById(R.id.v_body);
             tvTitle = view.findViewById(R.id.tv_title);
             tvSubtitle = view.findViewById(R.id.tv_subtitle);
             tvViews = view.findViewById(R.id.tv_views);

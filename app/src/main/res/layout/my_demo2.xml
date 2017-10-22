@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.csci150.newsapp.entirenews.utils.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/draggable_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:dragDismissDistance="@dimen/drag_dismiss_distance"
+    app:dragDismissScale="0.95">
+
+    <View
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg"
+        android:transitionName="@string/transition_news_background" />
+    <!---->
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:focusableInTouchMode="true"
+        android:importantForAccessibility="no" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.csci150.newsapp.entirenews.utils.NotifyingScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.csci150.newsapp.entirenews.utils.FourThreeImageView
+                    android:id="@+id/iv_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_grey"
+                    android:foreground="@drawable/mid_grey_ripple"
+                    android:minHeight="168dp"
+                    android:stateListAnimator="@animator/app_bar_pin"
+                    android:transitionName="@string/transition_news" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraint_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_full"
+                        android:lineSpacingExtra="@dimen/margin_three"
+                        android:paddingEnd="@dimen/margin_quadruple"
+                        android:paddingStart="@dimen/margin_zero"
+                        android:text="@string/small_text"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_source"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_full"
+                        android:layout_marginStart="@dimen/margin_full"
+                        android:layout_marginTop="@dimen/margin_half"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_quarter"
+                        android:text="@string/source"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorAccentDark"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+
+                    <TextView
+                        android:id="@+id/tv_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_full"
+                        android:background="@drawable/rounded_corners_date"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_quarter"
+                        android:text="@string/views"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_source" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_full"
+                        android:background="@drawable/rounded_corners_date"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_quarter"
+                        android:text="@string/date"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        app:layout_constraintStart_toEndOf="@+id/tv_views"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_source" />
+
+                    <TextView
+                        android:id="@+id/tv_article"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_full"
+                        android:lineSpacingExtra="@dimen/margin_one"
+                        android:text="@string/large_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_views" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+        </com.csci150.newsapp.entirenews.utils.NotifyingScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_full"
+            android:src="@drawable/ic_star_white_32dp"
+            app:layout_anchor="@id/iv_cover"
+            app:layout_anchorGravity="bottom|end"
+            app:layout_behavior="" />
+
+        <!--com.csci150.newsapp.entirenews.utils.FabToggle
+            android:id="@+id/fab2"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/margin_full"
+            android:layout_marginEnd="@dimen/margin_full"
+            android:background="@drawable/fab_save"
+            android:elevation="@dimen/margin_half"
+            android:src="@drawable/ic_star_white_32dp"
+            android:stateListAnimator="@animator/raise" /-->
+    </android.support.design.widget.CoordinatorLayout>
+
+    <FrameLayout
+        android:id="@+id/back_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:elevation="@dimen/margin_half">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="?android:actionBarSize"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginBottom="@dimen/margin_full"
+            android:layout_marginEnd="@dimen/margin_full"
+            android:background="@drawable/mid_grey_ripple"
+            android:src="@drawable/ic_arrow_back" />
+    </FrameLayout>
+</com.csci150.newsapp.entirenews.utils.ElasticDragDismissFrameLayout>

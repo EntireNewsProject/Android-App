@@ -7,13 +7,15 @@
     android:animateLayoutChanges="true"
     android:paddingBottom="@dimen/margin_half">
 
-    <ImageView
+    <com.csci150.newsapp.entirenews.utils.FourThreeImageView
         android:id="@+id/iv_cover"
-        android:layout_width="115dp"
-        android:layout_height="115dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_full"
         android:layout_marginTop="@dimen/margin_full"
+        android:minHeight="115dp"
         android:src="@drawable/sample"
+        android:transitionName="@string/transition_news"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,5 +1,8 @@
 package com.csci150.newsapp.entirenews;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +13,18 @@ import java.util.List;
  * A listing app, where you can find everything in one place.
  */
 
-public class NewsItem {
+public class NewsItem implements Parcelable {
+    public static final Creator<NewsItem> CREATOR = new Creator<NewsItem>() {
+        @Override
+        public NewsItem createFromParcel(Parcel in) {
+            return new NewsItem(in);
+        }
+
+        @Override
+        public NewsItem[] newArray(int size) {
+            return new NewsItem[size];
+        }
+    };
     @SerializedName("_id")
     @Expose
     public String id;
@@ -55,8 +69,44 @@ public class NewsItem {
         this.cover = cover;
     }
 
+    protected NewsItem(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        subtitle = in.readString();
+        source = in.readString();
+        cover = in.readString();
+        article = in.readString();
+        slug = in.readString();
+        saves = in.readInt();
+        views = in.readInt();
+        date = in.readString();
+        keywords = in.createStringArrayList();
+        tags = in.createStringArrayList();
+    }
+
     @Override
     public String toString() {
         return title;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(title);
+        parcel.writeString(subtitle);
+        parcel.writeString(source);
+        parcel.writeString(cover);
+        parcel.writeString(article);
+        parcel.writeString(slug);
+        parcel.writeInt(saves);
+        parcel.writeInt(views);
+        parcel.writeString(date);
+        parcel.writeStringList(keywords);
+        parcel.writeStringList(tags);
     }
 }

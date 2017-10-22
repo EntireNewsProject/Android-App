@@ -7,14 +7,27 @@
     android:animateLayoutChanges="true"
     android:paddingBottom="@dimen/margin_half">
 
-    <ImageView
+    <com.csci150.newsapp.entirenews.utils.FourThreeImageView
         android:id="@+id/iv_cover"
         android:layout_width="115dp"
-        android:layout_height="115dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_full"
         android:layout_marginTop="@dimen/margin_full"
         android:src="@drawable/sample"
+        android:transitionName="@string/transition_news"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:scaleType="centerCrop" />
+
+
+    <View
+        android:id="@+id/v_body"
+        android:layout_width="@dimen/margin_one"
+        android:layout_height="@dimen/margin_one"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
