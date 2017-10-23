@@ -3,7 +3,7 @@
 
 [![N|Solid](https://a.fsdn.com/sd/topics/android_64.png)](https://www.android.com/)
 
-An app, that will show current and recent news from all over the world. A nice, clean and simple user interface that is easy to use. Will show user live news feed from various and trusted news sources (free API available at https://newsapi.org).
+An app, that will show current and recent news from all over the world. A nice, clean, simple and interactive user interface that is easy to use. Will show user live news feed from various and trusted news sources (free API available at https://newsapi.org).
 
 ### Features including -
 
@@ -18,7 +18,7 @@ An app, that will show current and recent news from all over the world. A nice, 
   - The ability to login and sync saved news articles across multiple devices
   - Search for news articles
 
-Main goal: Design an app with current responsive user interface, so that everyone can use it without the need to learn new stuff. As soon as the user opens the app, it will collect and display the user with fresh and trending news.
+Main goal: Design an app with current responsive user interface (with interactive animations), so that everyone can use it without the need to learn new stuff. As soon as the user opens the app, it will collect and display the user with fresh and trending news.
 
 ### Requirements -
 - Language
@@ -30,6 +30,9 @@ Main goal: Design an app with current responsive user interface, so that everyon
     - PyCharm (with Python 3+)
     - WebStorm
     - Notepad++
+- Server
+    - Amazon AWS Elastic Compute Cloud (EC2)
+    - Ubuntu 16.10
 
 
 ### Libraries Used
@@ -40,6 +43,7 @@ Free Libries used in this project:
 * [Glide] - Glide is a fast and efficient image loading library for Android focused on smooth scrolling.
 * [Calligraphy] - Custom fonts in Android.
 * [Joda Time] - Joda-Time provides a quality replacement for the Java date and time classes.
+* [Android About Page] - Create an awesome About Page for your Android App in 2 minutes
 * [...] - Description
 
 ### Database Model
@@ -48,21 +52,25 @@ Free Libries used in this project:
 | ------ | ------ | ------ | ------ |
 | _id | hash | 64 | 507f1f77bcf86cd799439011 |
 | title | string | 1024 | Maria Expected to... |
-| datetime | string | 32 | 2017-09-16T10:09:22Z |
+| date | string | 32 | 2017-09-16T10:09:22Z |
 | source | string | 1024 | http://www.bbc.com/news/uk-41292528 |
 | cover | string | 1024 | https://ichef.bbci.co.uk/images/ic/1024x576/p05g9f0r.jpg |
 | article | string | ∞ | Tropical Storm Maria will threaten portions... |
+| summary | string | ∞ | Tropical Storm Maria is... |
 | slug | string | 1024 | maria-expected-to... |
 | saves | number |  | 654 |
 | views | number |  | 4532 |
 | published | boolean |  | true |
 | deleted | boolean |  | false |
+| hidden | boolean |  | false |
+| keywords | boolean | 32 | `[ String ]` |
+| tags | boolean | 32 | `[ String ]` |
 
 
 License
 ----
 
-FSU License
+2017 FSU License
 
 **Made with love from Fresno, CA**  💗
 
@@ -73,4 +81,5 @@ FSU License
    [Glide]: <https://github.com/bumptech/glide>
    [Calligraphy]: <https://github.com/chrisjenx/Calligraphy>
    [Joda Time]: <https://github.com/dlew/joda-time-android>
+   [Android About Page]: <https://github.com/medyo/android-about-page>
    
