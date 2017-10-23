@@ -15,7 +15,7 @@ import com.csci150.newsapp.entirenews.R;
 
 /**
  * Created by Shifatul Islam (Denocyte) on 10/21/2017 4:57 PM.
- * A listing app, where you can find everything in one place.
+ * A news app, where you can find everything in one place.
  */
 
 public class ParallaxImageView extends FourThreeImageView {

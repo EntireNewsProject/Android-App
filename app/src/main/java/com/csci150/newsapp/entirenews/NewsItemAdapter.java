@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.csci150.newsapp.entirenews.utils.Utils;
 
 import java.util.List;
 
@@ -30,12 +31,17 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     private final Activity host;
     private final List<NewsItem> mItems;
     private final OnListFragmentInteractionListener mListener;
+    private boolean isLoading, isLoadMoreAvailable;
 
     NewsItemAdapter(Activity hostActivity, List<NewsItem> items, OnListFragmentInteractionListener listener) {
+        int size = items.size();
+        //isLoadMoreAvailable = size >= requestLimit;
         host = hostActivity;
         mItems = items;
         mListener = listener;
-        setHasStableIds(true);
+        isLoading = false;
+        //setHasStableIds(true);
+        Utils.print(TAG, "ItemAdapter: Construct [size:" + size + "]");
     }
 
     @Override
@@ -48,18 +54,21 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mItems.get(position);
-        holder.tvTitle.setText(holder.mItem.title);
-        holder.tvSubtitle.setText(holder.mItem.subtitle);
-        holder.tvViews.setText(String.valueOf(holder.mItem.views));
-        holder.tvDate.setText(holder.mItem.date);
+        holder.tvTitle.setText(holder.mItem.getTitle());
+        holder.tvSubtitle.setText(holder.mItem.getSubtitle());
+        String views = host.getResources().getQuantityString(R.plurals.views, holder.mItem.getViews(), holder.mItem.getViews());
+        holder.tvViews.setText(views);
+        String date = Utils.getDateAgo(host, holder.mItem.getCreatedAt());
+        holder.tvDate.setText(date);
 
         Glide.with(host)
-                .load(holder.mItem.cover)
+                .load(holder.mItem.getCover())
+                // TODO change err
                 .apply(new RequestOptions().centerCrop().error(R.drawable.sample))
                 .into(holder.ivCover);
 
         holder.ivCover.setBackground(new ColorDrawable(Color.DKGRAY));
-        holder.ivCover.setTransitionName(holder.mItem.title);
+        holder.ivCover.setTransitionName(holder.mItem.getTitle());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +93,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         });
     }
 
-    private NewsItem getItem(int position) {
+    private NewsItem getItem(final int position) {
         if (position < 0 || position >= mItems.size()) return null;
         return mItems.get(position);
     }
@@ -92,6 +101,24 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     @Override
     public int getItemCount() {
         return mItems.size();
+    }
+
+    public void addItems(final List<NewsItem> items) { //, final int requestLimit) {
+        int size = items.size();
+        isLoading = false;
+        //removeLoading();
+        mItems.addAll(items);
+        //isLoadMoreAvailable = size >= requestLimit;
+        notifyDataSetChanged();
+        Utils.print(TAG, "addItems[size:" + size + "]");
+    }
+
+    public void addItems() {
+        isLoading = false;
+        //removeLoading();
+        isLoadMoreAvailable = false;
+        //notifyItemChanged(staticSize - 1);
+        Utils.print(TAG, "addItems[]");
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

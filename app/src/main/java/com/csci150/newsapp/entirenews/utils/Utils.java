@@ -13,9 +13,16 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+import com.csci150.newsapp.entirenews.R;
+
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
+
 /**
  * Created by Shifatul Islam (Denocyte) on 10/13/2017 9:29 PM.
- * A listing app, where you can find everything in one place.
+ * A news app, where you can find everything in one place.
  */
 
 public class Utils {
@@ -76,24 +83,45 @@ public class Utils {
         return modifyAlpha(color, (int) (255f * alpha));
     }
 
-    /**
-     * Determines if two views intersect in the window.
-     */
-    public static boolean viewsIntersect(View view1, View view2) {
-        if (view1 == null || view2 == null) return false;
-
-        final int[] view1Loc = new int[2];
-        view1.getLocationOnScreen(view1Loc);
-        final Rect view1Rect = new Rect(view1Loc[0],
-                view1Loc[1],
-                view1Loc[0] + view1.getWidth(),
-                view1Loc[1] + view1.getHeight());
-        int[] view2Loc = new int[2];
-        view2.getLocationOnScreen(view2Loc);
-        final Rect view2Rect = new Rect(view2Loc[0],
-                view2Loc[1],
-                view2Loc[0] + view2.getWidth(),
-                view2Loc[1] + view2.getHeight());
-        return view1Rect.intersect(view2Rect);
+    public static String getDateAgo(final Context context, final String isoDate) {
+        try {
+            DateTime date = new DateTime(isoDate);
+            DateTime now = new DateTime();
+            Period period = new Period(date, now);
+            PeriodFormatterBuilder builder = new PeriodFormatterBuilder();
+            if (period.getYears() == 1)
+                builder.appendYears().appendSuffix(" " + context.getString(R.string.ago_year));
+            else if (period.getYears() > 1)
+                builder.appendYears().appendSuffix(" " + context.getString(R.string.ago_years));
+            else if (period.getMonths() == 1)
+                builder.appendMonths().appendSuffix(" " + context.getString(R.string.ago_month));
+            else if (period.getMonths() > 1)
+                builder.appendMonths().appendSuffix(" " + context.getString(R.string.ago_months));
+            else if (period.getWeeks() == 1)
+                return context.getString(R.string.ago_week);
+            else if (period.getWeeks() > 1)
+                builder.appendWeeks().appendSuffix(" " + context.getString(R.string.ago_weeks));
+            else if (period.getDays() == 1)
+                return context.getString(R.string.ago_day);
+            else if (period.getDays() > 1)
+                builder.appendDays().appendSuffix(" " + context.getString(R.string.ago_days));
+            else if (period.getHours() == 1)
+                builder.appendHours().appendSuffix(" " + context.getString(R.string.ago_hour));
+            else if (period.getHours() > 1)
+                builder.appendHours().appendSuffix(" " + context.getString(R.string.ago_hours));
+            else if (period.getMinutes() == 1)
+                builder.appendMinutes().appendSuffix(" " + context.getString(R.string.ago_minute));
+            else if (period.getMinutes() > 1)
+                builder.appendMinutes().appendSuffix(" " + context.getString(R.string.ago_minutes));
+            else if (period.getSeconds() > 29)
+                builder.appendSeconds().appendSuffix(" " + context.getString(R.string.ago_seconds));
+            else return context.getString(R.string.ago_now);
+            PeriodFormatter formatter = builder.printZeroNever().toFormatter();
+            return formatter.print(period);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
+
 }

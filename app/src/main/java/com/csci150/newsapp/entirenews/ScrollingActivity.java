@@ -85,7 +85,7 @@ public class ScrollingActivity extends AppCompatActivity implements
         final Resources res = getResources();
 
         Glide.with(this)
-                .load(newsItem.cover)
+                .load(newsItem.getCover())
                 .apply(new RequestOptions().centerCrop().error(R.drawable.sample))
                 .into(ivCover);
 

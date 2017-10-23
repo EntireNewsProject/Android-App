@@ -30,10 +30,11 @@ public class DummyContent {
     static {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem());
+           // addItem(createDummyItem());
         }
     }
 
+    /*
     private static void addItem(NewsItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
@@ -61,9 +62,11 @@ public class DummyContent {
         }
         return builder.toString();
     }
+    */
 
     /**
      * A dummy item representing a piece of content.
      */
+
 
 }

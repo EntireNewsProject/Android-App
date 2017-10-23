@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Created by Shifatul Islam (Denocyte) on 10/20/2017 10:31 PM.
- * A listing app, where you can find everything in one place.
+ * A news app, where you can find everything in one place.
  */
 
 public class ElasticDragDismissFrameLayout extends FrameLayout {

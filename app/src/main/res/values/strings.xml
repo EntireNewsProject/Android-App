@@ -18,6 +18,27 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_about">About</string>
+
+    <plurals name="views">
+        <item quantity="one">%d view</item>
+        <item quantity="other">%d views</item>
+    </plurals>
+
+    <string name="ago_year">year ago</string>
+    <string name="ago_years">years ago</string>
+    <string name="ago_month">month ago</string>
+    <string name="ago_months">months ago</string>
+    <string name="ago_week">hasMore week</string>
+    <string name="ago_weeks">weeks ago</string>
+    <string name="ago_day">yesterday</string>
+    <string name="ago_days">days ago</string>
+    <string name="ago_hour">hour ago</string>
+    <string name="ago_hours">hours ago</string>
+    <string name="ago_minute">minute ago</string>
+    <string name="ago_minutes">minutes ago</string>
+    <string name="ago_seconds">seconds ago</string>
+    <string name="ago_now">just now</string>
+
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="save">Save</string>
     <string name="views">120 Views</string>

@@ -132,9 +132,9 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
 
             switch (position) {
                 case 2:
-                    return NewsItemFragment.newInstance(2);
+                    return NewsItemFragment.newInstance("bbc-news");
                 default:
-                    return NewsItemFragment.newInstance(1);
+                    return NewsItemFragment.newInstance("bbc-news");
 
             }
         }
