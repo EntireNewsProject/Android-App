@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.csci150.newsapp.entirenews.MainActivity">
     <item
+        android:id="@+id/action_saved"
+        android:icon="@drawable/ic_star_solid_24dp"
+        android:orderInCategory="10"
+        android:title="@string/saved"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

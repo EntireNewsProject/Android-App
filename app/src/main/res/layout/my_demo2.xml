@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.csci150.newsapp.entirenews.utils.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/draggable_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -40,7 +41,8 @@
                 <com.csci150.newsapp.entirenews.utils.FourThreeImageView
                     android:id="@+id/iv_cover"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:background="@color/light_grey"
                     android:foreground="@drawable/mid_grey_ripple"
                     android:minHeight="168dp"
@@ -49,8 +51,9 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/constraint_layout"
+                    android:layout_marginBottom="@dimen/margin_full"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/tv_title"
@@ -60,11 +63,11 @@
                         android:lineSpacingExtra="@dimen/margin_three"
                         android:paddingEnd="@dimen/margin_quadruple"
                         android:paddingStart="@dimen/margin_zero"
-                        android:text="@string/small_text"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/small_text" />
 
                     <TextView
                         android:id="@+id/tv_source"
@@ -76,26 +79,12 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:padding="@dimen/margin_quarter"
-                        android:text="@string/source"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/colorAccentDark"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                        tools:text="@string/source" />
 
-
-                    <TextView
-                        android:id="@+id/tv_views"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_full"
-                        android:background="@drawable/rounded_corners_date"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:padding="@dimen/margin_quarter"
-                        android:text="@string/views"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_source" />
 
                     <TextView
                         android:id="@+id/tv_date"
@@ -106,10 +95,24 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:padding="@dimen/margin_quarter"
-                        android:text="@string/date"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        app:layout_constraintStart_toEndOf="@+id/tv_views"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_source" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_source"
+                        tools:text="@string/date" />
+
+                    <TextView
+                        android:id="@+id/tv_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_full"
+                        android:background="@drawable/rounded_corners_date"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:padding="@dimen/margin_quarter"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        app:layout_constraintStart_toEndOf="@+id/tv_date"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_source"
+                        tools:text="@string/views" />
 
                     <TextView
                         android:id="@+id/tv_article"
@@ -120,7 +123,7 @@
                         android:text="@string/large_text"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_views" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_date" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -132,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_full"
-            android:src="@drawable/ic_star_white_32dp"
+            android:src="@drawable/ic_star_white_24dp"
             app:layout_anchor="@id/iv_cover"
             app:layout_anchorGravity="bottom|end"
             app:layout_behavior="" />

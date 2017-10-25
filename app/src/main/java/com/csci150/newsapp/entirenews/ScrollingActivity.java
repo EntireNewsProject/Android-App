@@ -1,14 +1,15 @@
 package com.csci150.newsapp.entirenews;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -17,12 +18,16 @@ import com.csci150.newsapp.entirenews.utils.FourThreeImageView;
 import com.csci150.newsapp.entirenews.utils.NotifyingScrollView;
 import com.csci150.newsapp.entirenews.utils.Utils;
 
-public class ScrollingActivity extends AppCompatActivity implements
+import java.util.HashMap;
+import java.util.Map;
+
+public class ScrollingActivity extends Activity implements
         NotifyingScrollView.OnScrollChangedListener,
         ViewTreeObserver.OnGlobalLayoutListener {
+    private static final String TAG = "ScrollingActivity";
+
     public final static String RESULT_EXTRA_NEWS_ID = "RESULT_EXTRA_NEWS_ID";
     public static final String EXTRA_NEWS_ITEM = "EXTRA_NEWS_ITEM";
-    private static final String TAG = "ScrollingActivity";
     private static final float mVerticalParallaxSpeed = 0.3f;
     int fabOffset;
     private int mCoverImageHeight;
@@ -33,6 +38,8 @@ public class ScrollingActivity extends AppCompatActivity implements
     //private FabToggle fab2;
     private ElasticDragDismissFrameLayout draggableFrame;
     private ElasticDragDismissFrameLayout.SystemChromeFader chromeFader;
+    private TextView tvTitle, tvArticle, tvViews, tvDate, tvSource;
+    private Map<String, String> mSources = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,25 +58,28 @@ public class ScrollingActivity extends AppCompatActivity implements
         //    }
         //});
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //fab2 = findViewById(R.id.fab2);
         ivCover = findViewById(R.id.iv_cover);
-        ibBack = findViewById(R.id.back);
+        tvTitle = findViewById(R.id.tv_title);
+        tvArticle = findViewById(R.id.tv_article);
+        tvViews = findViewById(R.id.tv_views);
+        tvDate = findViewById(R.id.tv_date);
+        tvSource = findViewById(R.id.tv_source);
+        draggableFrame = findViewById(R.id.draggable_frame);
         draggableFrame = findViewById(R.id.draggable_frame);
         mLayout = findViewById(R.id.constraint_layout);
-        //fab2 = findViewById(R.id.fab2);
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResultAndFinish();
+            }
+        });
         chromeFader = new ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             @Override
             public void onDragDismissed() {
                 setResultAndFinish();
             }
         };
-
-        ibBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResultAndFinish();
-            }
-        });
-
 
         ((NotifyingScrollView) findViewById(R.id.scroll_view)).setOnScrollChangedListener(this);
         ivCover.getViewTreeObserver().addOnGlobalLayoutListener(this);
@@ -82,7 +92,8 @@ public class ScrollingActivity extends AppCompatActivity implements
     }
 
     void bindNews(final boolean postponeEnterTransition) {
-        final Resources res = getResources();
+        //final Resources res = getResources();
+        createMap();
 
         Glide.with(this)
                 .load(newsItem.getCover())
@@ -101,6 +112,23 @@ public class ScrollingActivity extends AppCompatActivity implements
                     }
                 });
 
+        tvTitle.setText(newsItem.getTitle());
+        tvArticle.setText(newsItem.getArticle());
+        if (newsItem.getViews() > 0) {
+            tvViews.setVisibility(View.VISIBLE);
+            String views = getResources()
+                    .getQuantityString(R.plurals.views, newsItem.getViews(), newsItem.getViews());
+            tvViews.setText(views);
+        } else {
+            tvViews.setVisibility(View.GONE);
+        }
+        String date = Utils.getDateAgo(getApplicationContext(), newsItem.getCreatedAt());
+        tvDate.setText(date);
+        String source = mSources.get(newsItem.getSource());
+        if (source != null)
+            tvSource.setText(source);
+        else
+            tvSource.setText(R.string.news);
     }
 
     void calculateFabPosition() {
@@ -117,6 +145,13 @@ public class ScrollingActivity extends AppCompatActivity implements
         resultData.putExtra(RESULT_EXTRA_NEWS_ID, "gfhjfgjftghjdtuhrtedy"); //newsItem.id);
         setResult(RESULT_OK, resultData);
         finishAfterTransition();
+    }
+
+    private void createMap() {
+        String[] mTabsChoices = getResources().getStringArray(R.array.list_sources_names);
+        for (String str : mTabsChoices) {
+            mSources.put(Utils.createSlug(str), "- by " + str);
+        }
     }
 
     @Override

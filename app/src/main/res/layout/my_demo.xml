@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_full"
-        android:src="@drawable/ic_star_white_32dp"
+        android:src="@drawable/ic_star_white_24dp"
         app:layout_anchor="@id/iv_cover"
         app:layout_anchorGravity="bottom|end" />
 

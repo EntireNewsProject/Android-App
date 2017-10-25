@@ -94,10 +94,6 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
         tabLayout.post(tabLayoutConfig);
     }
 
-    private String createSlug(String slug) {
-        return slug.replaceAll("[^\\w\\s]", "").trim().toLowerCase().replaceAll("\\W+", "-");
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -146,7 +142,7 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
-            String slug = createSlug(mTabsChoices[position]);
+            String slug = Utils.createSlug(mTabsChoices[position]);
             return NewsItemFragment.newInstance(slug);
         }
 

@@ -75,7 +75,6 @@ public class NewsItem implements Parcelable {
     protected NewsItem(Parcel in) {
         id = in.readString();
         title = in.readString();
-        subtitle = in.readString();
         source = in.readString();
         cover = in.readString();
         article = in.readString();
@@ -85,6 +84,7 @@ public class NewsItem implements Parcelable {
         date = in.readString();
         keywords = in.createStringArrayList();
         tags = in.createStringArrayList();
+        createdAt = in.readString();
     }
 
     @Override
@@ -101,7 +101,6 @@ public class NewsItem implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(id);
         parcel.writeString(title);
-        parcel.writeString(subtitle);
         parcel.writeString(source);
         parcel.writeString(cover);
         parcel.writeString(article);
@@ -111,6 +110,7 @@ public class NewsItem implements Parcelable {
         parcel.writeString(date);
         parcel.writeStringList(keywords);
         parcel.writeStringList(tags);
+        parcel.writeString(createdAt);
     }
 
     public String getId() {
@@ -130,7 +130,9 @@ public class NewsItem implements Parcelable {
     }
 
     public String getSubtitle() {
-        return article.substring(0, Math.min(article.length(), 100));
+        return article.substring(0, Math.min(article.length(), 100))
+                .replace("\n", "")
+                .replace("\r", "");
     }
 
     public String getSource() {

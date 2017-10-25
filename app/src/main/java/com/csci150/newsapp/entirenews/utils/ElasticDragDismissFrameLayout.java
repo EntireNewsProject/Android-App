@@ -36,24 +36,24 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
 
     public ElasticDragDismissFrameLayout(Context context) {
         this(context, null, 0, 0);
-        Utils.print("AAAAAAAAAA", "ElasticDragDismissFrameLayout");
+        //Utils.print("AAAAAAAAAA", "ElasticDragDismissFrameLayout");
     }
 
     public ElasticDragDismissFrameLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0, 0);
-        Utils.print("AAAAAAAAAA", "ElasticDragDismissFrameLayout");
+        //Utils.print("AAAAAAAAAA", "ElasticDragDismissFrameLayout");
     }
 
     public ElasticDragDismissFrameLayout(Context context, AttributeSet attrs,
                                          int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
-        Utils.print("AAAAAAAAAA", "ElasticDragDismissFrameLayout");
+        //Utils.print("AAAAAAAAAA", "ElasticDragDismissFrameLayout");
     }
 
     public ElasticDragDismissFrameLayout(Context context, AttributeSet attrs,
                                          int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        Utils.print("AAAAAAAAAA", "ElasticDragDismissFrameLayout");
+        //Utils.print("AAAAAAAAAA", "ElasticDragDismissFrameLayout");
 
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.ElasticDragDismissFrameLayout, 0, 0);
@@ -79,14 +79,14 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
 
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
-        Utils.print("AAAAAAAAAA", "onStartNestedScroll");
+        //Utils.print("AAAAAAAAAA", "onStartNestedScroll");
         return (nestedScrollAxes & View.SCROLL_AXIS_VERTICAL) != 0;
     }
 
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
         // if we're in a drag gesture and the user reverses up the we should take those events
-        Utils.print("AAAAAAAAAA", "onNestedPreScroll");
+        //Utils.print("AAAAAAAAAA", "onNestedPreScroll");
         if (draggingDown && dy > 0 || draggingUp && dy < 0) {
             dragScale(dy);
             consumed[1] = dy;
@@ -96,13 +96,13 @@ public class ElasticDragDismissFrameLayout extends FrameLayout {
     @Override
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed,
                                int dxUnconsumed, int dyUnconsumed) {
-        Utils.print("AAAAAAAAAA", "onNestedScroll");
+        //Utils.print("AAAAAAAAAA", "onNestedScroll");
         dragScale(dyUnconsumed);
     }
 
     @Override
     public void onStopNestedScroll(View child) {
-        Utils.print("AAAAAAAAAA", "onStopNestedScroll");
+        //Utils.print("AAAAAAAAAA", "onStopNestedScroll");
         if (Math.abs(totalDrag) >= dragDismissDistance) {
             dispatchDismissCallback();
         } else { // settle back to natural position

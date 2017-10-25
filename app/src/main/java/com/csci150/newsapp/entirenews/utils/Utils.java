@@ -48,8 +48,12 @@ public class Utils {
         }
     }
 
-    public static void print(String title, String message) {
+    public static void print(final String title, final String message) {
         print(title, message, Log.DEBUG);
+    }
+
+    public static String createSlug(final String slug) {
+        return slug.replaceAll("[^\\w\\s]", "").trim().toLowerCase().replaceAll("\\W+", "-");
     }
 
     /**
@@ -84,6 +88,7 @@ public class Utils {
     }
 
     public static String getDateAgo(final Context context, final String isoDate) {
+        print("HELLO",isoDate);
         try {
             DateTime date = new DateTime(isoDate);
             DateTime now = new DateTime();

@@ -124,5 +124,5 @@
         android:layout_margin="@dimen/margin_full"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_star_white_32dp" />
+        app:srcCompat="@drawable/ic_star_white_24dp" />
 </android.support.design.widget.CoordinatorLayout>

@@ -1,19 +1,21 @@
 package com.csci150.newsapp.entirenews;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.csci150.newsapp.entirenews.utils.ElasticDragDismissFrameLayout;
 import com.csci150.newsapp.entirenews.utils.FourThreeImageView;
+import com.csci150.newsapp.entirenews.utils.Utils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.HttpUrl;
 
@@ -21,13 +23,14 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener {
     public final static String RESULT_EXTRA_NEWS_ID = "RESULT_EXTRA_NEWS_ID";
     public static final String EXTRA_NEWS_ITEM = "EXTRA_NEWS_ITEM";
 
-    FourThreeImageView ivCover;
-    FloatingActionButton fab;
-    ImageButton ibBack;
-    RecyclerView mRecyclerView;
-    ElasticDragDismissFrameLayout draggableFrame;
-    NewsItem newsItem;
+    private FourThreeImageView ivCover;
+    private FloatingActionButton fab;
+    //private RecyclerView mRecyclerView;
+    private ElasticDragDismissFrameLayout draggableFrame;
+    private NewsItem newsItem;
     private ElasticDragDismissFrameLayout.SystemChromeFader chromeFader;
+    private TextView tvTitle, tvArticle, tvViews, tvDate, tvSource;
+    private Map<String, String> mSources = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,18 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener {
         //fab = findViewById(R.id.fab);
         //fab.setOnClickListener(this);
         ivCover = findViewById(R.id.iv_cover);
-        ibBack = findViewById(R.id.back);
+        tvTitle = findViewById(R.id.tv_title);
+        tvArticle = findViewById(R.id.tv_article);
+        tvViews = findViewById(R.id.tv_views);
+        tvDate = findViewById(R.id.tv_date);
+        tvSource = findViewById(R.id.tv_source);
         draggableFrame = findViewById(R.id.draggable_frame);
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResultAndFinish();
+            }
+        });
 
         chromeFader = new ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             @Override
@@ -47,13 +60,6 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener {
                 setResultAndFinish();
             }
         };
-
-        ibBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResultAndFinish();
-            }
-        });
 
         final Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_NEWS_ITEM)) {
@@ -69,7 +75,7 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener {
 
     void bindNews(final boolean postponeEnterTransition) {
         //final Resources res = getResources();
-
+        createMap();
         Glide.with(this)
                 .load(newsItem.getCover())
                 .apply(new RequestOptions().centerCrop().error(R.drawable.sample))
@@ -85,6 +91,30 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener {
                         return true;
                     }
                 });
+
+        tvTitle.setText(newsItem.getTitle());
+        tvArticle.setText(newsItem.getSubtitle());
+        if (newsItem.getViews() > 0) {
+            tvViews.setVisibility(View.VISIBLE);
+            String views = getResources()
+                    .getQuantityString(R.plurals.views, newsItem.getViews(), newsItem.getViews());
+            tvViews.setText(views);
+        } else {
+            tvViews.setVisibility(View.GONE);
+        }
+        String date = Utils.getDateAgo(getApplicationContext(), newsItem.getCreatedAt());
+        tvDate.setText(date);
+        String source = mSources.get(newsItem.getSource());
+        if (source != null)
+            tvSource.setText(source);
+        else
+            tvSource.setText(R.string.news);
+    }
+
+    private void createMap() {
+        String[] mTabsChoices = getResources().getStringArray(R.array.list_sources_names);
+        for (String str : mTabsChoices)
+            mSources.put(Utils.createSlug(str), "- by " + str);
     }
 
     @Override

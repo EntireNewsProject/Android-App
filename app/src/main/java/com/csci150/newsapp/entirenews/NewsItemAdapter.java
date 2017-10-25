@@ -59,7 +59,8 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         holder.tvSubtitle.setText(holder.mItem.getSubtitle());
         if (holder.mItem.getViews() > 0) {
             holder.tvViews.setVisibility(View.VISIBLE);
-            String views = host.getResources().getQuantityString(R.plurals.views, holder.mItem.getViews(), holder.mItem.getViews());
+            String views = host.getResources().getQuantityString(R.plurals.views,
+                    holder.mItem.getViews(), holder.mItem.getViews());
             holder.tvViews.setText(views);
         } else {
             holder.tvViews.setVisibility(View.GONE);
