@@ -112,6 +112,8 @@ public class ScrollingActivity extends Activity implements
                     }
                 });
 
+        Utils.print(TAG, newsItem.getArticle());
+
         tvTitle.setText(newsItem.getTitle());
         tvArticle.setText(newsItem.getArticle());
         if (newsItem.getViews() > 0) {
