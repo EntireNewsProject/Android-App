@@ -11,7 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
+import com.csci150.newsapp.entirenews.utils.Utils;
+
+import java.util.Arrays;
+
 public class MainActivity extends BaseActivity implements OnListFragmentInteractionListener {
+    private final String TAG = "MainActivity";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -28,10 +33,13 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
      */
     private ViewPager mViewPager;
     private TabLayout tabLayout;
+    private String[] mTabsChoices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.print(TAG, "onCreate()");
+        mTabsChoices = getResources().getStringArray(R.array.list_sources_names);
         setContentView(R.layout.activity_main);
 
         toolbar = findViewById(R.id.toolbar);
@@ -48,25 +56,11 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         tabLayout = findViewById(R.id.tabs);
-
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_abc));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_bbc));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_bloomberg));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_businessinsider));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_buzzfeed));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_cnn));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_cnbc));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_hacker));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_reuters));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_techcrunch));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_nytimes));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_verge));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_time));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_text_today));
+        for (String str : mTabsChoices)
+            tabLayout.addTab(tabLayout.newTab().setText(str));
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-        tabLayout.post(tabLayoutConfig);
     }
 
     private Runnable tabLayoutConfig = new Runnable() {
@@ -82,6 +76,27 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
         }
     };
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Utils.print(TAG, "onResume()");
+
+        String[] mTemp = getResources().getStringArray(R.array.list_sources_names);
+        if (!Arrays.equals(mTabsChoices, mTemp)) {
+            Utils.print(TAG, "Tabs changed");
+            tabLayout.removeAllTabs();
+            for (String str : mTabsChoices)
+                tabLayout.addTab(tabLayout.newTab().setText(str));
+
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+        }
+        tabLayout.post(tabLayoutConfig);
+    }
+
+    private String createSlug(String slug) {
+        return slug.replaceAll("[^\\w\\s]", "").trim().toLowerCase().replaceAll("\\W+", "-");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,22 +142,17 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
 
         @Override
         public Fragment getItem(int position) {
+            Utils.print(TAG, "getItem()");
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
-            switch (position) {
-                case 2:
-                    return NewsItemFragment.newInstance("bbc-news");
-                default:
-                    return NewsItemFragment.newInstance("bbc-news");
-
-            }
+            String slug = createSlug(mTabsChoices[position]);
+            return NewsItemFragment.newInstance(slug);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return mTabsChoices.length;
         }
     }
 }

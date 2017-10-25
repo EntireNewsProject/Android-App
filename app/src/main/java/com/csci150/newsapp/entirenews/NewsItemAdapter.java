@@ -10,6 +10,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,8 +57,13 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         holder.mItem = mItems.get(position);
         holder.tvTitle.setText(holder.mItem.getTitle());
         holder.tvSubtitle.setText(holder.mItem.getSubtitle());
-        String views = host.getResources().getQuantityString(R.plurals.views, holder.mItem.getViews(), holder.mItem.getViews());
-        holder.tvViews.setText(views);
+        if (holder.mItem.getViews() > 0) {
+            holder.tvViews.setVisibility(View.VISIBLE);
+            String views = host.getResources().getQuantityString(R.plurals.views, holder.mItem.getViews(), holder.mItem.getViews());
+            holder.tvViews.setText(views);
+        } else {
+            holder.tvViews.setVisibility(View.GONE);
+        }
         String date = Utils.getDateAgo(host, holder.mItem.getCreatedAt());
         holder.tvDate.setText(date);
 
@@ -69,7 +75,12 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
 
         holder.ivCover.setBackground(new ColorDrawable(Color.DKGRAY));
         holder.ivCover.setTransitionName(holder.mItem.getTitle());
+        holder.ivSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +136,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         final View mView;
         private final TextView tvTitle, tvSubtitle, tvViews, tvDate;
         private final ImageView ivCover;
+        private final ImageButton ivSave;
         private final View vBody;
         NewsItem mItem;
 
@@ -137,6 +149,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
             tvViews = view.findViewById(R.id.tv_views);
             tvDate = view.findViewById(R.id.tv_date);
             ivCover = view.findViewById(R.id.iv_cover);
+            ivSave = view.findViewById(R.id.ib_save);
         }
 
         @Override

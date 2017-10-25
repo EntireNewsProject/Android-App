@@ -24,6 +24,25 @@
         <item quantity="other">%d views</item>
     </plurals>
 
+    <string-array name="list_sources_names">
+        <item>BBC News</item>
+        <item>Bloomberg</item>
+        <item>Business Insider</item>
+        <item>Buzzfeed</item>
+        <item>CNN</item>
+        <item>CNBC</item>
+        <item>Engadget</item>
+        <item>ESPN</item>
+        <item>Hacker News</item>
+        <item>Reuters</item>
+        <item>TechCrunch</item>
+        <item>TechRadar</item>
+        <item>The New York Times</item>
+        <item>The Verge</item>
+        <item>Time</item>
+        <item>USA Today</item>
+    </string-array>
+
     <string name="ago_year">year ago</string>
     <string name="ago_years">years ago</string>
     <string name="ago_month">month ago</string>
