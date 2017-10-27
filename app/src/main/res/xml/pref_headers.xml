@@ -5,7 +5,7 @@
     <header
         android:fragment="com.csci150.newsapp.entirenews.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_info_black_24dp"
-        android:title="@string/pref_header_general" />
+        android:title="@string/pref_news_sources" />
 
     <header
         android:fragment="com.csci150.newsapp.entirenews.SettingsActivity$NotificationPreferenceFragment"

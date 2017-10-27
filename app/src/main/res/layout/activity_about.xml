@@ -9,9 +9,5 @@
     android:paddingTop="16dp"
     tools:context="com.csci150.newsapp.entirenews.AboutActivity">
 
-    <!-- CODE HERE -->
-
-
-
 
 </android.support.constraint.ConstraintLayout>
