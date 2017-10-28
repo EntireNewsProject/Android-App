@@ -3,18 +3,18 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="com.csci150.newsapp.entirenews.SettingsActivity$GeneralPreferenceFragment"
-        android:icon="@drawable/ic_info_black_24dp"
+        android:fragment="com.csci150.newsapp.entirenews.SettingsActivity$NewsSourcesPreferenceFragment"
+        android:icon="@drawable/ic_source_black_24dp"
         android:title="@string/pref_news_sources" />
 
     <header
         android:fragment="com.csci150.newsapp.entirenews.SettingsActivity$NotificationPreferenceFragment"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_notification_black_24dp"
         android:title="@string/pref_header_notifications" />
 
-    <header
+    <!--header
         android:fragment="com.csci150.newsapp.entirenews.SettingsActivity$DataSyncPreferenceFragment"
         android:icon="@drawable/ic_sync_black_24dp"
-        android:title="@string/pref_header_data_sync" />
+        android:title="@string/pref_header_data_sync" /-->
 
 </preference-headers>

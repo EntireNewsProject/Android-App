@@ -1,5 +1,4 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
     <!-- A 'parent' preference, which enables/disables child preferences (below)
          when checked/unchecked. -->
     <SwitchPreference
@@ -17,6 +16,16 @@
         android:dependency="notifications_new_message"
         android:key="notifications_new_message_vibrate"
         android:title="@string/pref_title_vibrate" />
+
+    <ListPreference
+        android:defaultValue="180"
+        android:entries="@array/pref_notifications_interval_titles"
+        android:entryValues="@array/pref_sync_frequency_values"
+        android:key="sync_frequency"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_sync_frequency" />
+
     <RingtonePreference
         android:defaultValue="content://settings/system/notification_sound"
         android:dependency="notifications_new_message"
@@ -24,4 +33,9 @@
         android:ringtoneType="notification"
         android:title="@string/pref_title_ringtone" />
 
+    <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
+         design guidelines. -->
+    <Preference android:title="@string/pref_title_system_sync_settings">
+        <intent android:action="android.settings.SYNC_SETTINGS" />
+    </Preference>
 </PreferenceScreen>

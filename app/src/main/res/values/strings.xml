@@ -145,6 +145,22 @@
     </string>
     <string name="title_activity_news">NewsActivity</string>
 
+    <string name="title_news_source_bbc">BBC News</string>
+    <!--item>Bloomberg</item>
+    <item>Business Insider</item>
+    <item>Buzzfeed</item>
+    <item>CNN</item>
+    <item>CNBC</item>
+    <item>Engadget</item>
+    <item>ESPN</item>
+    <item>Hacker News</item>
+    <item>Reuters</item>
+    <item>TechCrunch</item>
+    <item>TechRadar</item>
+    <item>The New York Times</item>
+    <item>The Verge</item>
+    <item>Time</item>
+    <item>USA Today</item-->
 
     <!-- transition shared elements -->
     <string name="transition_news" translatable="false">news</string>
@@ -156,33 +172,12 @@
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
-    <string name="pref_news_sources">Select from news Sources</string>
+    <string name="pref_news_sources">Select news sources</string>
 
     <!-- <string name="pref_select_news_sources">Select from news sources</string>
      <string name="pref_description_social_recommendations">Recommendations for people to contact
          based on your message history
      </string> -->
-
-
-    <string-array name="sources_names">
-        <item>BBC News</item>
-        <item>Bloomberg</item>
-        <item>Business Insider</item>
-        <item>Buzzfeed</item>
-        <item>CNN</item>
-        <item>CNBC</item>
-        <item>Engadget</item>
-        <item>ESPN</item>
-        <item>Hacker News</item>
-        <item>Reuters</item>
-        <item>TechCrunch</item>
-        <item>TechRadar</item>
-        <item>The New York Times</item>
-        <item>The Verge</item>
-        <item>Time</item>
-        <item>USA Today</item>
-    </string-array>
-
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Smith</string>
 
@@ -201,20 +196,18 @@
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Notifications</string>
 
-    <string name="pref_title_sync_frequency">Add interval for notifications</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>6 Hours</item>
-        <item>12 Hours</item>
-        <item>24 Hours</item>
+    <string name="pref_title_sync_frequency">Choose notifications interval</string>
+    <string-array name="pref_notifications_interval_titles">
         <item>Never</item>
+        <item>Every 6 Hours</item>
+        <item>Every 12 Hours</item>
+        <item>Every day</item>
     </string-array>
     <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
         <item>-1</item>
+        <item>6</item>
+        <item>12</item>
+        <item>24</item>
     </string-array>
 
     <string-array name="list_preference_entries">
