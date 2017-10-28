@@ -64,6 +64,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.csci150.newsapp.entirenews.MainActivity" />
         </activity>
+        <activity android:name=".SavedActivity"></activity>
     </application>
 
 </manifest>
