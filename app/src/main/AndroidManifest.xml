@@ -42,29 +42,34 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.csci150.newsapp.entirenews.MainActivity" />
-
-            <!-- HERE -->
-
         </activity>
         <activity
             android:name=".AboutActivity"
             android:label="@string/app_name"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- HERE -->
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.csci150.newsapp.entirenews.MainActivity" />
         </activity>
         <activity
             android:name=".ScrollingActivity"
-            android:label="@string/title_activity_scrolling"
+            android:label="@string/app_name"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.Translucent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.csci150.newsapp.entirenews.MainActivity" />
         </activity>
-        <activity android:name=".SavedActivity"></activity>
+        <activity
+            android:name=".SavedActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.Home">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.csci150.newsapp.entirenews.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
