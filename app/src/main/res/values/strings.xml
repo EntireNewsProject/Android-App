@@ -146,21 +146,21 @@
     <string name="title_activity_news">NewsActivity</string>
 
     <string name="title_news_source_bbc">BBC News</string>
-    <!--item>Bloomberg</item>
-    <item>Business Insider</item>
-    <item>Buzzfeed</item>
-    <item>CNN</item>
-    <item>CNBC</item>
-    <item>Engadget</item>
-    <item>ESPN</item>
-    <item>Hacker News</item>
-    <item>Reuters</item>
-    <item>TechCrunch</item>
-    <item>TechRadar</item>
-    <item>The New York Times</item>
-    <item>The Verge</item>
-    <item>Time</item>
-    <item>USA Today</item-->
+    <string name="title_news_source_bloomberg">Bloomberg</string>
+    <string name="title_news_source_business_insider">Business Insider</string>
+    <string name="title_news_source_buzzfeed">Buzzfeed</string>
+    <string name="title_news_source_cnn">CNN</string>
+    <string name="title_news_source_cnbc">CNBC</string>
+    <string name="title_news_source_engadget">Engadget</string>
+    <string name="title_news_source_espn">ESPN</string>
+    <string name="title_news_source_hacker_news">Hacker News</string>
+    <string name="title_news_source_reuters">Reuters</string>
+    <string name="title_news_source_techcrunch">TechCrunch</string>
+    <string name="title_news_source_tech_radar">TechRadar</string>
+    <string name="title_news_source_new_york_times">The New York Times</string>
+    <string name="title_news_source_the_verge">The Verge</string>
+    <string name="title_news_source_time">Time</string>
+    <string name="title_news_source_usa_today">USA Today</string>
 
     <!-- transition shared elements -->
     <string name="transition_news" translatable="false">news</string>

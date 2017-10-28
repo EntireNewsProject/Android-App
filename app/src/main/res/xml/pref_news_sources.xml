@@ -2,18 +2,93 @@
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="example_switch"
+        android:key="bbc-news"
         android:title="@string/title_news_source_bbc" />
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="example_switch1"
-        android:title="CNN" />
+        android:key="bloomberg"
+        android:title="@string/title_news_source_bloomberg" />
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="example_switch2"
-        android:title="CNBC" />
+        android:key="business-insider"
+        android:title="@string/title_news_source_business_insider" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="buzzfeed"
+        android:title="@string/title_news_source_buzzfeed" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="cnn"
+        android:title="@string/title_news_source_cnn" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="cnbc"
+        android:title="@string/title_news_source_cnbc" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="engadget"
+        android:title="@string/title_news_source_engadget" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="espn"
+        android:title="@string/title_news_source_espn" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="hacker-news"
+        android:title="@string/title_news_source_hacker_news" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="reuters"
+        android:title="@string/title_news_source_reuters" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="techcrunch"
+        android:title="@string/title_news_source_techcrunch" />
+
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="tech-radar"
+        android:title="@string/title_news_source_tech_radar" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="new-york-times"
+        android:title="@string/title_news_source_new_york_times" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="the-verge"
+        android:title="@string/title_news_source_the_verge" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="time"
+        android:title="@string/title_news_source_time" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="usa-today"
+        android:title="@string/title_news_source_usa_today" />
+
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
