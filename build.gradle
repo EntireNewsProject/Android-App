@@ -1,17 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-
-    ext.versions = [
-            'compileSdk'    : 26,
-            'minimumSdk'    : 21,
-            'targetSdk'     : 26,
-            'buildTools'    : '26.0.2',
-            'glide'         : '4.1.1',
-            'retrofit'      : '2.3.0',
-            'supportLibrary': '26.1.0'
-    ]
-
     repositories {
         google()
         jcenter()

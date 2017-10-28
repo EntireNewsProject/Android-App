@@ -82,6 +82,8 @@ public class NewsItemFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (mContext == null)
+            mContext = getActivity().getApplicationContext();
         Utils.print(TAG, "onCreate()");
         mApiPrefs = ApiPrefs.get(mContext);
         if (getArguments() != null) {
