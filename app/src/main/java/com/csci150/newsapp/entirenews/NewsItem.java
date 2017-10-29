@@ -116,6 +116,10 @@ public class NewsItem implements Parcelable {
         this.title = title;
     }
 
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
     public String getSubtitle() {
         if (!TextUtils.isEmpty(subtitle)) return subtitle;
         else if (!TextUtils.isEmpty(article))
