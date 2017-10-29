@@ -66,12 +66,12 @@
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="tech-radar"
+        android:key="techradar"
         android:title="@string/title_news_source_tech_radar" />
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="new-york-times"
+        android:key="the-new-york-times"
         android:title="@string/title_news_source_new_york_times" />
 
     <SwitchPreference

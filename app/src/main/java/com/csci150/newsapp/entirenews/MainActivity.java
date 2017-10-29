@@ -3,7 +3,9 @@ package com.csci150.newsapp.entirenews;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,7 +15,8 @@ import android.view.ViewGroup;
 
 import com.csci150.newsapp.entirenews.utils.Utils;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity implements OnListFragmentInteractionListener {
     private final String TAG = "MainActivity";
@@ -33,13 +36,17 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
      */
     private ViewPager mViewPager;
     private TabLayout tabLayout;
-    private String[] mTabsChoices;
+    private String[] mTabsChoicesAll;
+    private List<String> mTabsChoicesSelected = new ArrayList<>();
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.print(TAG, "onCreate()");
-        mTabsChoices = getResources().getStringArray(R.array.list_sources_names);
+        sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mTabsChoicesAll = getResources().getStringArray(R.array.list_sources_names);
+
         setContentView(R.layout.activity_main);
 
         toolbar = findViewById(R.id.toolbar);
@@ -56,8 +63,29 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         tabLayout = findViewById(R.id.tabs);
-        for (String str : mTabsChoices)
-            tabLayout.addTab(tabLayout.newTab().setText(str));
+
+        /*for (int i = 0; i < mTabChoicesLen; i++) {
+            mTabsChoicesId[i] = Utils.createSlug(mTabsChoicesName[i]);
+            if (sp.getBoolean(Utils.createSlug(mTabsChoicesId[i]), true)) {
+                tabLayout.addTab(tabLayout.newTab().setText(mTabsChoicesId[i]));
+                Utils.print(TAG, "addTab(" + mTabsChoicesId[i] + ")");
+            }
+        }*/
+        if (!mTabsChoicesSelected.isEmpty())
+            mTabsChoicesSelected = new ArrayList<>();
+        for (String str : mTabsChoicesAll) {
+            if (sp.getBoolean(Utils.createSlug(str), true)) {
+                mTabsChoicesSelected.add(str);
+                tabLayout.addTab(tabLayout.newTab().setText(str));
+                Utils.print(TAG, "addTab(" + str + ")");
+            }
+        }
+        if (mTabsChoicesSelected.size() == 0)
+            for (String str : mTabsChoicesAll) {
+                mTabsChoicesSelected.add(str);
+                tabLayout.addTab(tabLayout.newTab().setText(str));
+                Utils.print(TAG, "addForcedTab(" + str + ")");
+            }
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -80,18 +108,44 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
     protected void onResume() {
         super.onResume();
         Utils.print(TAG, "onResume()");
+        if (!mTabsChoicesSelected.isEmpty())
+            mTabsChoicesSelected = new ArrayList<>();
+        tabLayout.removeAllTabs();
+        //mSectionsPagerAdapter.notifyDataSetChanged();
+        Utils.print(TAG, "Tabs changed");
+        for (String str : mTabsChoicesAll) {
+            if (sp.getBoolean(Utils.createSlug(str), true)) {
+                mTabsChoicesSelected.add(str);
+                tabLayout.addTab(tabLayout.newTab().setText(str));
+                Utils.print(TAG, "addTab(" + str + ")");
+            }
+        }
+        if (mTabsChoicesSelected.size() == 0)
+            for (String str : mTabsChoicesAll) {
+                mTabsChoicesSelected.add(str);
+                tabLayout.addTab(tabLayout.newTab().setText(str));
+                Utils.print(TAG, "addForcedTab(" + str + ")");
+            }
 
-        String[] mTemp = getResources().getStringArray(R.array.list_sources_names);
-        if (!Arrays.equals(mTabsChoices, mTemp)) {
+        //mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager()));
+        //mViewPager.setAdapter(mSectionsPagerAdapter);
+        mSectionsPagerAdapter.notifyDataSetChanged();
+        tabLayout.post(tabLayoutConfig);
+
+        /*String[] mTemp = getResources().getStringArray(R.array.list_sources_names);
+        if (!Arrays.equals(mTabsChoicesAll, mTemp)) {
             Utils.print(TAG, "Tabs changed");
             tabLayout.removeAllTabs();
-            for (String str : mTabsChoices)
-                tabLayout.addTab(tabLayout.newTab().setText(str));
-
+            for (String str : mTabsChoicesAll) {
+                if (sp.getBoolean(Utils.createSlug(str), true)) {
+                    tabLayout.addTab(tabLayout.newTab().setText(str));
+                    Utils.print(TAG, "addTab(" + str + ")");
+                }
+            }
             mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
             mViewPager.setAdapter(mSectionsPagerAdapter);
         }
-        tabLayout.post(tabLayoutConfig);
+        tabLayout.post(tabLayoutConfig);*/
     }
 
     @Override
@@ -142,13 +196,13 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
-            String slug = Utils.createSlug(mTabsChoices[position]);
+            String slug = Utils.createSlug(mTabsChoicesSelected.get(position));
             return NewsItemFragment.newInstance(slug);
         }
 
         @Override
         public int getCount() {
-            return mTabsChoices.length;
+            return mTabsChoicesSelected.size();
         }
     }
 }

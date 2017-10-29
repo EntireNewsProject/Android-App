@@ -2,6 +2,7 @@ package com.csci150.newsapp.entirenews;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -77,13 +78,6 @@ public class NewsItem implements Parcelable {
         title = in.readString();
         source = in.readString();
         cover = in.readString();
-        article = in.readString();
-        slug = in.readString();
-        saves = in.readInt();
-        views = in.readInt();
-        date = in.readString();
-        keywords = in.createStringArrayList();
-        tags = in.createStringArrayList();
         createdAt = in.readString();
     }
 
@@ -103,13 +97,6 @@ public class NewsItem implements Parcelable {
         parcel.writeString(title);
         parcel.writeString(source);
         parcel.writeString(cover);
-        parcel.writeString(article);
-        parcel.writeString(slug);
-        parcel.writeInt(saves);
-        parcel.writeInt(views);
-        parcel.writeString(date);
-        parcel.writeStringList(keywords);
-        parcel.writeStringList(tags);
         parcel.writeString(createdAt);
     }
 
@@ -130,10 +117,12 @@ public class NewsItem implements Parcelable {
     }
 
     public String getSubtitle() {
-        /*return article.substring(0, Math.min(article.length(), 100))
-                .replace("\n", "")
-                .replace("\r", "");*/
-        return "Subtitle";
+        if (!TextUtils.isEmpty(subtitle)) return subtitle;
+        else if (!TextUtils.isEmpty(article))
+            return article.substring(0, Math.min(article.length(), 100))
+                    .replace("\n", "")
+                    .replace("\r", "");
+        else return "Subtitle";
     }
 
     public String getSource() {
