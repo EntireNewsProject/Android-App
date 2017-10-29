@@ -130,9 +130,10 @@ public class NewsItem implements Parcelable {
     }
 
     public String getSubtitle() {
-        return article.substring(0, Math.min(article.length(), 100))
+        /*return article.substring(0, Math.min(article.length(), 100))
                 .replace("\n", "")
-                .replace("\r", "");
+                .replace("\r", "");*/
+        return "Subtitle";
     }
 
     public String getSource() {
