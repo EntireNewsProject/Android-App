@@ -24,18 +24,20 @@ public class AboutActivity extends AppCompatActivity {
                 .setImage(R.drawable.smaplelogo)
                 .setDescription("This is demo version")
                 .addItem(new Element().setTitle("Version 1.0"))
+                .addItem(new Element().setTitle("Private Policy"))
+                .addItem(new Element().setTitle("Libraries we use"))
                 .addItem(adsElement)
-                .addGroup("Libraries we use")
-                .addGroup("Private Policy")
-                .addGroup("Connect")
+                .addGroup("Connect with us")
+                .addEmail("kishanshah147@mail.fresnostate.edu")
                 .addGitHub("Entire News Project (News App)")
                 .addPlayStore("My Playstore")
-                .addEmail("kishanshah147@mail.fresnostate.edu")
                 .addItem(createCopyright())
                 .create();
 
         setContentView(aboutPage);
     }
+
+
 
     private Element createCopyright() {
         Element copyright = new Element();
@@ -51,7 +53,10 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
         return copyright;
+    }
+
+
 
     }
 
-}
+
