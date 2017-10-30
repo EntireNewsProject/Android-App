@@ -88,7 +88,7 @@ public class Utils {
     }
 
     public static String getDateAgo(final Context context, final String isoDate) {
-        print("HELLO",isoDate);
+        //print("HELLO",isoDate);
         try {
             DateTime date = new DateTime(isoDate);
             DateTime now = new DateTime();

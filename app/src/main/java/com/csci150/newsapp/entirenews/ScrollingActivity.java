@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.csci150.newsapp.entirenews.utils.ApiInterface;
+import com.csci150.newsapp.entirenews.utils.ApiPrefs;
 import com.csci150.newsapp.entirenews.utils.ElasticDragDismissFrameLayout;
 import com.csci150.newsapp.entirenews.utils.FourThreeImageView;
 import com.csci150.newsapp.entirenews.utils.NotifyingScrollView;
@@ -21,6 +25,10 @@ import com.csci150.newsapp.entirenews.utils.Utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ScrollingActivity extends Activity implements
         NotifyingScrollView.OnScrollChangedListener,
         ViewTreeObserver.OnGlobalLayoutListener {
@@ -28,11 +36,14 @@ public class ScrollingActivity extends Activity implements
 
     public final static String RESULT_EXTRA_NEWS_ID = "RESULT_EXTRA_NEWS_ID";
     public static final String EXTRA_NEWS_ITEM = "EXTRA_NEWS_ITEM";
+
+    private ApiPrefs mApiPrefs;
     private static final float mVerticalParallaxSpeed = 0.3f;
-    int fabOffset;
+    private int fabOffset;
     private int mCoverImageHeight;
-    private FourThreeImageView ivCover;
     private NewsItem newsItem;
+
+    private FourThreeImageView ivCover;
     private ConstraintLayout mLayout;
     private ImageButton ibBack;
     //private FabToggle fab2;
@@ -46,6 +57,7 @@ public class ScrollingActivity extends Activity implements
         super.onCreate(savedInstanceState);
         Utils.print(TAG, "onCreate");
         setContentView(R.layout.my_demo2);
+        mApiPrefs = ApiPrefs.get(getApplicationContext());
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
@@ -91,6 +103,10 @@ public class ScrollingActivity extends Activity implements
         }
     }
 
+    public ApiInterface getApi() {
+        return mApiPrefs.getApi();
+    }
+
     void bindNews(final boolean postponeEnterTransition) {
         //final Resources res = getResources();
         createMap();
@@ -112,8 +128,21 @@ public class ScrollingActivity extends Activity implements
                     }
                 });
 
-        //Utils.print(TAG, newsItem.getArticle());
         tvTitle.setText(newsItem.getTitle());
+
+        String date = Utils.getDateAgo(getApplicationContext(), newsItem.getCreatedAt());
+        tvDate.setText(date);
+        String source = mSources.get(newsItem.getSource());
+        if (source != null)
+            tvSource.setText(source);
+        else
+            tvSource.setText(R.string.news);
+
+        getNews(newsItem.getId());
+    }
+
+    void bindNews(final NewsItem item) {
+        newsItem = item;
         tvArticle.setText(newsItem.getArticle());
         if (newsItem.getViews() > 0) {
             tvViews.setVisibility(View.VISIBLE);
@@ -123,13 +152,39 @@ public class ScrollingActivity extends Activity implements
         } else {
             tvViews.setVisibility(View.GONE);
         }
-        String date = Utils.getDateAgo(getApplicationContext(), newsItem.getCreatedAt());
-        tvDate.setText(date);
-        String source = mSources.get(newsItem.getSource());
-        if (source != null)
-            tvSource.setText(source);
-        else
-            tvSource.setText(R.string.news);
+    }
+
+
+    private void getNews(final String id) {
+        Utils.print(TAG, "getNews(id: " + id + ")");
+        getApi().getNews(id).enqueue(new Callback<NewsItem>() {
+
+            @Override
+            public void onResponse(@NonNull Call<NewsItem> call, @NonNull Response<NewsItem> response) {
+                Utils.print(TAG, "onResponse()");
+                Utils.print(TAG, "URL: " + response.raw().request().url());
+                Utils.print(TAG, "Status Code: " + response.code());
+                if (response.isSuccessful()) {
+                    bindNews(response.body());
+                } else {
+                    Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
+                    // TODO
+                    //if (isAdded() && getActivity() != null)
+                    //if (response.code() == 401)
+                    //    showError(true, R.string.response_login);
+                    //else showError(true, R.string.response_error);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NewsItem> call, @NonNull Throwable t) {
+                Utils.print(TAG, "onFailure()", Log.ERROR);
+                Utils.print(TAG, t.toString(), Log.ERROR);
+                // TODO
+                //if (isAdded() && getActivity() != null)
+                //    showError(true, R.string.response_error);
+            }
+        });
     }
 
     void calculateFabPosition() {

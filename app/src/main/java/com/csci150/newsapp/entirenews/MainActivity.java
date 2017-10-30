@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +31,7 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private PagerAdapter mPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -37,8 +39,7 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
     private ViewPager mViewPager;
     private TabLayout tabLayout;
     private String[] mTabsChoicesAll;
-    private List<String> mTabsChoicesSelected = new ArrayList<>();
-    SharedPreferences sp;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,41 +55,35 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
         // if (savedInstanceState == null)
         animateToolbar();
 
+        tabLayout = findViewById(R.id.tabs);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        mPagerAdapter = new PagerAdapter(getFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        tabLayout = findViewById(R.id.tabs);
-
-        /*for (int i = 0; i < mTabChoicesLen; i++) {
-            mTabsChoicesId[i] = Utils.createSlug(mTabsChoicesName[i]);
-            if (sp.getBoolean(Utils.createSlug(mTabsChoicesId[i]), true)) {
-                tabLayout.addTab(tabLayout.newTab().setText(mTabsChoicesId[i]));
-                Utils.print(TAG, "addTab(" + mTabsChoicesId[i] + ")");
-            }
-        }*/
-        if (!mTabsChoicesSelected.isEmpty())
-            mTabsChoicesSelected = new ArrayList<>();
-        for (String str : mTabsChoicesAll) {
-            if (sp.getBoolean(Utils.createSlug(str), true)) {
-                mTabsChoicesSelected.add(str);
-                tabLayout.addTab(tabLayout.newTab().setText(str));
-                Utils.print(TAG, "addTab(" + str + ")");
-            }
-        }
-        if (mTabsChoicesSelected.size() == 0)
-            for (String str : mTabsChoicesAll) {
-                mTabsChoicesSelected.add(str);
-                tabLayout.addTab(tabLayout.newTab().setText(str));
-                Utils.print(TAG, "addForcedTab(" + str + ")");
-            }
+        mViewPager.setOffscreenPageLimit(0);
+        mViewPager.setAdapter(mPagerAdapter);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        for (String str : mTabsChoicesAll) {
+            if (sp.getBoolean(Utils.createSlug(str), true)) {
+                tabLayout.addTab(tabLayout.newTab().setText(str));
+                mPagerAdapter.addTabPage(str);
+                Utils.print(TAG, "addTab(" + str + ")");
+            }
+        }
+        if (mPagerAdapter.getSelectedTabs().size() == 0) {
+            for (String str : mTabsChoicesAll) {
+                tabLayout.addTab(tabLayout.newTab().setText(str));
+                mPagerAdapter.addTabPage(str);
+                Utils.print(TAG, "addForcedTab(" + str + ")");
+            }
+        }
+        //tabLayout.post(tabLayoutConfig);
     }
 
     private Runnable tabLayoutConfig = new Runnable() {
@@ -108,44 +103,34 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
     protected void onResume() {
         super.onResume();
         Utils.print(TAG, "onResume()");
-        if (!mTabsChoicesSelected.isEmpty())
-            mTabsChoicesSelected = new ArrayList<>();
-        tabLayout.removeAllTabs();
-        //mSectionsPagerAdapter.notifyDataSetChanged();
-        Utils.print(TAG, "Tabs changed");
-        for (String str : mTabsChoicesAll) {
-            if (sp.getBoolean(Utils.createSlug(str), true)) {
-                mTabsChoicesSelected.add(str);
-                tabLayout.addTab(tabLayout.newTab().setText(str));
-                Utils.print(TAG, "addTab(" + str + ")");
-            }
+
+        List<String> temp = new ArrayList<>();
+        for (String tab : mTabsChoicesAll) {
+            if (sp.getBoolean(Utils.createSlug(tab), true))
+                temp.add(tab);
         }
-        if (mTabsChoicesSelected.size() == 0)
-            for (String str : mTabsChoicesAll) {
-                mTabsChoicesSelected.add(str);
-                tabLayout.addTab(tabLayout.newTab().setText(str));
-                Utils.print(TAG, "addForcedTab(" + str + ")");
-            }
-
-        //mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager()));
-        //mViewPager.setAdapter(mSectionsPagerAdapter);
-        mSectionsPagerAdapter.notifyDataSetChanged();
-        tabLayout.post(tabLayoutConfig);
-
-        /*String[] mTemp = getResources().getStringArray(R.array.list_sources_names);
-        if (!Arrays.equals(mTabsChoicesAll, mTemp)) {
+        if (mPagerAdapter.getSelectedTabs().equals(temp))
+            Utils.print(TAG, "Tabs not changed");
+        else {
             Utils.print(TAG, "Tabs changed");
             tabLayout.removeAllTabs();
-            for (String str : mTabsChoicesAll) {
-                if (sp.getBoolean(Utils.createSlug(str), true)) {
+            mPagerAdapter.removeTabs();
+            if (temp.size() == 0) {
+                for (String str : mTabsChoicesAll) {
                     tabLayout.addTab(tabLayout.newTab().setText(str));
+                    mPagerAdapter.addTabPage(str);
+                    Utils.print(TAG, "addForcedTab(" + str + ")");
+                }
+            } else {
+                for (String str : temp) {
+                    tabLayout.addTab(tabLayout.newTab().setText(str));
+                    mPagerAdapter.addTabPage(str);
                     Utils.print(TAG, "addTab(" + str + ")");
                 }
             }
-            mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-            mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.setAdapter(mPagerAdapter);
+            //tabLayout.post(tabLayoutConfig);
         }
-        tabLayout.post(tabLayoutConfig);*/
     }
 
     @Override
@@ -184,10 +169,17 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class PagerAdapter extends FragmentStatePagerAdapter {
+        private List<String> mTabsChoicesSelected;
 
-        SectionsPagerAdapter(FragmentManager fm) {
+        PagerAdapter(FragmentManager fm) {
             super(fm);
+            mTabsChoicesSelected = new ArrayList<>();
+        }
+
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            return super.getItemPosition(object);
         }
 
         @Override
@@ -203,6 +195,29 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
         @Override
         public int getCount() {
             return mTabsChoicesSelected.size();
+        }
+
+        List<String> getSelectedTabs() {
+            return mTabsChoicesSelected;
+        }
+
+        void addTabPage(String title) {
+            mTabsChoicesSelected.add(title);
+            notifyDataSetChanged();
+        }
+
+        void removeTabPage(int position) {
+            if (!mTabsChoicesSelected.isEmpty() && position < mTabsChoicesSelected.size()) {
+                mTabsChoicesSelected.remove(position);
+                notifyDataSetChanged();
+            }
+        }
+
+        void removeTabs() {
+            if (!mTabsChoicesSelected.isEmpty()) {
+                mTabsChoicesSelected = new ArrayList<>();
+                notifyDataSetChanged();
+            }
         }
     }
 }

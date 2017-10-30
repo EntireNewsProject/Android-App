@@ -24,7 +24,7 @@ public interface ApiInterface {
             @Query("page") int page);
 
 
-    @GET("news/{id}}")
+    @GET("news/{id}")
     Call<NewsItem> getNews(
             @NonNull @Path("id") String id);
 }
