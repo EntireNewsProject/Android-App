@@ -45,7 +45,6 @@ public class ScrollingActivity extends Activity implements
 
     private FourThreeImageView ivCover;
     private ConstraintLayout mLayout;
-    private ImageButton ibBack;
     //private FabToggle fab2;
     private ElasticDragDismissFrameLayout draggableFrame;
     private ElasticDragDismissFrameLayout.SystemChromeFader chromeFader;

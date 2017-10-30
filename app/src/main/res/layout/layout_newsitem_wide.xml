@@ -22,12 +22,12 @@
     <View
         android:id="@+id/v_body"
         android:layout_width="@dimen/margin_one"
-        android:layout_height="@dimen/margin_one"
+        android:layout_height="@dimen/margin_zero"
         android:background="@color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/iv_cover"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:transitionName="@string/transition_news_background"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover"
+        app:layout_constraintEnd_toStartOf="@id/iv_cover"
+        app:layout_constraintTop_toTopOf="@id/iv_cover" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -84,13 +84,13 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:padding="@dimen/margin_quarter"
-        android:text="October 2, 2017"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toBottomOf="@+id/ib_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/ib_save"
-        app:layout_constraintTop_toTopOf="@id/ib_save" />
+        app:layout_constraintTop_toTopOf="@id/ib_save"
+        tools:text="October 2, 2017" />
 
     <TextView
         android:id="@+id/tv_views"

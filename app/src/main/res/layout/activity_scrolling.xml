@@ -68,4 +68,22 @@
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+
+    <FrameLayout
+        android:id="@+id/back_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:elevation="@dimen/margin_half">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="?android:actionBarSize"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginBottom="@dimen/margin_full"
+            android:layout_marginEnd="@dimen/margin_full"
+            android:background="@drawable/mid_grey_ripple"
+            android:src="@drawable/ic_arrow_back" />
+    </FrameLayout>
+
 </android.support.design.widget.CoordinatorLayout>
