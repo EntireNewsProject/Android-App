@@ -3,34 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_full"
     android:orientation="vertical"
     tools:context="com.csci150.newsapp.entirenews.PrivatePolicyActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AAA"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BBB"/>
+
+    </LinearLayout>
+
     <TextView
-        android:layout_width="406dp"
-        android:layout_height="45dp"
-        android:text="Entire News Private Policy
-"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Entire News Private Policy"
+
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/margin_full"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This privacy policy has been compiled to better serve those who are concerned with how their 'Personally Identifiable Information' (PII) is being used online. PII, as described in US privacy law and information security, is information that can be used on its own or with other information to identify, contact, or locate a single person, or to identify an individual in context. Please read our privacy policy carefully to get a clear understanding of how we collect, use, protect or otherwise handle your Personally Identifiable Information in accordance with our website.
-"
+        android:text="This privacy policy has been compiled to better serve those who are concerned with how their 'Personally Identifiable Information' (PII) is being used online. PII, as described in US privacy law and information security, is information that can be used on its own or with other information to identify, contact, or locate a single person, or to identify an individual in context. Please read our privacy policy carefully to get a clear understanding of how we collect, use, protect or otherwise handle your Personally Identifiable Information in accordance with our website."
+        android:layout_padding="@dimen/margin_full"
+        android:background="@color/mid_grey"
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_full"
+        android:magrin="@dimen/margin_full"
         android:text="What personal information do we collect from the people that visit our blog, website or app?"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="When ordering or registering on our site, as appropriate, you may be asked to enter your email address, phone number or other details to help you with your experience.
-"
+        android:text="When ordering or registering on our site, as appropriate, you may be asked to enter your email address, phone number or other details to help you with your experience."
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView
@@ -88,8 +109,8 @@ All transactions are processed through a gateway provider and are not stored or 
         android:layout_height="match_parent"
         android:text="Yes. Cookies are small files that a site or its service provider transfers to your computer's hard drive through your Web browser (if you allow) that enables the site's or service provider's systems to recognize your browser and capture and remember certain information. For instance, we use cookies to help us remember and process the items in your shopping cart. They are also used to help us understand your preferences based on previous or current site activity, which enables us to provide you with improved services. We also use cookies to help us compile aggregate data about site traffic and site interaction so that we can offer better site experiences and tools in the future.
 We use cookies to:
-      • Understand and save user's preferences for future visits.
-      • Compile aggregate data about site traffic and site interactions in order to offer better site experiences and tools in the future. We may also use trusted third-party services that track this information on our behalf.
+Understand and save user's preferences for future visits.
+Compile aggregate data about site traffic and site interactions in order to offer better site experiences and tools in the future. We may also use trusted third-party services that track this information on our behalf.
 You can choose to have your computer warn you each time a cookie is being sent, or you can choose to turn off all cookies. You do this through your browser settings. Since browser is a little different, look at your browser's Help Menu to learn the correct way to modify your cookies.
 "
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
