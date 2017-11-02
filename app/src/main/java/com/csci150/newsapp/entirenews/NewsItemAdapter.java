@@ -54,6 +54,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder.position = position;
         holder.mItem = mItems.get(position);
         holder.tvTitle.setText(holder.mItem.getTitle());
         holder.tvSubtitle.setText(holder.mItem.getSubtitle());
@@ -76,10 +77,24 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
 
         holder.ivCover.setBackground(new ColorDrawable(Color.DKGRAY));
         holder.ivCover.setTransitionName(holder.mItem.getTitle());
+
+        if (holder.mItem.isSaved())
+            holder.ivSave.setImageResource(R.drawable.ic_star_solid_24dp);
+        else
+            holder.ivSave.setImageResource(R.drawable.ic_star_24dp);
+
         holder.ivSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (holder.mItem.isSaved()) {
+                    holder.ivSave.setImageResource(R.drawable.ic_star_24dp);
+                } else {
+                    holder.ivSave.setImageResource(R.drawable.ic_star_solid_24dp);
+                }
+                int pos = holder.position;
+                boolean saved = !mItems.get(pos).isSaved();
+                mItems.get(pos).setSaved(saved);
+                holder.mItem.setSaved(saved);
             }
         });
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +154,8 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         private final ImageView ivCover;
         private final ImageButton ivSave;
         private final View vBody;
-        NewsItem mItem;
+        private NewsItem mItem;
+        private int position;
 
         ViewHolder(View view) {
             super(view);
