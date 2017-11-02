@@ -2,7 +2,6 @@ package com.csci150.newsapp.entirenews;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -10,7 +9,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -55,7 +53,7 @@ public class ScrollingActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.print(TAG, "onCreate");
-        setContentView(R.layout.my_demo2);
+        setContentView(R.layout.activity_scrolling);
         mApiPrefs = ApiPrefs.get(getApplicationContext());
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);

@@ -66,6 +66,8 @@ public class NewsItem implements Parcelable {
     @Expose
     private String createdAt;
 
+    private boolean saved;
+
     /*public NewsItem(String title, String article, String cover) {
         this.title = title;
         this.subtitle = article.substring(0, Math.min(article.length(), 100));
@@ -79,6 +81,7 @@ public class NewsItem implements Parcelable {
         source = in.readString();
         cover = in.readString();
         createdAt = in.readString();
+        saved = in.readByte() != 0;
     }
 
     @Override
@@ -98,6 +101,15 @@ public class NewsItem implements Parcelable {
         parcel.writeString(source);
         parcel.writeString(cover);
         parcel.writeString(createdAt);
+        parcel.writeByte((byte) (saved ? 1 : 0));
+    }
+
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
     }
 
     public String getId() {

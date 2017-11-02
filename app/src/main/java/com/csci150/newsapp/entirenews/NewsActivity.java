@@ -35,7 +35,7 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_demo2);
+        setContentView(R.layout.activity_scrolling);
         //toolbar = findViewById(R.id.toolbar);
         //setupToolbar(false, true);
         //fab = findViewById(R.id.fab);
