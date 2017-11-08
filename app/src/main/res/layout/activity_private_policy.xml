@@ -37,15 +37,11 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
 
-    <ImageView
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        app:srcCompat="@android:drawable/btn_star" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="14dp"
+        android:layout_margin="16dp"
         android:layout_marginTop="@dimen/margin_full"
         android:text="What personal information do we collect from the people that visit our blog, website or app?"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
