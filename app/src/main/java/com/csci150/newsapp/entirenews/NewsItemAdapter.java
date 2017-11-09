@@ -10,6 +10,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,7 +58,20 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         holder.position = position;
         holder.mItem = mItems.get(position);
         holder.tvTitle.setText(holder.mItem.getTitle());
-        holder.tvSubtitle.setText(holder.mItem.getSubtitle());
+
+        holder.tvTitle.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                holder.tvTitle.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                if (holder.tvTitle.getLineCount() == 3) {
+                    holder.tvSubtitle.setMaxLines(1);
+                    holder.tvSubtitle.setText(holder.mItem.getSubtitle());
+                } else if (holder.tvTitle.getLineCount() < 3) {
+                    holder.tvSubtitle.setText(holder.mItem.getSubtitle());
+                }
+            }
+        });
+
         if (holder.mItem.getViews() > 0) {
             holder.tvViews.setVisibility(View.VISIBLE);
             String views = host.getResources().getQuantityString(R.plurals.views,

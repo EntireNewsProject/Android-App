@@ -55,6 +55,10 @@ public class Utils {
         }
     }
 
+    public static void print(final String title, final int message) {
+        print(title, String.valueOf(message), Log.DEBUG);
+    }
+
     public static void print(final String title, final String message) {
         print(title, message, Log.DEBUG);
     }
