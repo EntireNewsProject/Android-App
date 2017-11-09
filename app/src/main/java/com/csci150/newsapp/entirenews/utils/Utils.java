@@ -3,15 +3,22 @@ package com.csci150.newsapp.entirenews.utils;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.csci150.newsapp.entirenews.R;
 
@@ -50,6 +57,76 @@ public class Utils {
 
     public static void print(final String title, final String message) {
         print(title, message, Log.DEBUG);
+    }
+
+    public static void showSnackbar(final CoordinatorLayout layout, final Context context, final String message) {
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbar));
+        ((TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
+    public static void showSnackbar(final CoordinatorLayout layout, final Context context, final String message, final boolean isError) {
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
+        View snackbarView = snackbar.getView();
+        if (isError)
+            snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbarErr));
+        else
+            snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbar));
+        ((TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
+    public static void showSnackbar(final CoordinatorLayout layout, final Context context, final int message) {
+
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbar));
+        ((TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
+        snackbar.show();
+
+    }
+
+    public static void showSnackbar(final CoordinatorLayout layout, final Context context, final int message, final boolean isError) {
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
+        View snackbarView = snackbar.getView();
+        if (isError)
+            snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbarErr));
+        else
+            snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbar));
+        ((TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
+    public static void showSnackbar(final CoordinatorLayout layout, final Context context, final String message, final int action) {
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        snackbar.setAction(action, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        }).setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbar));
+        ((TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
+    public static void showSnackbar(final CoordinatorLayout layout, final Context context, final int message, final int action) {
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        snackbar.setAction(action, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        }).setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbar));
+        ((TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
+        snackbar.show();
     }
 
     public static String createSlug(final String slug) {
@@ -128,5 +205,12 @@ public class Utils {
             return "";
         }
     }
+
+    // check device connected to or not internet
+    public static boolean isInternetConnected(final Context context) {
+        final NetworkInfo activeNetworkInfo = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 
 }

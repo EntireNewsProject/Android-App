@@ -99,12 +99,9 @@ public class NewsItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newsitem_list, container, false);
         mRecyclerView = view.findViewById(R.id.list);
+        mCoordinatorLayout = view.findViewById(R.id.container);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
         // Set the adapter
-        if (mColumnCount <= 1) {
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        } else {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), mColumnCount));
-        }
         //mRecyclerView.setAdapter(new NewsItemAdapter(getActivity(), DummyContent.ITEMS, mListener));
         return view;
     }
@@ -112,11 +109,38 @@ public class NewsItemFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // TODO
-        //setupSwipeLayout();
-        //checkConnectivity();
+        setupSwipeLayout();
+        setupRecyclerView();
+        checkConnectivity();
         if (connected)
             getNews(mSource, mPage = 1);
+    }
+
+    private void checkConnectivity() {
+        Utils.print(TAG, "checkConnectivity()");
+        connected = Utils.isInternetConnected(mContext);
+        // TODO
+        //showConnectedOrDisconnected();
+    }
+
+    private void checkConnectivityAndLoad(final boolean isCon) {
+        Utils.print(TAG, "checkConnectivityAndLoad(isCon)");
+        if (isCon && !connected) {
+            // TODO - not working with data connection (test in emulator)
+            //getNews();
+            // show loader and fetch messages
+            mSwipeRefreshLayout.post(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            getNews(mSource, mPage = 1);
+                        }
+                    }
+            );
+        }
+        connected = isCon;
+        // TODO
+        //showConnectedOrDisconnected();
     }
 
     @Override
@@ -129,6 +153,9 @@ public class NewsItemFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Utils.print(TAG, "onResume()");
+        boolean isCon = Utils.isInternetConnected(mContext);
+        if (connected != isCon)
+            checkConnectivityAndLoad(isCon);
     }
 
     @Override
@@ -160,6 +187,30 @@ public class NewsItemFragment extends Fragment {
     public ApiInterface getApi() {
         return mApiPrefs.getApi();
     }
+
+    private void setupRecyclerView() {
+        if (mColumnCount <= 1)
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        else
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), mColumnCount));
+    }
+
+    private void setupSwipeLayout() {
+        Utils.print(TAG, "setupSwipeLayout");
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                connected = Utils.isInternetConnected(mContext);
+                if (connected) getNews(mSource, mPage = 1);
+                else {
+                    Utils.showSnackbar(mCoordinatorLayout, mContext, getString(R.string.response_fail));
+                    if (mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing())
+                        mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
+    }
+
 
     private void getNews(final String source, final int page) {
         Utils.print(TAG, "getNews(source: " + source + ")");

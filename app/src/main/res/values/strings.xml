@@ -49,6 +49,8 @@
     <string name="views">120 Views</string>
     <string name="date">October 2, 2017</string>
 
+    <string name="response_fail">Something went wrong, please check your internet connection</string>
+
 
     <string name="source">- by The New York Times</string>
     <string name="small_text">

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +42,7 @@ public class ScrollingActivity extends Activity implements
     private int fabOffset;
     private int mCoverImageHeight;
     private NewsItem newsItem;
+    private FloatingActionButton fab;
 
     private FourThreeImageView ivCover;
     private ConstraintLayout mLayout;
@@ -58,14 +61,22 @@ public class ScrollingActivity extends Activity implements
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        //FloatingActionButton fab = findViewById(R.id.fab);
-        //fab.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        //                .setAction("Action", null).show();
-        //    }
-        //});
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (newsItem.isSaved()) {
+                    fab.setImageResource(R.drawable.ic_star_white_24dp);
+                    Snackbar.make(view, "News removed from offline reading.", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                } else {
+                    fab.setImageResource(R.drawable.ic_star_white_solid_24dp);
+                    Snackbar.make(view, "News saved for offline reading.", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                }
+                newsItem.setSaved(!newsItem.isSaved());
+            }
+        });
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //fab2 = findViewById(R.id.fab2);
         ivCover = findViewById(R.id.iv_cover);
@@ -134,6 +145,11 @@ public class ScrollingActivity extends Activity implements
             tvSource.setText(source);
         else
             tvSource.setText(R.string.news);
+
+        if (newsItem.isSaved())
+            fab.setImageResource(R.drawable.ic_star_white_solid_24dp);
+        else
+            fab.setImageResource(R.drawable.ic_star_white_24dp);
 
         getNews(newsItem.getId());
     }

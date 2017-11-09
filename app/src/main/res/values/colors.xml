@@ -13,4 +13,8 @@
     <color name="scrim">#99323232</color>
     <color name="mid_grey">#40808080</color>
     <color name="light_grey">#fff5f5f5</color>
+
+    <color name="bgSnackbar">#e04285f4</color>
+    <color name="bgSnackbarErr">#e0f4424e</color>
+    <color name="buttonSnackbar">#ffb558</color>
 </resources>

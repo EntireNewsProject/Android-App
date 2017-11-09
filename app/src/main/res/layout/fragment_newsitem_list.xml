@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@id/container"
+    android:id="@+id/container"
     android:name="com.csci150.newsapp.entirenews.NewsItemFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,4 +34,4 @@
         android:indeterminateTint="?android:colorAccent"
         android:indeterminateTintMode="src_in"
         tools:targetApi="lollipop" /-->
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>
