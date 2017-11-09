@@ -9,16 +9,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
-
 /**
  * Created by Shifatul Islam (Denocyte) on 9/24/2017 9:46 PM.
  * A news app, where you can find everything in one place.
  */
 
-public class NewsItem extends RealmObject implements Parcelable {
+public class NewsItem implements Parcelable {
     public static final Creator<NewsItem> CREATOR = new Creator<NewsItem>() {
         @Override
         public NewsItem createFromParcel(Parcel in) {
@@ -32,12 +28,12 @@ public class NewsItem extends RealmObject implements Parcelable {
     };
     @SerializedName("_id")
     @Expose
-    @Required
-    @PrimaryKey
+    //@Required
+    //@PrimaryKey
     private String id;
     @SerializedName("title")
     @Expose
-    @Required
+    //@Required
     private String title;
     @SerializedName("subtitle")
     @Expose
@@ -50,7 +46,7 @@ public class NewsItem extends RealmObject implements Parcelable {
     private String cover;
     @SerializedName("article")
     @Expose
-    @Required
+    //@Required
     private String article;
     @SerializedName("slug")
     @Expose

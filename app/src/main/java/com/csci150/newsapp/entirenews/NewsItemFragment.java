@@ -90,7 +90,7 @@ public class NewsItemFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT, 1);
             mSource = getArguments().getString(ARG_PARAM_SOURCE, "default");
         }
-        Utils.print("XXXXXXXXXXXXXXX", "onCreate(" + mSource + ")");
+        //Utils.print("XXXXXXXXXXXXXXX", "onCreate(" + mSource + ")");
         //setExitSharedElementCallback(NewsItemAdapter.createSharedElementReenterCallback(getActivity()));
     }
 
