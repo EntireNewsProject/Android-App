@@ -193,6 +193,10 @@ public class NewsItem implements Parcelable {
         this.views = views;
     }
 
+    public void addView() {
+        this.views++;
+    }
+
     public String getDate() {
         return date;
     }

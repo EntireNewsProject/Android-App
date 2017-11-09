@@ -67,7 +67,10 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                     holder.tvSubtitle.setMaxLines(1);
                     holder.tvSubtitle.setText(holder.mItem.getSubtitle());
                 } else if (holder.tvTitle.getLineCount() < 3) {
+                    holder.tvSubtitle.setMaxLines(2);
                     holder.tvSubtitle.setText(holder.mItem.getSubtitle());
+                } else {
+                    holder.tvSubtitle.setMaxLines(2);
                 }
             }
         });
@@ -129,7 +132,12 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                                 Pair.create((View) holder.ivCover, host.getString(R.string.transition_news)),
                                 Pair.create(holder.vBody, host.getString(R.string.transition_news_background)));
                 host.startActivityForResult(intent, 100, options.toBundle());
-
+                mItems.get(holder.position).addView();
+                //holder.mItem.addView();
+                holder.tvViews.setVisibility(View.VISIBLE);
+                String views = host.getResources().getQuantityString(R.plurals.views,
+                        holder.mItem.getViews(), holder.mItem.getViews());
+                holder.tvViews.setText(views);
             }
         });
     }
