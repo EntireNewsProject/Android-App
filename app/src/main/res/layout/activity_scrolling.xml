@@ -51,9 +51,9 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/constraint_layout"
-                    android:layout_margin="@dimen/margin_full"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin_full">
 
                     <TextView
                         android:id="@+id/tv_title"
@@ -81,7 +81,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_title"
                         tools:text="@string/source" />
 
-
                     <TextView
                         android:id="@+id/tv_date"
                         android:layout_width="wrap_content"
@@ -90,7 +89,10 @@
                         android:background="@drawable/rounded_corners_date"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:padding="@dimen/margin_quarter"
+                        android:paddingBottom="@dimen/margin_quarter"
+                        android:paddingEnd="@dimen/margin_half"
+                        android:paddingStart="@dimen/margin_half"
+                        android:paddingTop="@dimen/margin_quarter"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_source"
@@ -100,11 +102,16 @@
                         android:id="@+id/tv_views"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_full"
+                        android:layout_marginStart="@dimen/margin_full"
                         android:layout_marginTop="@dimen/margin_full"
                         android:background="@drawable/rounded_corners_date"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:padding="@dimen/margin_quarter"
+                        android:paddingBottom="@dimen/margin_quarter"
+                        android:paddingEnd="@dimen/margin_half"
+                        android:paddingStart="@dimen/margin_half"
+                        android:paddingTop="@dimen/margin_quarter"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         app:layout_constraintStart_toEndOf="@+id/tv_date"
                         app:layout_constraintTop_toBottomOf="@+id/tv_source"
@@ -116,10 +123,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_full"
                         android:lineSpacingExtra="@dimen/margin_one"
-                        tools:text="@string/large_text"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_date" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_date"
+                        tools:text="@string/large_text" />
 
                 </android.support.constraint.ConstraintLayout>
 
