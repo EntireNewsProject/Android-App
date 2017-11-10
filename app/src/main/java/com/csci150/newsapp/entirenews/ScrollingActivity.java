@@ -49,7 +49,7 @@ public class ScrollingActivity extends Activity implements
     //private FabToggle fab2;
     private ElasticDragDismissFrameLayout draggableFrame;
     private ElasticDragDismissFrameLayout.SystemChromeFader chromeFader;
-    private TextView tvTitle, tvArticle, tvViews, tvDate, tvSource;
+    private TextView tvTitle, tvArticle, tvViews, tvSaves, tvDate, tvSource;
     private Map<String, String> mSources = new HashMap<>();
 
     @Override
@@ -83,6 +83,7 @@ public class ScrollingActivity extends Activity implements
         tvTitle = findViewById(R.id.tv_title);
         tvArticle = findViewById(R.id.tv_article);
         tvViews = findViewById(R.id.tv_views);
+        tvSaves = findViewById(R.id.tv_saves);
         tvDate = findViewById(R.id.tv_date);
         tvSource = findViewById(R.id.tv_source);
         draggableFrame = findViewById(R.id.draggable_frame);
@@ -157,13 +158,19 @@ public class ScrollingActivity extends Activity implements
     void bindNews(final NewsItem item) {
         newsItem = item;
         tvArticle.setText(newsItem.getArticle());
-        if (newsItem.getViews() > 0) {
-            tvViews.setVisibility(View.VISIBLE);
-            String views = getResources()
-                    .getQuantityString(R.plurals.views, newsItem.getViews(), newsItem.getViews());
-            tvViews.setText(views);
+
+        tvViews.setVisibility(View.VISIBLE);
+        String views = getResources()
+                .getQuantityString(R.plurals.views, newsItem.getViews(), newsItem.getViews());
+        tvViews.setText(views);
+
+        if (newsItem.getSaves() > 0) {
+            tvSaves.setVisibility(View.VISIBLE);
+            String saves = getResources()
+                    .getQuantityString(R.plurals.saves, newsItem.getSaves(), newsItem.getSaves());
+            tvSaves.setText(saves);
         } else {
-            tvViews.setVisibility(View.GONE);
+            tvSaves.setVisibility(View.GONE);
         }
     }
 

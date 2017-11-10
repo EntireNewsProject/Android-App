@@ -44,11 +44,12 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:${versions.glide}"
     annotationProcessor "com.github.bumptech.glide:compiler:${versions.glide}"
 
-    implementation "io.realm:realm-android:${versions.realm}"
-    annotationProcessor "io.realm:realm-android:${versions.realm}"
+    //implementation "io.realm:realm-android:${versions.realm}"
+    //annotationProcessor "io.realm:realm-android:${versions.realm}"
 
     implementation 'net.danlew:android.joda:2.9.9'
     implementation 'com.github.medyo:android-about-page:1.2'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'

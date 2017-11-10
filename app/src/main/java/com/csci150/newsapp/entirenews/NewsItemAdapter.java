@@ -83,6 +83,16 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         } else {
             holder.tvViews.setVisibility(View.GONE);
         }
+
+        if (holder.mItem.getSaves() > 0) {
+            holder.tvSaves.setVisibility(View.VISIBLE);
+            String saves = host.getResources().getQuantityString(R.plurals.saves,
+                    holder.mItem.getSaves(), holder.mItem.getSaves());
+            holder.tvSaves.setText(saves);
+        } else {
+            holder.tvSaves.setVisibility(View.GONE);
+        }
+
         String date = Utils.getDateAgo(host, holder.mItem.getCreatedAt());
         holder.tvDate.setText(date);
 
@@ -105,13 +115,30 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
             public void onClick(View view) {
                 if (holder.mItem.isSaved()) {
                     holder.ivSave.setImageResource(R.drawable.ic_star_24dp);
+
+                    mItems.get(holder.position).subSave();
+                    if (holder.mItem.getSaves() > 0) {
+                        holder.tvSaves.setVisibility(View.VISIBLE);
+                        String saves = host.getResources().getQuantityString(R.plurals.saves,
+                                holder.mItem.getSaves(), holder.mItem.getSaves());
+                        holder.tvSaves.setText(saves);
+                    } else {
+                        holder.tvSaves.setVisibility(View.GONE);
+                    }
                 } else {
                     holder.ivSave.setImageResource(R.drawable.ic_star_solid_24dp);
+
+                    mItems.get(holder.position).addSave();
+                    holder.tvSaves.setVisibility(View.VISIBLE);
+                    String saves = host.getResources().getQuantityString(R.plurals.saves,
+                            holder.mItem.getSaves(), holder.mItem.getSaves());
+                    holder.tvSaves.setText(saves);
+
                 }
                 int pos = holder.position;
                 boolean saved = !mItems.get(pos).isSaved();
                 mItems.get(pos).setSaved(saved);
-                holder.mItem.setSaved(saved);
+                //holder.mItem.setSaved(saved);
             }
         });
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +159,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                                 Pair.create((View) holder.ivCover, host.getString(R.string.transition_news)),
                                 Pair.create(holder.vBody, host.getString(R.string.transition_news_background)));
                 host.startActivityForResult(intent, 100, options.toBundle());
+
                 mItems.get(holder.position).addView();
                 //holder.mItem.addView();
                 holder.tvViews.setVisibility(View.VISIBLE);
@@ -172,7 +200,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
-        private final TextView tvTitle, tvSubtitle, tvViews, tvDate;
+        private final TextView tvTitle, tvSubtitle, tvViews, tvSaves, tvDate;
         private final ImageView ivCover;
         private final ImageButton ivSave;
         private final View vBody;
@@ -186,6 +214,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
             tvTitle = view.findViewById(R.id.tv_title);
             tvSubtitle = view.findViewById(R.id.tv_subtitle);
             tvViews = view.findViewById(R.id.tv_views);
+            tvSaves = view.findViewById(R.id.tv_saves);
             tvDate = view.findViewById(R.id.tv_date);
             ivCover = view.findViewById(R.id.iv_cover);
             ivSave = view.findViewById(R.id.ib_save);

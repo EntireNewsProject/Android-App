@@ -9,6 +9,11 @@
         <item quantity="other">%d views</item>
     </plurals>
 
+    <plurals name="saves">
+        <item quantity="one">%d save</item>
+        <item quantity="other">%d saves</item>
+    </plurals>
+
     <string-array name="list_sources_names">
         <item>BBC News</item>
         <item>Bloomberg</item>
