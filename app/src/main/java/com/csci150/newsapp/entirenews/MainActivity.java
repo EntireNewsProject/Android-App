@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
@@ -20,7 +21,7 @@ import com.csci150.newsapp.entirenews.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity  {
+public class MainActivity extends BaseActivity implements OnFragmentInteractionListener {
     private final String TAG = "MainActivity";
 
     /**
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity  {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private PagerAdapter mPagerAdapter;
+    private CoordinatorLayout mCoordinatorLayout;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -51,6 +53,7 @@ public class MainActivity extends BaseActivity  {
         setContentView(R.layout.activity_main);
 
         toolbar = findViewById(R.id.toolbar);
+        mCoordinatorLayout = findViewById(R.id.coordinator_layout);
         setupToolbar(false, true);
         // if (savedInstanceState == null)
         animateToolbar();
@@ -84,6 +87,7 @@ public class MainActivity extends BaseActivity  {
             }
         }
         //tabLayout.post(tabLayoutConfig);
+        //Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(), R.string.response_saved);
     }
 
     private Runnable tabLayoutConfig = new Runnable() {
@@ -158,6 +162,16 @@ public class MainActivity extends BaseActivity  {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showSnackBar(int resId) {
+        Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(), getString(resId));
+    }
+
+    @Override
+    public void showSnackBar(String msg) {
+        Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(), msg);
     }
 
     /**

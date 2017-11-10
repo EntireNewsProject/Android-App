@@ -64,7 +64,7 @@ public class Utils {
     }
 
     public static void showSnackbar(final CoordinatorLayout layout, final Context context, final String message) {
-        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_SHORT);
         snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbar));
@@ -73,7 +73,7 @@ public class Utils {
     }
 
     public static void showSnackbar(final CoordinatorLayout layout, final Context context, final String message, final boolean isError) {
-        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_SHORT);
         snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
         View snackbarView = snackbar.getView();
         if (isError)
@@ -85,18 +85,16 @@ public class Utils {
     }
 
     public static void showSnackbar(final CoordinatorLayout layout, final Context context, final int message) {
-
-        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_SHORT);
         snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbar));
         ((TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
         snackbar.show();
-
     }
 
     public static void showSnackbar(final CoordinatorLayout layout, final Context context, final int message, final boolean isError) {
-        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_SHORT);
         snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
         View snackbarView = snackbar.getView();
         if (isError)
@@ -108,7 +106,7 @@ public class Utils {
     }
 
     public static void showSnackbar(final CoordinatorLayout layout, final Context context, final String message, final int action) {
-        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_SHORT);
         snackbar.setAction(action, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +119,7 @@ public class Utils {
     }
 
     public static void showSnackbar(final CoordinatorLayout layout, final Context context, final int message, final int action) {
-        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_SHORT);
         snackbar.setAction(action, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

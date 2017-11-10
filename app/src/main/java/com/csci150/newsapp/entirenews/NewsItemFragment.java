@@ -1,12 +1,13 @@
 package com.csci150.newsapp.entirenews;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,10 +31,10 @@ import retrofit2.Response;
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link OnListInteractionListener}
  * interface.
  */
-public class NewsItemFragment extends Fragment implements OnListFragmentInteractionListener {
+public class NewsItemFragment extends Fragment implements OnListInteractionListener {
     private final String TAG = "NewsItemFragment";
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -48,11 +49,11 @@ public class NewsItemFragment extends Fragment implements OnListFragmentInteract
     private boolean connected = true;
 
     private RecyclerView mRecyclerView;
-    private CoordinatorLayout mCoordinatorLayout;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LinearLayout layoutEmpty, layoutNoInternet, layoutError, layoutNoSaved;
 
     protected NewsItemAdapter mAdapter;
+    private OnFragmentInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -98,7 +99,6 @@ public class NewsItemFragment extends Fragment implements OnListFragmentInteract
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newsitem_list, container, false);
         mRecyclerView = view.findViewById(R.id.list);
-        mCoordinatorLayout = view.findViewById(R.id.container);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
         // Set the adapter
         //mRecyclerView.setAdapter(new NewsItemAdapter(getActivity(), DummyContent.ITEMS, mListener));
@@ -164,17 +164,36 @@ public class NewsItemFragment extends Fragment implements OnListFragmentInteract
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Utils.print(TAG, "onAttach()");
-        mContext = activity.getApplicationContext();
+        Utils.print(TAG, "onAttach(activity)");
+        if (Build.VERSION.SDK_INT < 23)
+            onAttachToContext(activity);
     }
 
     @Override
+    @TargetApi(23)
     public void onAttach(Context context) {
         super.onAttach(context);
-        Utils.print(TAG, "onAttach()");
-        mContext = context;
+        Utils.print(TAG, "onAttach(context)");
+        onAttachToContext(context);
+    }
+
+    private void onAttachToContext(Context context) {
+        if (context instanceof OnFragmentInteractionListener) {
+            mContext = context;
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     public ApiInterface getApi() {
@@ -196,7 +215,8 @@ public class NewsItemFragment extends Fragment implements OnListFragmentInteract
                 connected = Utils.isInternetConnected(mContext);
                 if (connected) getNews(mSource, mPage = 1);
                 else {
-                    Utils.showSnackbar(mCoordinatorLayout, mContext, getString(R.string.response_fail));
+                    if (mListener != null) mListener.showSnackBar(R.string.response_fail);
+                    //Utils.showSnackbar(mCoordinatorLayout, mContext, getString(R.string.response_fail));
                     if (mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing())
                         mSwipeRefreshLayout.setRefreshing(false);
                 }
@@ -204,7 +224,7 @@ public class NewsItemFragment extends Fragment implements OnListFragmentInteract
         });
     }
 
-    protected OnListFragmentInteractionListener getListener() {
+    protected OnListInteractionListener getListener() {
         return this;
     }
 
@@ -267,6 +287,28 @@ public class NewsItemFragment extends Fragment implements OnListFragmentInteract
         });
     }
 
+    protected void setSave(final String id) {
+        Utils.print(TAG, "setSave(id: " + id + ")");
+        getApi().saveNews(id).enqueue(new Callback<NewsItem>() {
+
+            @Override
+            public void onResponse(@NonNull Call<NewsItem> call, @NonNull Response<NewsItem> response) {
+                Utils.print(TAG, "onResponse()");
+                Utils.print(TAG, "URL: " + response.raw().request().url());
+                Utils.print(TAG, "Status Code: " + response.code());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NewsItem> call, @NonNull Throwable t) {
+                Utils.print(TAG, "onFailure()", Log.ERROR);
+                Utils.print(TAG, t.toString(), Log.ERROR);
+                if (isAdded() && getActivity() != null)
+                    if (mListener != null) mListener.showSnackBar(R.string.response_fail);
+                //Utils.showSnackbar(mCoordinatorLayout, mContext, getString(R.string.response_fail));
+            }
+        });
+    }
+
     @Override
     public void onLoadMore() {
         Utils.print(TAG, "onLoadMore()");
@@ -274,8 +316,20 @@ public class NewsItemFragment extends Fragment implements OnListFragmentInteract
     }
 
     @Override
+    public void onSave(final boolean save, final String id) {
+        Utils.print(TAG, "onSave()");
+        if (save) {
+            if (mListener != null) mListener.showSnackBar(R.string.response_saved);
+            //Utils.showSnackbar(mCoordinatorLayout, mContext, R.string.response_saved);
+            setSave(id);
+        } else {
+            if (mListener != null) mListener.showSnackBar(R.string.response_unsaved);
+            //Utils.showSnackbar(mCoordinatorLayout, mContext, R.string.response_unsaved);
+        }
+    }
+
+    @Override
     public void onListFragmentInteraction(NewsItem item) {
         Utils.print(TAG, "onListFragmentInteraction()");
-
     }
 }

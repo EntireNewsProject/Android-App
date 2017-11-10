@@ -23,8 +23,11 @@ public interface ApiInterface {
             @NonNull @Query("source") String source,
             @Query("page") int page);
 
-
     @GET("news/{id}")
     Call<NewsItem> getNews(
+            @NonNull @Path("id") String id);
+
+    @GET("news/{id}/save")
+    Call<NewsItem> saveNews(
             @NonNull @Path("id") String id);
 }

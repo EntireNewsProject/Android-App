@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link NewsItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link OnListInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHolder> {
@@ -35,11 +35,11 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     // we need to hold on to an activity ref for the shared element transitions :/
     private final Activity host;
     private final List<NewsItem> mItems;
-    private final OnListFragmentInteractionListener mListener;
+    private final OnListInteractionListener mListener;
     private boolean isLoading, isLoadMoreAvailable;
     private int size;
 
-    NewsItemAdapter(Activity hostActivity, List<NewsItem> items, OnListFragmentInteractionListener listener) {
+    NewsItemAdapter(Activity hostActivity, List<NewsItem> items, OnListInteractionListener listener) {
         size = items.size();
         isLoadMoreAvailable = size >= DEFAULT_SIZE;
         host = hostActivity;
@@ -179,6 +179,8 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 int pos = holder.position;
                 boolean saved = !mItems.get(pos).isSaved();
                 mItems.get(pos).setSaved(saved);
+                if (mListener != null)
+                    mListener.onSave(saved, holder.mItem.getId());
                 //holder.mItem.setSaved(saved);
             }
         });
