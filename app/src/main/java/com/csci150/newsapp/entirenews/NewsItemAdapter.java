@@ -47,7 +47,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         mListener = listener;
         isLoading = false;
         //setHasStableIds(true);
-        Utils.print(TAG, "ItemAdapter: Construct [size:" + size + "]");
+        Utils.print(TAG, "ItemAdapter: Construct [size: " + size + "]");
     }
 
     void addItems(final List<NewsItem> items) { //, final int requestLimit) {
@@ -58,7 +58,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         mItems.addAll(items);
         isLoadMoreAvailable = len >= DEFAULT_SIZE;
         notifyDataSetChanged();
-        Utils.print(TAG, "addItems[size:" + len + "]");
+        Utils.print(TAG, "addItems[size: " + len + "]");
     }
 
     void addItems() {
@@ -67,6 +67,8 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         isLoadMoreAvailable = false;
         //notifyItemChanged(staticSize - 1);
         Utils.print(TAG, "addItems[]");
+        // Force remove load more
+        notifyItemChanged(size - 1);
     }
 
     @Override
@@ -236,7 +238,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (position == size - 1) return ITEM_NEWS_LOAD;
+        if (isLoadMoreAvailable && position == size - 1) return ITEM_NEWS_LOAD;
         return 1;
     }
 

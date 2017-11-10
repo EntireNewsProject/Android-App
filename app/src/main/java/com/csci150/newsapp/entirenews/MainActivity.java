@@ -20,7 +20,7 @@ import com.csci150.newsapp.entirenews.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements OnListFragmentInteractionListener {
+public class MainActivity extends BaseActivity  {
     private final String TAG = "MainActivity";
 
     /**
@@ -158,16 +158,6 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onLoadMore() {
-
-    }
-
-    @Override
-    public void onListFragmentInteraction(NewsItem item) {
-
     }
 
     /**

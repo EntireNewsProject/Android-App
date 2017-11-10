@@ -1,5 +1,6 @@
 package com.csci150.newsapp.entirenews;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -32,7 +33,7 @@ import retrofit2.Response;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class NewsItemFragment extends Fragment {
+public class NewsItemFragment extends Fragment implements OnListFragmentInteractionListener {
     private final String TAG = "NewsItemFragment";
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -52,8 +53,6 @@ public class NewsItemFragment extends Fragment {
     private LinearLayout layoutEmpty, layoutNoInternet, layoutError, layoutNoSaved;
 
     protected NewsItemAdapter mAdapter;
-
-    private OnListFragmentInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -165,23 +164,17 @@ public class NewsItemFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        Utils.print(TAG, "onAttach()");
+        mContext = activity.getApplicationContext();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Utils.print(TAG, "onAttach()");
         mContext = context;
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Utils.print(TAG, "onDetach()");
-        mListener = null;
     }
 
     public ApiInterface getApi() {
@@ -211,6 +204,9 @@ public class NewsItemFragment extends Fragment {
         });
     }
 
+    protected OnListFragmentInteractionListener getListener() {
+        return this;
+    }
 
     private void getNews(final String source, final int page) {
         Utils.print(TAG, "getNews(source: " + source + ")");
@@ -236,7 +232,7 @@ public class NewsItemFragment extends Fragment {
                         } else {
                             // TODO
                             //hideStubs();
-                            mAdapter = new NewsItemAdapter(getActivity(), response.body(), mListener);
+                            mAdapter = new NewsItemAdapter(getActivity(), response.body(), getListener());
                             mRecyclerView.setAdapter(mAdapter);
                             //Utils.print(TAG, response.body().getItems().toString());
                         }
@@ -269,5 +265,17 @@ public class NewsItemFragment extends Fragment {
                 //    showError(true, R.string.response_error);
             }
         });
+    }
+
+    @Override
+    public void onLoadMore() {
+        Utils.print(TAG, "onLoadMore()");
+        getNews(mSource, ++mPage);
+    }
+
+    @Override
+    public void onListFragmentInteraction(NewsItem item) {
+        Utils.print(TAG, "onListFragmentInteraction()");
+
     }
 }
