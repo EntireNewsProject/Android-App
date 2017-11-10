@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:paddingBottom="@dimen/margin_half">
+
+    <com.csci150.newsapp.entirenews.utils.FourThreeImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_full"
+        android:layout_marginTop="@dimen/margin_full"
+        android:src="@drawable/sample"
+        android:transitionName="@string/transition_news"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:scaleType="centerCrop" />
+
+    <View
+        android:id="@+id/v_body"
+        android:layout_width="@dimen/margin_one"
+        android:layout_height="@dimen/margin_zero"
+        android:background="@color/transparent"
+        android:transitionName="@string/transition_news_background"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover"
+        app:layout_constraintEnd_toStartOf="@id/iv_cover"
+        app:layout_constraintTop_toTopOf="@id/iv_cover" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="@dimen/margin_zero"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_full"
+        android:layout_marginStart="@dimen/margin_full"
+        android:layout_marginTop="@dimen/margin_full"
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        app:layout_constraintEnd_toStartOf="@id/iv_cover"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title goes here." />
+
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="@dimen/margin_zero"
+        android:layout_height="@dimen/margin_zero"
+        android:layout_marginEnd="@dimen/margin_full"
+        android:layout_marginStart="@dimen/margin_full"
+        android:layout_marginTop="@dimen/margin_third"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover"
+        app:layout_constraintEnd_toStartOf="@id/iv_cover"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        tools:text="Las Vegas shooter's girlfriend: Who is Marilou Danley? Marilou Danley had been out of the country while her boyfriend, Stephen Paddock, opened fire during a Las Vegas music festival, killing at least 59 people. ... Marilou Danley was overseas during the Las Vegas shooting." />
+
+    <ImageButton
+        android:id="@+id/ib_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_half"
+        android:layout_marginTop="@dimen/margin_half"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/save"
+        android:padding="@dimen/margin_half"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_star_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_subtitle" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_full"
+        android:layout_marginStart="@dimen/margin_full"
+        android:background="@drawable/rounded_corners_date"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/margin_quarter"
+        android:paddingEnd="@dimen/margin_half"
+        android:paddingStart="@dimen/margin_half"
+        android:paddingTop="@dimen/margin_quarter"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/ib_save"
+        app:layout_constraintTop_toTopOf="@id/ib_save"
+        tools:text="October 2, 2017" />
+
+    <TextView
+        android:id="@+id/tv_views"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/margin_full"
+        android:background="@drawable/rounded_corners_date"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/margin_quarter"
+        android:paddingEnd="@dimen/margin_half"
+        android:paddingStart="@dimen/margin_half"
+        android:paddingTop="@dimen/margin_quarter"
+        android:text="@string/views"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@id/ib_save"
+        app:layout_constraintEnd_toStartOf="@id/tv_date"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/ib_save"
+        app:layout_constraintTop_toTopOf="@id/ib_save" />
+
+    <TextView
+        android:id="@+id/tv_saves"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/margin_full"
+        android:background="@drawable/rounded_corners_date"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/margin_quarter"
+        android:paddingEnd="@dimen/margin_half"
+        android:paddingStart="@dimen/margin_half"
+        android:paddingTop="@dimen/margin_quarter"
+        android:text="@string/views"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintBottom_toBottomOf="@id/ib_save"
+        app:layout_constraintEnd_toStartOf="@id/tv_views"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/ib_save"
+        app:layout_constraintTop_toTopOf="@id/ib_save" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_half"
+        android:background="@color/divider_color"
+        app:layout_constraintTop_toBottomOf="@id/ib_save" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:paddingBottom="@dimen/margin_double"
+        android:paddingTop="@dimen/margin_full"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view" />
+
+</android.support.constraint.ConstraintLayout>

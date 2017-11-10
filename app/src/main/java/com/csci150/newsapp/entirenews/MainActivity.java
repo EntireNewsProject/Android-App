@@ -161,6 +161,11 @@ public class MainActivity extends BaseActivity implements OnListFragmentInteract
     }
 
     @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
     public void onListFragmentInteraction(NewsItem item) {
 
     }

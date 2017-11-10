@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,16 +29,19 @@ import java.util.List;
  */
 public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHolder> {
     private static final String TAG = "NewsItemAdapter";
+    private static final int DEFAULT_SIZE = 12;
+    private static final int ITEM_NEWS_LOAD = -1;
 
     // we need to hold on to an activity ref for the shared element transitions :/
     private final Activity host;
     private final List<NewsItem> mItems;
     private final OnListFragmentInteractionListener mListener;
     private boolean isLoading, isLoadMoreAvailable;
+    private int size;
 
     NewsItemAdapter(Activity hostActivity, List<NewsItem> items, OnListFragmentInteractionListener listener) {
-        int size = items.size();
-        //isLoadMoreAvailable = size >= requestLimit;
+        size = items.size();
+        isLoadMoreAvailable = size >= DEFAULT_SIZE;
         host = hostActivity;
         mItems = items;
         mListener = listener;
@@ -46,16 +50,43 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         Utils.print(TAG, "ItemAdapter: Construct [size:" + size + "]");
     }
 
+    void addItems(final List<NewsItem> items) { //, final int requestLimit) {
+        int len = items.size();
+        size += len;
+        isLoading = false;
+        //removeLoading();
+        mItems.addAll(items);
+        isLoadMoreAvailable = len >= DEFAULT_SIZE;
+        notifyDataSetChanged();
+        Utils.print(TAG, "addItems[size:" + len + "]");
+    }
+
+    void addItems() {
+        isLoading = false;
+        //removeLoading();
+        isLoadMoreAvailable = false;
+        //notifyItemChanged(staticSize - 1);
+        Utils.print(TAG, "addItems[]");
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_newsitem_wide, parent, false);
+        View view;
+        switch (viewType) {
+            case ITEM_NEWS_LOAD:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.layout_newsitem_wide_load, parent, false);
+                break;
+            default:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.layout_newsitem_wide, parent, false);
+        }
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.position = position;
+        holder.position = holder.getAdapterPosition();
         holder.mItem = mItems.get(position);
         holder.tvTitle.setText(holder.mItem.getTitle());
 
@@ -63,14 +94,22 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
             @Override
             public void onGlobalLayout() {
                 holder.tvTitle.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                if (holder.tvTitle.getLineCount() == 3) {
-                    holder.tvSubtitle.setMaxLines(1);
-                    holder.tvSubtitle.setText(holder.mItem.getSubtitle());
-                } else if (holder.tvTitle.getLineCount() < 3) {
-                    holder.tvSubtitle.setMaxLines(2);
-                    holder.tvSubtitle.setText(holder.mItem.getSubtitle());
-                } else {
-                    holder.tvSubtitle.setMaxLines(2);
+
+                switch (holder.tvTitle.getLineCount()) {
+                    case 1:
+                        holder.tvSubtitle.setMaxLines(3);
+                        holder.tvSubtitle.setText(holder.mItem.getSubtitle());
+                        break;
+                    case 2:
+                        holder.tvSubtitle.setMaxLines(2);
+                        holder.tvSubtitle.setText(holder.mItem.getSubtitle());
+                        break;
+                    case 3:
+                        holder.tvSubtitle.setMaxLines(1);
+                        holder.tvSubtitle.setText(holder.mItem.getSubtitle());
+                        break;
+                    default:
+                        holder.tvSubtitle.setMaxLines(2);
                 }
             }
         });
@@ -168,6 +207,21 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 holder.tvViews.setText(views);
             }
         });
+
+        // Load more News
+        if (position >= getStaticSize() - 1 && !isLoading && isLoadMoreAvailable) {
+            Utils.print(TAG, "Load more data...", Log.INFO);
+            isLoading = true;
+            if (mListener != null)
+                mListener.onLoadMore();
+        }
+
+    }
+
+    private int getStaticSize() {
+        if (size > 0) return size;
+        else size = getItemCount();
+        return size;
     }
 
     private NewsItem getItem(final int position) {
@@ -180,22 +234,10 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         return mItems.size();
     }
 
-    public void addItems(final List<NewsItem> items) { //, final int requestLimit) {
-        int size = items.size();
-        isLoading = false;
-        //removeLoading();
-        mItems.addAll(items);
-        //isLoadMoreAvailable = size >= requestLimit;
-        notifyDataSetChanged();
-        Utils.print(TAG, "addItems[size:" + size + "]");
-    }
-
-    public void addItems() {
-        isLoading = false;
-        //removeLoading();
-        isLoadMoreAvailable = false;
-        //notifyItemChanged(staticSize - 1);
-        Utils.print(TAG, "addItems[]");
+    @Override
+    public int getItemViewType(int position) {
+        if (position == size - 1) return ITEM_NEWS_LOAD;
+        return 1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
