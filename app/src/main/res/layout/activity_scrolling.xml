@@ -159,8 +159,7 @@
             android:layout_margin="@dimen/margin_full"
             android:src="@drawable/ic_star_white_24dp"
             app:layout_anchor="@id/iv_cover"
-            app:layout_anchorGravity="bottom|end"
-            app:layout_behavior="" />
+            app:layout_anchorGravity="bottom|end" />
 
         <!--com.csci150.newsapp.entirenews.utils.FabToggle
             android:id="@+id/fab2"

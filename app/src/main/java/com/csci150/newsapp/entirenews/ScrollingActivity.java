@@ -267,22 +267,20 @@ public class ScrollingActivity extends Activity implements
 
     @Override
     public void onScrollChanged(NestedScrollView who, int l, int t, int oldL, int oldT) {
-        /*
-        if (l < mCoverImageHeight) {
-            final float ratio = (float) Math.min(Math.max(t, 0), mCoverImageHeight) / mCoverImageHeight;
-            ivCover.setTranslationY(ratio * mCoverImageHeight * mVerticalParallaxSpeed);
-        }
-        */
+        if (t < mCoverImageHeight / 2) {
+            fab.show();
+            //final float ratio = (float) Math.min(Math.max(t, 0), mCoverImageHeight) / mCoverImageHeight;
+            //ivCover.setTranslationY(ratio * mCoverImageHeight * mVerticalParallaxSpeed);
+        } else
+            fab.hide();
         //final int scrollY = mLayout.getTop();
         //fab2.setOffset(fabOffset + scrollY);
     }
 
     @Override
     public void onGlobalLayout() {
-        /*
         mCoverImageHeight = ivCover.getHeight();
         ViewTreeObserver obs = ivCover.getViewTreeObserver();
         obs.removeOnGlobalLayoutListener(this);
-        */
     }
 }
