@@ -5,7 +5,6 @@
     android:id="@+id/draggable_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     app:dragDismissDistance="@dimen/drag_dismiss_distance"
     app:dragDismissScale="0.95">
 
@@ -24,6 +23,7 @@
         android:importantForAccessibility="no" />
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -179,8 +179,10 @@
         android:id="@+id/back_wrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/status_bar_top_margin"
         android:background="@android:color/transparent"
-        android:elevation="@dimen/margin_half">
+        android:elevation="@dimen/margin_half"
+        android:paddingTop="@dimen/appbar_padding_top">
 
         <ImageButton
             android:id="@+id/back"

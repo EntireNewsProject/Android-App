@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
@@ -60,6 +61,7 @@ public class ScrollingActivity extends Activity implements
         mApiPrefs = ApiPrefs.get(getApplicationContext());
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
+        final CoordinatorLayout mCoordinatorLayout = findViewById(R.id.coordinator_layout);
 
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,12 +69,12 @@ public class ScrollingActivity extends Activity implements
             public void onClick(View view) {
                 if (newsItem.isSaved()) {
                     fab.setImageResource(R.drawable.ic_star_white_24dp);
-                    Snackbar.make(view, "News removed from offline reading.", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
+                    Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(),
+                            getString(R.string.response_unsaved));
                 } else {
                     fab.setImageResource(R.drawable.ic_star_white_solid_24dp);
-                    Snackbar.make(view, "News saved for offline reading.", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
+                    Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(),
+                            getString(R.string.response_saved));
                 }
                 newsItem.setSaved(!newsItem.isSaved());
             }
