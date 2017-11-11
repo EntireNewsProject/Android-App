@@ -212,7 +212,7 @@
         <item>Every 12 Hours</item>
         <item>Every day</item>
     </string-array>
-    <string-array name="pref_sync_frequency_values">
+    <string-array name="pref_notifications_interval_values">
         <item>-1</item>
         <item>6</item>
         <item>12</item>
@@ -243,8 +243,11 @@
     <string name="pref_title_ringtone">Sound</string>
     <string name="pref_ringtone_silent">Silent</string>
 
+    <string name="pref_title_vibrate_key">notifications_new_message_vibrate</string>
     <string name="pref_title_vibrate">Vibrate</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pref_sample_key">sample_notification</string>
+    <string name="pref_sample_title">View example notification</string>
+    <string name="pref_sample_summary">See what a notification looks like</string>
+
 </resources>

@@ -1,9 +1,12 @@
 package com.csci150.newsapp.entirenews;
 
 import android.annotation.TargetApi;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -16,6 +19,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -35,6 +39,11 @@ import java.util.List;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
+    // Sets an ID for the notification
+    static int mNotificationId = 001;
+    // Gets an instance of the NotificationManager service
+    static NotificationManager mNotifyMgr;
+    static String ring;
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -75,6 +84,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         // name.
                         String name = ringtone.getTitle(preference.getContext());
                         preference.setSummary(name);
+                        ring = stringValue;
                     }
                 }
 
@@ -121,6 +131,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+        mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
     /**
@@ -184,6 +195,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_news_sources);
             setHasOptionsMenu(true);
+
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
@@ -220,6 +232,46 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+
+            @SuppressWarnings("deprecation")
+            Preference preferenceNots = findPreference(getString(R.string.pref_sample_key));
+
+            if (preferenceNots != null)
+                preferenceNots.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        createNots();
+                        return false;
+                    }
+                });
+        }
+
+        @SuppressWarnings("deprecation")
+        private void createNots() {
+            Context context = getActivity().getApplicationContext();
+            Intent notificationIntent = new Intent(context, MainActivity.class);
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent intent = PendingIntent.getActivity(context, 0,
+                    notificationIntent, 0);
+            boolean isVibrate = PreferenceManager.getDefaultSharedPreferences(context)
+                    .getBoolean(getString(R.string.pref_title_vibrate_key), true);
+
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(context)
+                            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
+                                    R.mipmap.ic_launcher))
+                            .setSmallIcon(android.R.drawable.ic_popup_reminder)
+                            .setContentTitle("EntireNews reminder")
+                            .setTicker("Notification!")
+                            .setContentText("Hello, its time to read the news!")
+                            .setContentIntent(intent)
+                            .setSound(TextUtils.isEmpty(ring) ? null : Uri.parse(ring))
+                            .setVibrate(isVibrate ? new long[]{700, 700} : new long[]{0L})
+                            .setAutoCancel(true);
+
+            // Builds the notification and issues it.
+            mNotifyMgr.notify(mNotificationId, mBuilder.build());
         }
 
         @Override

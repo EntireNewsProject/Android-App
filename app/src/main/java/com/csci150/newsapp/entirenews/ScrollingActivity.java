@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.View;
@@ -267,7 +266,7 @@ public class ScrollingActivity extends Activity implements
 
     @Override
     public void onScrollChanged(NestedScrollView who, int l, int t, int oldL, int oldT) {
-        if (t < mCoverImageHeight / 2) {
+        if (t < mCoverImageHeight) {
             fab.show();
             //final float ratio = (float) Math.min(Math.max(t, 0), mCoverImageHeight) / mCoverImageHeight;
             //ivCover.setTranslationY(ratio * mCoverImageHeight * mVerticalParallaxSpeed);
@@ -279,7 +278,7 @@ public class ScrollingActivity extends Activity implements
 
     @Override
     public void onGlobalLayout() {
-        mCoverImageHeight = ivCover.getHeight();
+        mCoverImageHeight = ivCover.getHeight() / 3 * 2;
         ViewTreeObserver obs = ivCover.getViewTreeObserver();
         obs.removeOnGlobalLayoutListener(this);
     }

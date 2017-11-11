@@ -9,19 +9,16 @@
     <!-- Allows the user to choose a ringtone in the 'notification' category. -->
     <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
     <!-- NOTE: RingtonePreference's summary should be set to its value by the activity code. -->
-
     <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
-
-
     <ListPreference
-        android:defaultValue="180"
+        android:defaultValue="12"
+        android:dependency="notifications_new_message"
         android:entries="@array/pref_notifications_interval_titles"
-        android:entryValues="@array/pref_sync_frequency_values"
-        android:key="sync_frequency"
+        android:entryValues="@array/pref_notifications_interval_values"
+        android:key="notifications_interval"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_sync_frequency" />
-
 
     <RingtonePreference
         android:defaultValue="content://settings/system/notification_sound"
@@ -33,8 +30,13 @@
     <SwitchPreference
         android:defaultValue="true"
         android:dependency="notifications_new_message"
-        android:key="notifications_new_message_vibrate"
+        android:key="@string/pref_title_vibrate_key"
         android:title="@string/pref_title_vibrate" />
+
+    <Preference
+        android:key="@string/pref_sample_key"
+        android:summary="@string/pref_sample_summary"
+        android:title="@string/pref_sample_title" />
 
     <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
          design guidelines. -->
