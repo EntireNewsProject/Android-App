@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.csci150.newsapp.entirenews">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -38,8 +38,7 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
+            android:label="@string/title_activity_settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.csci150.newsapp.entirenews.MainActivity" />
@@ -71,8 +70,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.csci150.newsapp.entirenews.MainActivity" />
         </activity>
-        <activity android:name=".LibActivity" />
-        <activity android:name=".PrivatePolicyActivity"></activity>
+        <activity android:name=".LibActivity">
+        </activity>
+        <activity android:name=".PrivatePolicyActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -250,4 +250,6 @@
     <string name="pref_sample_title">View example notification</string>
     <string name="pref_sample_summary">See what a notification looks like</string>
 
+    <string name="font_name">fonts/angltrr.ttf</string>
+
 </resources>

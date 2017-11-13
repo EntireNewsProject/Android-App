@@ -14,6 +14,10 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+        //        .setDefaultFontPath(getString(R.string.font_name))
+        //       .setFontAttrId(R.attr.fontPath)
+        //        .build());
 
         JodaTimeAndroid.init(this);
     }

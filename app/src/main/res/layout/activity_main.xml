@@ -36,10 +36,11 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
         </Toolbar>
 
-        <android.support.design.widget.TabLayout
+        <com.csci150.newsapp.entirenews.utils.FontAwareTabLayout
             android:id="@+id/tabs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            fontPath="@string/font_name"
             android:overScrollMode="never"
             app:tabGravity="fill"
             app:tabMode="scrollable" />

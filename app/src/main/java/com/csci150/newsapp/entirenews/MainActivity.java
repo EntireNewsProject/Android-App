@@ -2,13 +2,13 @@ package com.csci150.newsapp.entirenews;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,10 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
+import com.csci150.newsapp.entirenews.utils.FontAwareTabLayout;
 import com.csci150.newsapp.entirenews.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends BaseActivity implements OnFragmentInteractionListener {
     private final String TAG = "MainActivity";
@@ -39,7 +42,7 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private TabLayout tabLayout;
+    private FontAwareTabLayout tabLayout;
     private String[] mTabsChoicesAll;
     private SharedPreferences sp;
 
@@ -69,8 +72,8 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
         mViewPager.setOffscreenPageLimit(0);
         mViewPager.setAdapter(mPagerAdapter);
 
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        mViewPager.addOnPageChangeListener(new FontAwareTabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new FontAwareTabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
         for (String str : mTabsChoicesAll) {
             if (sp.getBoolean(Utils.createSlug(str), true)) {
@@ -94,14 +97,19 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
         @Override
         public void run() {
             if (tabLayout.getWidth() < MainActivity.this.getResources().getDisplayMetrics().widthPixels) {
-                tabLayout.setTabMode(TabLayout.MODE_FIXED);
+                tabLayout.setTabMode(FontAwareTabLayout.MODE_FIXED);
                 ViewGroup.LayoutParams mParams = tabLayout.getLayoutParams();
                 mParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 tabLayout.setLayoutParams(mParams);
             } else
-                tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+                tabLayout.setTabMode(FontAwareTabLayout.MODE_SCROLLABLE);
         }
     };
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onResume() {
