@@ -24,6 +24,8 @@ import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
+import com.csci150.newsapp.entirenews.utils.Utils;
+
 import java.util.List;
 
 /**
@@ -38,6 +40,7 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+    private final String TAG = "SettingsActivity";
 
     // Sets an ID for the notification
     static int mNotificationId = 001;
@@ -131,6 +134,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+        Utils.print(TAG, "onCreate");
         mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
@@ -151,6 +155,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         if (id == android.R.id.home) {
             if (!super.onMenuItemSelected(featureId, item)) {
                 NavUtils.navigateUpFromSameTask(this);
+                //onBackPressed();
             }
             return true;
         }

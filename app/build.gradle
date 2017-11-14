@@ -42,7 +42,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
 
     implementation "com.github.bumptech.glide:glide:${versions.glide}"
-    implementation 'com.android.support:support-v4:26.1.0'
     annotationProcessor "com.github.bumptech.glide:compiler:${versions.glide}"
 
     //implementation "io.realm:realm-android:${versions.realm}"
