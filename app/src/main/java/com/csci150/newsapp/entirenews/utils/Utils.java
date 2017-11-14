@@ -1,12 +1,13 @@
 package com.csci150.newsapp.entirenews.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.IBinder;
 import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
@@ -26,6 +27,9 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Created by Shifatul Islam (Denocyte) on 10/13/2017 9:29 PM.
@@ -214,5 +218,23 @@ public class Utils {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    private static boolean hasNavigationBarBackup(final Resources resources) {
+        int id = resources.getIdentifier("config_showNavigationBar", "bool", "android");
+        return id > 0 && resources.getBoolean(id);
+    }
 
+    @SuppressLint("PrivateApi")
+    public static Boolean hasNavigationBar(final String TAG, final Resources resources) {
+        try {
+            Class<?> serviceManager = Class.forName("android.os.ServiceManager");
+            IBinder serviceBinder = (IBinder) serviceManager.getMethod("getService", String.class).invoke(serviceManager, "window");
+            Class<?> stub = Class.forName("android.view.IWindowManager$Stub");
+            Object windowManagerService = stub.getMethod("asInterface", IBinder.class).invoke(stub, serviceBinder);
+            Method hasNavigationBar = windowManagerService.getClass().getMethod("hasNavigationBar");
+            return (boolean) hasNavigationBar.invoke(windowManagerService);
+        } catch (ClassNotFoundException | ClassCastException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            print(TAG, "Couldn't determine whether the device has a navigation bar");
+            return hasNavigationBarBackup(resources);
+        }
+    }
 }

@@ -90,8 +90,6 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT, 1);
             mSource = getArguments().getString(ARG_PARAM_SOURCE, "default");
         }
-        //Utils.print("XXXXXXXXXXXXXXX", "onCreate(" + mSource + ")");
-        //setExitSharedElementCallback(NewsItemAdapter.createSharedElementReenterCallback(getActivity()));
     }
 
     @Override
@@ -108,6 +106,10 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (!Utils.hasNavigationBar(TAG, getResources()))
+            mRecyclerView.setPadding(0, 0, 0, 0);
+
         setupSwipeLayout();
         setupRecyclerView();
         checkConnectivity();

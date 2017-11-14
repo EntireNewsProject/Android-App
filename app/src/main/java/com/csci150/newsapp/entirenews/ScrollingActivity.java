@@ -62,6 +62,9 @@ public class ScrollingActivity extends Activity implements
         //setSupportActionBar(toolbar);
         final CoordinatorLayout mCoordinatorLayout = findViewById(R.id.coordinator_layout);
 
+        if (!Utils.hasNavigationBar(TAG, getResources()))
+            findViewById(R.id.view).setVisibility(View.GONE);
+
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

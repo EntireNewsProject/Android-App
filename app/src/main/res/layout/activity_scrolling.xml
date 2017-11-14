@@ -147,6 +147,14 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_date"
                         tools:text="@string/large_text" />
 
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_triple"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_article" />
+
                 </android.support.constraint.ConstraintLayout>
 
             </LinearLayout>
