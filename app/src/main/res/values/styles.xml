@@ -12,7 +12,7 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
-    <style name="AppTheme.Home" parent="AppTheme.Fullscreen">
+    <style name="AppTheme.Home" parent="AppTheme.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowActionModeOverlay">true</item>

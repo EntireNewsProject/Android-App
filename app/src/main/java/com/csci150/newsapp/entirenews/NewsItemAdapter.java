@@ -112,6 +112,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                         break;
                     default:
                         holder.tvSubtitle.setMaxLines(2);
+                        holder.tvSubtitle.setText(null);
                 }
             }
         });
