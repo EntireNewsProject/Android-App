@@ -27,7 +27,7 @@ public class AboutActivity extends AppCompatActivity{
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.drawable.smaplelogo)
-                .setDescription("This is demo version")
+                .setDescription("Powered by Newspaper3k")
                 .addItem(new Element().setTitle("Version 1.0"))
                 .addItem(new Element().setTitle("Private Policy").setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -52,10 +52,10 @@ public class AboutActivity extends AppCompatActivity{
 
                     }
                 }))
-                .addItem(adsElement)
+                //.addItem(adsElement)
                 .addGroup("Connect with us")
                 .addEmail("kishanshah147@mail.fresnostate.edu")
-                .addGitHub("Entire News Project (News App)")
+                .addGitHub("EntireNewsProject")
                 .addPlayStore("My Playstore")
                 .addItem(createCopyright())
                 .create();
@@ -63,23 +63,12 @@ public class AboutActivity extends AppCompatActivity{
         setContentView(aboutPage);
     }
 
-
-
-
-
     private Element createCopyright() {
         Element copyright = new Element();
         final String copyrightString = String.format("Copyright %d by EntireNews", java.util.Calendar.getInstance().get(java.util.Calendar.YEAR));
         copyright.setTitle(copyrightString);
         copyright.setIconDrawable(R.mipmap.ic_launcher);
         copyright.setGravity(Gravity.CENTER);
-        copyright.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(AboutActivity.this, copyrightString, Toast.LENGTH_SHORT).show();
-
-            }
-        });
         return copyright;
     }
 }
