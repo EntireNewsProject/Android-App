@@ -27,7 +27,7 @@ public class AboutActivity extends AppCompatActivity{
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.drawable.smaplelogo)
-                .setDescription("This is demo version")
+                .setDescription("Powered by Newspaper3k")
                 .addItem(new Element().setTitle("Version 1.0"))
                 .addItem(new Element().setTitle("Private Policy").setOnClickListener(new View.OnClickListener() {
                     @Override
