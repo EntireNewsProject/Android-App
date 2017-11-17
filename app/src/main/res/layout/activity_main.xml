@@ -18,7 +18,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="@dimen/status_bar_top_margin"
             android:layout_weight="1"
             android:background="?attr/colorPrimary"
             android:elevation="1dp"
@@ -26,6 +25,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:title="@string/app_name">
+            <!-- android:layout_marginTop="@dimen/status_bar_top_margin"-->
 
             <TextView
                 android:id="@+id/toolbar_title"
@@ -36,7 +36,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
         </Toolbar>
 
-        <com.csci150.newsapp.entirenews.utils.FontAwareTabLayout
+        <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

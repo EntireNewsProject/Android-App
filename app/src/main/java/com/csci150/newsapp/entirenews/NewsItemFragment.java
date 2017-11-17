@@ -35,7 +35,7 @@ import retrofit2.Response;
  * interface.
  */
 public class NewsItemFragment extends Fragment implements OnListInteractionListener {
-    private final String TAG = "NewsItemFragment";
+    private static final String TAG = "NewsItemFragment";
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_PARAM_SOURCE = "param-source";
@@ -107,8 +107,8 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (!Utils.hasNavigationBar(TAG, getResources()))
-            mRecyclerView.setPadding(0, 0, 0, 0);
+       // if (!Utils.hasNavigationBar(TAG, getResources()))
+       //     mRecyclerView.setPadding(0, 0, 0, 0);
 
         setupSwipeLayout();
         setupRecyclerView();

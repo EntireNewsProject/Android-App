@@ -6,6 +6,8 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
  * A news app, where you can find everything in one place.
  */
 
+@DatabaseTable
 public class NewsItem implements Parcelable {
     public static final Creator<NewsItem> CREATOR = new Creator<NewsItem>() {
         @Override
@@ -28,46 +31,55 @@ public class NewsItem implements Parcelable {
     };
     @SerializedName("_id")
     @Expose
-    //@Required
-    //@PrimaryKey
+    @DatabaseField(id = true)
     private String id;
     @SerializedName("title")
     @Expose
-    //@Required
+    @DatabaseField
     private String title;
     @SerializedName("subtitle")
     @Expose
+    @DatabaseField
     private String subtitle;
     @SerializedName("source")
     @Expose
+    @DatabaseField
     private String source;
     @SerializedName("cover")
     @Expose
+    @DatabaseField
     private String cover;
     @SerializedName("article")
     @Expose
-    //@Required
+    @DatabaseField
     private String article;
     @SerializedName("slug")
     @Expose
+    @DatabaseField
     private String slug;
     @SerializedName("saves")
     @Expose
+    @DatabaseField
     private int saves;
     @SerializedName("views")
     @Expose
+    @DatabaseField
     private int views;
     @SerializedName("date")
     @Expose
+    @DatabaseField
     private String date;
     @SerializedName("keywords")
     @Expose
+    //@DatabaseField
     private List<String> keywords;
     @SerializedName("tags")
     @Expose
+    //@DatabaseField
     private List<String> tags;
     @SerializedName("createdAt")
     @Expose
+    @DatabaseField
     private String createdAt;
 
     private boolean saved;
