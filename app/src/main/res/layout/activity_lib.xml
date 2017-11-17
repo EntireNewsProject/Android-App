@@ -36,21 +36,21 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_full"
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_full"
             android:text="Libraries We Use"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/margin_full"
             android:text="The following sets forth attribution notices for third oparty software that may be contained in portions of the Entire News Application. Thanks to open source community for all their contributions"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
 
@@ -58,6 +58,7 @@
             android:id="@+id/btnRet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
             android:text="Retrofit" />
 
 
@@ -65,6 +66,7 @@
             android:id="@+id/btnGli"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
             android:text="Glide" />
 
 
@@ -72,6 +74,7 @@
             android:id="@+id/btnCali"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
             android:text="Calligraphy" />
 
 
@@ -79,12 +82,14 @@
             android:id="@+id/btnJod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
             android:text="Joda Time" />
 
         <Button
             android:id="@+id/btnAAP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
             android:text="Android About Page" />
     </LinearLayout>
 </LinearLayout>
