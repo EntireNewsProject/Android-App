@@ -55,29 +55,34 @@
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
 
         <Button
+            android:id="@+id/btnRet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Retrofit" />
 
 
         <Button
+            android:id="@+id/btnGli"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Glide" />
 
 
         <Button
+            android:id="@+id/btnCali"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Calligraphy" />
 
 
         <Button
+            android:id="@+id/btnJod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Joda Time" />
 
         <Button
+            android:id="@+id/btnAAP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Android About Page" />
