@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private FontAwareTabLayout tabLayout;
+    private TabLayout tabLayout;
     private String[] mTabsChoicesAll;
     private SharedPreferences sp;
 
