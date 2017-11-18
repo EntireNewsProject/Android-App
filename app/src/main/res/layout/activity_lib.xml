@@ -23,14 +23,14 @@
             android:outlineProvider="none"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/app_name">
+            app:title="@string/action_lib">
 
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/app_name"
+                android:text="@string/action_lib"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
         </Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -38,19 +38,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_full"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_full"
-            android:text="Libraries We Use"
-            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_full"
             android:text="The following sets forth attribution notices for third oparty software that may be contained in portions of the Entire News Application. Thanks to open source community for all their contributions"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle" />
 
@@ -58,7 +51,7 @@
             android:id="@+id/btnRet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_half"
             android:text="Retrofit" />
 
 
@@ -66,7 +59,7 @@
             android:id="@+id/btnGli"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_half"
             android:text="Glide" />
 
 
@@ -74,7 +67,7 @@
             android:id="@+id/btnCali"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_half"
             android:text="Calligraphy" />
 
 
@@ -82,14 +75,14 @@
             android:id="@+id/btnJod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_half"
             android:text="Joda Time" />
 
         <Button
             android:id="@+id/btnAAP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_half"
             android:text="Android About Page" />
     </LinearLayout>
 </LinearLayout>

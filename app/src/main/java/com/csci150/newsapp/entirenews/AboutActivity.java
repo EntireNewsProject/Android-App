@@ -1,9 +1,11 @@
 package com.csci150.newsapp.entirenews;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
@@ -14,12 +16,17 @@ import android.widget.Toast;
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 
-public class AboutActivity extends AppCompatActivity{
+public class AboutActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_about);
+
+        toolbar=findViewById(R.id.toolbar);
+        setupToolbar(false, true);
+
+        ConstraintLayout mRoot = findViewById(R.id.main_view);
 
         Element adsElement = new Element();
         adsElement.setTitle("Advertise here");
@@ -60,7 +67,8 @@ public class AboutActivity extends AppCompatActivity{
                 .addItem(createCopyright())
                 .create();
 
-        setContentView(aboutPage);
+        //setContentView(aboutPage);
+        mRoot.addView(aboutPage, 1);
     }
 
     private Element createCopyright() {
