@@ -47,6 +47,9 @@ dependencies {
     implementation "io.realm:realm-android:${versions.realm}"
     annotationProcessor "io.realm:realm-android:${versions.realm}"
 
+    implementation 'org.parceler:parceler-api:1.1.9'
+    annotationProcessor 'org.parceler:parceler:1.1.9'
+
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'net.danlew:android.joda:2.9.9'
     implementation 'com.github.medyo:android-about-page:1.2'

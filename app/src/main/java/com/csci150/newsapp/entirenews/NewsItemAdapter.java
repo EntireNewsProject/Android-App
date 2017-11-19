@@ -196,8 +196,8 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 Intent intent = new Intent();
                 intent.setClass(host, ScrollingActivity.class);
 
-                intent.putExtra(NewsActivity.EXTRA_NEWS_ITEM,
-                        getItem(holder.getAdapterPosition()).getTitle());
+               // intent.putExtra(NewsActivity.EXTRA_NEWS_ITEM,
+                //        getItem(holder.getAdapterPosition()));
 
                 //setGridItemContentTransitions(holder.ivCover);
                 ActivityOptions options =

@@ -55,7 +55,6 @@ public class RealmController {
 
     //Refresh the realm istance
     public void refresh() {
-
         realm.refresh();
     }
 

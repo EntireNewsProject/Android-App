@@ -20,10 +20,12 @@ import android.widget.LinearLayout;
 
 import com.csci150.newsapp.entirenews.utils.ApiInterface;
 import com.csci150.newsapp.entirenews.utils.ApiPrefs;
+import com.csci150.newsapp.entirenews.utils.RealmController;
 import com.csci150.newsapp.entirenews.utils.Utils;
 
 import java.util.List;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,6 +56,7 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
 
     protected NewsItemAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
+    private Realm realm;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -86,6 +89,10 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
             mContext = getActivity().getApplicationContext();
         Utils.print(TAG, "onCreate()");
         mApiPrefs = ApiPrefs.get(mContext);
+
+        //get realm instance
+        this.realm = RealmController.with(this).getRealm();
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT, 1);
             mSource = getArguments().getString(ARG_PARAM_SOURCE, "default");
@@ -321,8 +328,11 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
     public void onSave(final boolean save, final NewsItem news) {
         Utils.print(TAG, "onSave()");
         if (save) {
-            if (mListener != null) mListener.showSnackBar(R.string.response_saved);
             setSave(news.get_id());
+            realm.beginTransaction();
+            realm.copyToRealm(news);
+            realm.commitTransaction();
+            if (mListener != null) mListener.showSnackBar(R.string.response_saved);
         } else {
             if (mListener != null) mListener.showSnackBar(R.string.response_unsaved);
         }

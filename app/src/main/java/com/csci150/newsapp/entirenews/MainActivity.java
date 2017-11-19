@@ -161,6 +161,10 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
         //noinspection SimplifiableIfStatement
         Intent intent;
         switch (item.getItemId()) {
+            case R.id.action_saved:
+                intent = new Intent(getApplicationContext(), SavedActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.action_settings:
                 intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);

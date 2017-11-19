@@ -1,5 +1,8 @@
 package com.csci150.newsapp.entirenews;
 
+import org.parceler.Parcel;
+
+import io.realm.NewsItemRealmProxy;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -7,7 +10,9 @@ import io.realm.annotations.PrimaryKey;
  * Created by Shifatul Islam (Denocyte) on 9/24/2017 9:46 PM.
  * A news app, where you can find everything in one place.
  */
-
+@Parcel(implementations = {NewsItemRealmProxy.class},
+        value = Parcel.Serialization.FIELD,
+        analyze = {NewsItem.class})
 public class NewsItem extends RealmObject {
 
     public NewsItem() {
