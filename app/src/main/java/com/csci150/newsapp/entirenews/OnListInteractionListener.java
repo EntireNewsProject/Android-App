@@ -4,7 +4,7 @@ public interface OnListInteractionListener {
 
     void onLoadMore();
 
-    void onSave(final boolean save, final String id);
+    void onSave(final boolean save, final NewsItem news);
 
     void onListFragmentInteraction(NewsItem item);
 }

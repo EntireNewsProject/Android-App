@@ -1,124 +1,38 @@
 package com.csci150.newsapp.entirenews;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.text.TextUtils;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
-import java.util.List;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Shifatul Islam (Denocyte) on 9/24/2017 9:46 PM.
  * A news app, where you can find everything in one place.
  */
 
-@DatabaseTable
-public class NewsItem implements Parcelable {
-    public static final Creator<NewsItem> CREATOR = new Creator<NewsItem>() {
-        @Override
-        public NewsItem createFromParcel(Parcel in) {
-            return new NewsItem(in);
-        }
+public class NewsItem extends RealmObject {
 
-        @Override
-        public NewsItem[] newArray(int size) {
-            return new NewsItem[size];
-        }
-    };
-    @SerializedName("_id")
-    @Expose
-    @DatabaseField(id = true)
-    private String id;
-    @SerializedName("title")
-    @Expose
-    @DatabaseField
+    public NewsItem() {
+    }
+
+    @PrimaryKey
+    private String _id;
     private String title;
-    @SerializedName("subtitle")
-    @Expose
-    @DatabaseField
     private String subtitle;
-    @SerializedName("source")
-    @Expose
-    @DatabaseField
     private String source;
-    @SerializedName("cover")
-    @Expose
-    @DatabaseField
     private String cover;
-    @SerializedName("article")
-    @Expose
-    @DatabaseField
     private String article;
-    @SerializedName("slug")
-    @Expose
-    @DatabaseField
     private String slug;
-    @SerializedName("saves")
-    @Expose
-    @DatabaseField
     private int saves;
-    @SerializedName("views")
-    @Expose
-    @DatabaseField
     private int views;
-    @SerializedName("date")
-    @Expose
-    @DatabaseField
-    private String date;
+    /*
     @SerializedName("keywords")
     @Expose
-    //@DatabaseField
-    private List<String> keywords;
+    private RealmList<RealmString> keywords;
     @SerializedName("tags")
     @Expose
-    //@DatabaseField
-    private List<String> tags;
-    @SerializedName("createdAt")
-    @Expose
-    @DatabaseField
+    private RealmList<RealmString> tags;*/
     private String createdAt;
 
     private boolean saved;
-
-    /*public NewsItem(String title, String article, String cover) {
-        this.title = title;
-        this.subtitle = article.substring(0, Math.min(article.length(), 100));
-        this.article = article;
-        this.cover = cover;
-    }*/
-
-    protected NewsItem(Parcel in) {
-        id = in.readString();
-        title = in.readString();
-        source = in.readString();
-        cover = in.readString();
-        createdAt = in.readString();
-        saved = in.readByte() != 0;
-    }
-
-    @Override
-    public String toString() {
-        return title;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(title);
-        parcel.writeString(source);
-        parcel.writeString(cover);
-        parcel.writeString(createdAt);
-        parcel.writeByte((byte) (saved ? 1 : 0));
-    }
 
     public boolean isSaved() {
         return saved;
@@ -128,12 +42,12 @@ public class NewsItem implements Parcelable {
         this.saved = saved;
     }
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getTitle() {
@@ -149,12 +63,7 @@ public class NewsItem implements Parcelable {
     }
 
     public String getSubtitle() {
-        if (!TextUtils.isEmpty(subtitle)) return subtitle;
-        else if (!TextUtils.isEmpty(article))
-            return article.substring(0, Math.min(article.length(), 100))
-                    .replace("\n", "")
-                    .replace("\r", "");
-        else return "Subtitle";
+        return subtitle;
     }
 
     public String getSource() {
@@ -204,42 +113,22 @@ public class NewsItem implements Parcelable {
     public void setViews(int views) {
         this.views = views;
     }
-
-    public void addView() {
-        this.views++;
-    }
-
-    public void addSave() {
-        this.saves++;
-    }
-
-    public void subSave() {
-        this.saves--;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public List<String> getKeywords() {
+    /*
+    public RealmList<RealmString> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(List<String> keywords) {
+    public void setKeywords(RealmList<RealmString> keywords) {
         this.keywords = keywords;
     }
 
-    public List<String> getTags() {
+    public RealmList<RealmString> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(RealmList<RealmString> tags) {
         this.tags = tags;
-    }
+    }*/
 
     public String getCreatedAt() {
         return createdAt;

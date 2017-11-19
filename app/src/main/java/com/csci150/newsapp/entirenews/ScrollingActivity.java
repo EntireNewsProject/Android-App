@@ -156,7 +156,7 @@ public class ScrollingActivity extends Activity implements
         else
             fab.setImageResource(R.drawable.ic_star_white_24dp);
 
-        getNews(newsItem.getId());
+        getNews(newsItem.get_id());
     }
 
     void bindNews(final NewsItem item) {

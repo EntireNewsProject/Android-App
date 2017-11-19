@@ -318,15 +318,13 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
     }
 
     @Override
-    public void onSave(final boolean save, final String id) {
+    public void onSave(final boolean save, final NewsItem news) {
         Utils.print(TAG, "onSave()");
         if (save) {
             if (mListener != null) mListener.showSnackBar(R.string.response_saved);
-            //Utils.showSnackbar(mCoordinatorLayout, mContext, R.string.response_saved);
-            setSave(id);
+            setSave(news.get_id());
         } else {
             if (mListener != null) mListener.showSnackBar(R.string.response_unsaved);
-            //Utils.showSnackbar(mCoordinatorLayout, mContext, R.string.response_unsaved);
         }
     }
 

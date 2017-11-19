@@ -158,7 +158,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 if (holder.mItem.isSaved()) {
                     holder.ivSave.setImageResource(R.drawable.ic_star_24dp);
 
-                    mItems.get(holder.position).subSave();
+                    mItems.get(holder.position).setSaves(mItems.get(holder.position).getSaves() - 1);
                     if (holder.mItem.getSaves() > 0) {
                         holder.tvSaves.setVisibility(View.VISIBLE);
                         String saves = host.getResources().getQuantityString(R.plurals.saves,
@@ -170,7 +170,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 } else {
                     holder.ivSave.setImageResource(R.drawable.ic_star_solid_24dp);
 
-                    mItems.get(holder.position).addSave();
+                    mItems.get(holder.position).setSaves(mItems.get(holder.position).getSaves() + 1);
                     holder.tvSaves.setVisibility(View.VISIBLE);
                     String saves = host.getResources().getQuantityString(R.plurals.saves,
                             holder.mItem.getSaves(), holder.mItem.getSaves());
@@ -181,7 +181,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 boolean saved = !mItems.get(pos).isSaved();
                 mItems.get(pos).setSaved(saved);
                 if (mListener != null)
-                    mListener.onSave(saved, holder.mItem.getId());
+                    mListener.onSave(saved, holder.mItem);
                 //holder.mItem.setSaved(saved);
             }
         });
@@ -195,8 +195,10 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 }
                 Intent intent = new Intent();
                 intent.setClass(host, ScrollingActivity.class);
+
                 intent.putExtra(NewsActivity.EXTRA_NEWS_ITEM,
-                        getItem(holder.getAdapterPosition()));
+                        getItem(holder.getAdapterPosition()).getTitle());
+
                 //setGridItemContentTransitions(holder.ivCover);
                 ActivityOptions options =
                         ActivityOptions.makeSceneTransitionAnimation(host,
@@ -204,7 +206,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                                 Pair.create(holder.vBody, host.getString(R.string.transition_news_background)));
                 host.startActivityForResult(intent, 100, options.toBundle());
 
-                mItems.get(holder.position).addView();
+                mItems.get(holder.position).setViews(mItems.get(holder.position).getViews() + 1);
                 //holder.mItem.addView();
                 holder.tvViews.setVisibility(View.VISIBLE);
                 String views = host.getResources().getQuantityString(R.plurals.views,

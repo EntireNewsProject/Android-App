@@ -3,6 +3,12 @@ package com.csci150.newsapp.entirenews.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import io.realm.RealmObject;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -39,10 +45,23 @@ public class ApiPrefs {
     }
 
     private void createApi() {
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes attributes) {
+                        return attributes.getDeclaringClass().equals(RealmObject.class);
+                    }
+
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .create();
+
         api = new Retrofit.Builder()
                 .baseUrl(URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build().create((ApiInterface.class));
     }
-
 }
