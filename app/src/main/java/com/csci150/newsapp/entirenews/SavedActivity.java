@@ -3,7 +3,6 @@ package com.csci150.newsapp.entirenews;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +23,6 @@ public class SavedActivity extends BaseActivity implements OnListInteractionList
 
     private RecyclerView mRecyclerView;
     private CoordinatorLayout mCoordinatorLayout;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private NewsItemAdapter mAdapter;
 
@@ -37,15 +35,17 @@ public class SavedActivity extends BaseActivity implements OnListInteractionList
         setContentView(R.layout.activity_saved);
 
         mRecyclerView = findViewById(R.id.list);
-        mSwipeRefreshLayout = findViewById(R.id.swipe_layout);
+        mCoordinatorLayout = findViewById(R.id.coordinator_layout);
+
         toolbar = findViewById(R.id.toolbar);
         setupToolbar(false, true);
 
         //get realm instance
         this.realm = RealmController.with(this).getRealm();
 
-
-        mAdapter = new NewsItemAdapter(this, RealmController.with(this).getNewsItems(), getListener());
+        mItems = RealmController.with(this).getNewsItems();
+        //Collections.reverse(mItems);
+        mAdapter = new NewsItemAdapter(this, mItems, realm, getListener());
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -79,6 +79,11 @@ public class SavedActivity extends BaseActivity implements OnListInteractionList
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -106,11 +111,26 @@ public class SavedActivity extends BaseActivity implements OnListInteractionList
 
     @Override
     public void onSave(boolean save, NewsItem news) {
-
+        Utils.print(TAG, "onSave()");
+        if (!save) {
+            showSnackBar(R.string.response_unsaved);
+            RealmController.with(this).deleteNewsItems(news.get_id());
+            RealmController.with(this).refresh();
+            mAdapter = new NewsItemAdapter(this, RealmController.with(this).getNewsItems(), realm, getListener());
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     @Override
     public void onListFragmentInteraction(NewsItem item) {
 
+    }
+
+    public void showSnackBar(int resId) {
+        Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(), getString(resId));
+    }
+
+    public void showSnackBar(String msg) {
+        Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(), msg);
     }
 }

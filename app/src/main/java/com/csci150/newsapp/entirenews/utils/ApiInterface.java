@@ -29,5 +29,6 @@ public interface ApiInterface {
 
     @GET("news/{id}/save")
     Call<NewsItem> saveNews(
-            @NonNull @Path("id") String id);
+            @NonNull @Path("id") String id,
+            @Query("savecheck") boolean save);
 }

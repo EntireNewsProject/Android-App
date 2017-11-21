@@ -20,7 +20,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.csci150.newsapp.entirenews.utils.Utils;
 
+import org.parceler.Parcels;
+
 import java.util.List;
+
+import io.realm.Realm;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link NewsItem} and makes a call to the
@@ -38,6 +42,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     private final OnListInteractionListener mListener;
     private boolean isLoading, isLoadMoreAvailable;
     private int size;
+    private Realm realm;
 
     NewsItemAdapter(Activity hostActivity, List<NewsItem> items, OnListInteractionListener listener) {
         size = items.size();
@@ -47,6 +52,18 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         mListener = listener;
         isLoading = false;
         //setHasStableIds(true);
+        Utils.print(TAG, "ItemAdapter: Construct [size: " + size + "]");
+    }
+
+    NewsItemAdapter(Activity hostActivity, List<NewsItem> items, Realm r, OnListInteractionListener listener) {
+        size = items.size();
+        isLoadMoreAvailable = size >= DEFAULT_SIZE;
+        host = hostActivity;
+        mItems = items;
+        mListener = listener;
+        isLoading = false;
+        //setHasStableIds(true);
+        realm = r;
         Utils.print(TAG, "ItemAdapter: Construct [size: " + size + "]");
     }
 
@@ -69,6 +86,17 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         Utils.print(TAG, "addItems[]");
         // Force remove load more
         notifyItemChanged(size - 1);
+    }
+
+    void changeSaved(String id, boolean value) {
+        int i;
+        for (i = 0; i < size; i++) {
+            if (mItems.get(i).get_id().equals(id)) {
+                mItems.get(i).setSaved(value);
+                break;
+            }
+        }
+        notifyItemChanged(i);
     }
 
     @Override
@@ -158,7 +186,14 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 if (holder.mItem.isSaved()) {
                     holder.ivSave.setImageResource(R.drawable.ic_star_24dp);
 
-                    mItems.get(holder.position).setSaves(mItems.get(holder.position).getSaves() - 1);
+                    if (realm == null)
+                        mItems.get(holder.position).setSaves(mItems.get(holder.position).getSaves() - 1);
+                    else {
+                        realm.beginTransaction();
+                        mItems.get(holder.position).setSaves(mItems.get(holder.position).getSaves() - 1);
+                        realm.commitTransaction();
+                    }
+
                     if (holder.mItem.getSaves() > 0) {
                         holder.tvSaves.setVisibility(View.VISIBLE);
                         String saves = host.getResources().getQuantityString(R.plurals.saves,
@@ -170,7 +205,13 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 } else {
                     holder.ivSave.setImageResource(R.drawable.ic_star_solid_24dp);
 
-                    mItems.get(holder.position).setSaves(mItems.get(holder.position).getSaves() + 1);
+                    if (realm == null)
+                        mItems.get(holder.position).setSaves(mItems.get(holder.position).getSaves() + 1);
+                    else {
+                        realm.beginTransaction();
+                        mItems.get(holder.position).setSaves(mItems.get(holder.position).getSaves() + 1);
+                        realm.commitTransaction();
+                    }
                     holder.tvSaves.setVisibility(View.VISIBLE);
                     String saves = host.getResources().getQuantityString(R.plurals.saves,
                             holder.mItem.getSaves(), holder.mItem.getSaves());
@@ -179,7 +220,15 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 }
                 int pos = holder.position;
                 boolean saved = !mItems.get(pos).isSaved();
-                mItems.get(pos).setSaved(saved);
+
+                if (realm == null)
+                    mItems.get(pos).setSaved(saved);
+                else {
+                    realm.beginTransaction();
+                    mItems.get(pos).setSaved(saved);
+                    realm.commitTransaction();
+                }
+
                 if (mListener != null)
                     mListener.onSave(saved, holder.mItem);
                 //holder.mItem.setSaved(saved);
@@ -188,6 +237,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
@@ -196,17 +246,31 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
                 Intent intent = new Intent();
                 intent.setClass(host, ScrollingActivity.class);
 
-               // intent.putExtra(NewsActivity.EXTRA_NEWS_ITEM,
-                //        getItem(holder.getAdapterPosition()));
 
                 //setGridItemContentTransitions(holder.ivCover);
+
                 ActivityOptions options =
                         ActivityOptions.makeSceneTransitionAnimation(host,
                                 Pair.create((View) holder.ivCover, host.getString(R.string.transition_news)),
                                 Pair.create(holder.vBody, host.getString(R.string.transition_news_background)));
+
+                if (realm == null)
+                    intent.putExtra(ScrollingActivity.EXTRA_NEWS_ITEM,
+                            Parcels.wrap(getItem(holder.getAdapterPosition())));
+                else
+                    intent.putExtra(ScrollingActivity.RESULT_EXTRA_NEWS_ID,
+                            getItem(holder.getAdapterPosition()).get_id());
+
                 host.startActivityForResult(intent, 100, options.toBundle());
 
-                mItems.get(holder.position).setViews(mItems.get(holder.position).getViews() + 1);
+                if (realm == null)
+                    mItems.get(holder.position).setViews(mItems.get(holder.position).getViews() + 1);
+                else {
+                    realm.beginTransaction();
+                    mItems.get(holder.position).setViews(mItems.get(holder.position).getViews() + 1);
+                    realm.commitTransaction();
+                }
+
                 //holder.mItem.addView();
                 holder.tvViews.setVisibility(View.VISIBLE);
                 String views = host.getResources().getQuantityString(R.plurals.views,

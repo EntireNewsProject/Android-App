@@ -20,11 +20,15 @@ import com.csci150.newsapp.entirenews.utils.ApiPrefs;
 import com.csci150.newsapp.entirenews.utils.ElasticDragDismissFrameLayout;
 import com.csci150.newsapp.entirenews.utils.FourThreeImageView;
 import com.csci150.newsapp.entirenews.utils.NotifyingScrollView;
+import com.csci150.newsapp.entirenews.utils.RealmController;
 import com.csci150.newsapp.entirenews.utils.Utils;
+
+import org.parceler.Parcels;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,6 +39,7 @@ public class ScrollingActivity extends Activity implements
     private static final String TAG = "ScrollingActivity";
 
     public final static String RESULT_EXTRA_NEWS_ID = "RESULT_EXTRA_NEWS_ID";
+    public final static String RESULT_EXTRA_NEWS_SAVED = "RESULT_EXTRA_NEWS_SAVED";
     public static final String EXTRA_NEWS_ITEM = "EXTRA_NEWS_ITEM";
 
     private ApiPrefs mApiPrefs;
@@ -52,12 +57,20 @@ public class ScrollingActivity extends Activity implements
     private TextView tvTitle, tvArticle, tvViews, tvSaves, tvDate, tvSource;
     private Map<String, String> mSources = new HashMap<>();
 
+    private Realm realm;
+    private boolean defaultSaved;
+    private boolean isRemoved = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.print(TAG, "onCreate");
         setContentView(R.layout.activity_scrolling);
         mApiPrefs = ApiPrefs.get(getApplicationContext());
+
+        //get realm instance
+        this.realm = RealmController.with(this).getRealm();
+
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         final CoordinatorLayout mCoordinatorLayout = findViewById(R.id.coordinator_layout);
@@ -73,12 +86,20 @@ public class ScrollingActivity extends Activity implements
                     fab.setImageResource(R.drawable.ic_star_white_24dp);
                     Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(),
                             getString(R.string.response_unsaved));
+                    realm.beginTransaction();
+                    newsItem.setSaved(!newsItem.isSaved());
+                    realm.commitTransaction();
+                    isRemoved = true;
                 } else {
                     fab.setImageResource(R.drawable.ic_star_white_solid_24dp);
                     Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(),
                             getString(R.string.response_saved));
+                    newsItem.setSaved(!newsItem.isSaved());
+                    realm.beginTransaction();
+                    realm.copyToRealm(newsItem);
+                    realm.commitTransaction();
+                    isRemoved = false;
                 }
-                newsItem.setSaved(!newsItem.isSaved());
             }
         });
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -110,9 +131,22 @@ public class ScrollingActivity extends Activity implements
         ivCover.getViewTreeObserver().addOnGlobalLayoutListener(this);
 
         final Intent intent = getIntent();
-        if (intent.hasExtra(EXTRA_NEWS_ITEM)) {
-            newsItem = intent.getParcelableExtra(EXTRA_NEWS_ITEM);
-            bindNews(true);
+
+        if (intent.hasExtra(RESULT_EXTRA_NEWS_ID) && intent.getExtras() != null) {
+            String id = intent.getExtras().getString(RESULT_EXTRA_NEWS_ID);
+
+            newsItem = RealmController.with(this).getNewsItem(id);
+            bindNews(true, true);
+
+            Utils.print(TAG, "AAA " + id);
+        } else if (intent.hasExtra(EXTRA_NEWS_ITEM)) {
+            newsItem = Parcels.unwrap(intent.getParcelableExtra(EXTRA_NEWS_ITEM));
+            bindNews(true, false);
+
+            Utils.print(TAG, "BBB " + newsItem.getTitle());
+        } else {
+
+            Utils.print(TAG, "CCC " + newsItem.isSaved());
         }
     }
 
@@ -120,10 +154,9 @@ public class ScrollingActivity extends Activity implements
         return mApiPrefs.getApi();
     }
 
-    void bindNews(final boolean postponeEnterTransition) {
+    void bindNews(final boolean postponeEnterTransition, final boolean isLocal) {
         //final Resources res = getResources();
         createMap();
-
         Glide.with(this)
                 .load(newsItem.getCover())
                 .apply(new RequestOptions().centerCrop().error(R.drawable.sample))
@@ -151,16 +184,22 @@ public class ScrollingActivity extends Activity implements
         else
             tvSource.setText(R.string.news);
 
-        if (newsItem.isSaved())
+        defaultSaved = newsItem.isSaved();
+        if (defaultSaved)
             fab.setImageResource(R.drawable.ic_star_white_solid_24dp);
         else
             fab.setImageResource(R.drawable.ic_star_white_24dp);
 
-        getNews(newsItem.get_id());
+        if (isLocal)
+            bindNews(newsItem, isLocal);
+        else
+            getNews(newsItem.get_id());
     }
 
-    void bindNews(final NewsItem item) {
+    void bindNews(final NewsItem item, final boolean isLocal) {
         newsItem = item;
+        if (!isLocal)
+            newsItem.setSaved(defaultSaved);
         tvArticle.setText(newsItem.getArticle());
 
         tvViews.setVisibility(View.VISIBLE);
@@ -178,7 +217,6 @@ public class ScrollingActivity extends Activity implements
         }
     }
 
-
     private void getNews(final String id) {
         Utils.print(TAG, "getNews(id: " + id + ")");
         getApi().getNews(id).enqueue(new Callback<NewsItem>() {
@@ -189,7 +227,7 @@ public class ScrollingActivity extends Activity implements
                 Utils.print(TAG, "URL: " + response.raw().request().url());
                 Utils.print(TAG, "Status Code: " + response.code());
                 if (response.isSuccessful()) {
-                    bindNews(response.body());
+                    bindNews(response.body(), false);
                 } else {
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
                     // TODO
@@ -221,9 +259,16 @@ public class ScrollingActivity extends Activity implements
 
     void setResultAndFinish() {
         //content.setBackgroundColor(getResources().getColor(R.color.transparent));
-        final Intent resultData = new Intent();
-        resultData.putExtra(RESULT_EXTRA_NEWS_ID, "gfhjfgjftghjdtuhrtedy"); //newsItem.id);
-        setResult(RESULT_OK, resultData);
+        if (isRemoved) {
+            RealmController.with(getApplication()).deleteNewsItems(newsItem.get_id());
+        } else {
+            final Intent resultData = new Intent();
+            if (newsItem.isSaved() != defaultSaved) {
+                resultData.putExtra(RESULT_EXTRA_NEWS_ID, newsItem.get_id());
+                resultData.putExtra(RESULT_EXTRA_NEWS_SAVED, newsItem.isSaved());
+            }
+            setResult(RESULT_OK, resultData);
+        }
         finishAfterTransition();
     }
 

@@ -36,7 +36,8 @@ import retrofit2.Response;
  * Activities containing this fragment MUST implement the {@link OnListInteractionListener}
  * interface.
  */
-public class NewsItemFragment extends Fragment implements OnListInteractionListener {
+public class NewsItemFragment extends Fragment implements
+        OnListInteractionListener, Communication {
     private static final String TAG = "NewsItemFragment";
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -114,8 +115,8 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-       // if (!Utils.hasNavigationBar(TAG, getResources()))
-       //     mRecyclerView.setPadding(0, 0, 0, 0);
+        // if (!Utils.hasNavigationBar(TAG, getResources()))
+        //     mRecyclerView.setPadding(0, 0, 0, 0);
 
         setupSwipeLayout();
         setupRecyclerView();
@@ -149,6 +150,10 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
         connected = isCon;
         // TODO
         //showConnectedOrDisconnected();
+    }
+
+    public void onRefresh() {
+        getNews(mSource, mPage = 1);
     }
 
     @Override
@@ -261,7 +266,13 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
                         } else {
                             // TODO
                             //hideStubs();
-                            mAdapter = new NewsItemAdapter(getActivity(), response.body(), getListener());
+
+                            List<NewsItem> items = response.body();
+                            for (int i = 0; i < size; i++)
+                                if (RealmController.with(getActivity()).getNewsItem(items.get(i).get_id()) != null)
+                                    items.get(i).setSaved(true);
+
+                            mAdapter = new NewsItemAdapter(getActivity(), items, getListener());
                             mRecyclerView.setAdapter(mAdapter);
                             //Utils.print(TAG, response.body().getItems().toString());
                         }
@@ -273,7 +284,9 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
                             //Utils.showSnackbar(mCoordinatorLayout, mContext, R.string.response_cross_limit);
                         }
                     }
-                } else {
+                } else
+
+                {
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
                     // TODO
                     //if (isAdded() && getActivity() != null)
@@ -285,7 +298,7 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
 
             @Override
             public void onFailure(@NonNull Call<List<NewsItem>> call, @NonNull Throwable t) {
-                Utils.print(TAG, "onFailure()", Log.ERROR);
+                Utils.print(TAG, "onFailure(getNews(source))", Log.ERROR);
                 Utils.print(TAG, t.toString(), Log.ERROR);
                 if (mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing())
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -296,9 +309,37 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
         });
     }
 
-    protected void setSave(final String id) {
+    private void getNews(final String id) {
+        Utils.print(TAG, "getNews(id: " + id + ")");
+        getApi().getNews(id).enqueue(new Callback<NewsItem>() {
+
+            @Override
+            public void onResponse(@NonNull Call<NewsItem> call, @NonNull Response<NewsItem> response) {
+                Utils.print(TAG, "onResponse()");
+                Utils.print(TAG, "URL: " + response.raw().request().url());
+                Utils.print(TAG, "Status Code: " + response.code());
+                if (response.isSuccessful()) {
+                    realm.beginTransaction();
+                    NewsItem news = response.body();
+                    news.setSaved(true);
+                    realm.copyToRealm(news);
+                    realm.commitTransaction();
+                } else {
+                    Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NewsItem> call, @NonNull Throwable t) {
+                Utils.print(TAG, "onFailure(getNews(id))", Log.ERROR);
+                Utils.print(TAG, t.toString(), Log.ERROR);
+            }
+        });
+    }
+
+    protected void addSave(final String id, final boolean isSave) {
         Utils.print(TAG, "setSave(id: " + id + ")");
-        getApi().saveNews(id).enqueue(new Callback<NewsItem>() {
+        getApi().saveNews(id, isSave).enqueue(new Callback<NewsItem>() {
 
             @Override
             public void onResponse(@NonNull Call<NewsItem> call, @NonNull Response<NewsItem> response) {
@@ -309,7 +350,7 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
 
             @Override
             public void onFailure(@NonNull Call<NewsItem> call, @NonNull Throwable t) {
-                Utils.print(TAG, "onFailure()", Log.ERROR);
+                Utils.print(TAG, "onFailure(addSave)", Log.ERROR);
                 Utils.print(TAG, t.toString(), Log.ERROR);
                 if (isAdded() && getActivity() != null)
                     if (mListener != null) mListener.showSnackBar(R.string.response_fail);
@@ -327,19 +368,29 @@ public class NewsItemFragment extends Fragment implements OnListInteractionListe
     @Override
     public void onSave(final boolean save, final NewsItem news) {
         Utils.print(TAG, "onSave()");
+        news.setSaved(save);
         if (save) {
-            setSave(news.get_id());
-            realm.beginTransaction();
-            realm.copyToRealm(news);
-            realm.commitTransaction();
+            addSave(news.get_id(), save);
+            getNews(news.get_id());
             if (mListener != null) mListener.showSnackBar(R.string.response_saved);
         } else {
             if (mListener != null) mListener.showSnackBar(R.string.response_unsaved);
+            RealmController.with(this).deleteNewsItems(news.get_id());
         }
     }
 
     @Override
     public void onListFragmentInteraction(NewsItem item) {
         Utils.print(TAG, "onListFragmentInteraction()");
+    }
+
+    @Override
+    public void refresh() {
+        Utils.print(TAG, "refresh()");
+    }
+
+    public void changeSave(String id, boolean value) {
+        Utils.print(TAG, "changeSave()");
+        mAdapter.changeSaved(id, value);
     }
 }

@@ -49,7 +49,6 @@ public class RealmController {
     }
 
     public Realm getRealm() {
-
         return realm;
     }
 
@@ -81,12 +80,22 @@ public class RealmController {
     }
 
     //query example
-    public RealmResults<NewsItem> queryedNewsItems() {
+    public RealmResults<NewsItem> queryedNewsItems(String val) {
         return realm.where(NewsItem.class)
-                .contains("_id", "XXX")
-                .or()
-                .contains("title", "XXX")
+                .equalTo("_id", val)
                 .findAll();
+    }
 
+    public boolean deleteNewsItems(String val) {
+        NewsItem result = realm.where(NewsItem.class)
+                .equalTo("_id", val)
+                .findFirst();
+        if (result != null) {
+            realm.beginTransaction();
+            result.removeFromRealm();
+            realm.commitTransaction();
+            return true;
+        }
+        return false;
     }
 }

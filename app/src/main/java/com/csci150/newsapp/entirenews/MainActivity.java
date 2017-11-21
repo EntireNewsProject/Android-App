@@ -13,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import com.csci150.newsapp.entirenews.utils.FontAwareTabLayout;
 import com.csci150.newsapp.entirenews.utils.Utils;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +114,33 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Utils.print(TAG, "onActivityResult(" + requestCode + ")");
+        if (requestCode == 1) {
+            Utils.print(TAG, "Back from Save");
+            Fragment fragment = mPagerAdapter.getFragment(tabLayout.getSelectedTabPosition());
+            if (fragment != null && fragment instanceof NewsItemFragment) {
+                ((NewsItemFragment) fragment).onRefresh();
+            }
+        } else if (requestCode == 100) {
+            Utils.print(TAG, "Back from News");
+
+            if (resultCode == RESULT_OK) {
+                String id = data.getStringExtra(ScrollingActivity.RESULT_EXTRA_NEWS_ID);
+                boolean value = data.getBooleanExtra(ScrollingActivity.RESULT_EXTRA_NEWS_SAVED, false);
+                if (id != null) {
+                    Utils.print(TAG, "Saved changed: "+value);
+                    Fragment fragment = mPagerAdapter.getFragment(tabLayout.getSelectedTabPosition());
+                    if (fragment != null && fragment instanceof NewsItemFragment) {
+                        ((NewsItemFragment) fragment).changeSave(id, value);
+                    }
+                }
+
+            }
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -163,7 +192,7 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
         switch (item.getItemId()) {
             case R.id.action_saved:
                 intent = new Intent(getApplicationContext(), SavedActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 return true;
             case R.id.action_settings:
                 intent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -193,10 +222,33 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
      */
     public class PagerAdapter extends FragmentStatePagerAdapter {
         private List<String> mTabsChoicesSelected;
+        private final SparseArray<WeakReference<Fragment>> instantiatedFragments = new SparseArray<>();
 
         PagerAdapter(FragmentManager fm) {
             super(fm);
             mTabsChoicesSelected = new ArrayList<>();
+        }
+
+        public Fragment getFragment(final int position) {
+            final WeakReference<Fragment> wr = instantiatedFragments.get(position);
+            if (wr != null) {
+                return wr.get();
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        public Object instantiateItem(final ViewGroup container, final int position) {
+            final Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            instantiatedFragments.put(position, new WeakReference<>(fragment));
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(final ViewGroup container, final int position, final Object object) {
+            instantiatedFragments.remove(position);
+            super.destroyItem(container, position, object);
         }
 
         @Override

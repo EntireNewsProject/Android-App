@@ -14,6 +14,8 @@ import com.csci150.newsapp.entirenews.utils.ElasticDragDismissFrameLayout;
 import com.csci150.newsapp.entirenews.utils.FourThreeImageView;
 import com.csci150.newsapp.entirenews.utils.Utils;
 
+import org.parceler.Parcels;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +65,7 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener {
 
         final Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_NEWS_ITEM)) {
-            newsItem = intent.getParcelableExtra(EXTRA_NEWS_ITEM);
+            newsItem = Parcels.unwrap(intent.getParcelableExtra(EXTRA_NEWS_ITEM));
             bindNews(true);
         } else if (intent.getData() != null && intent.getDataString() != null) {
             final HttpUrl url = HttpUrl.parse(intent.getDataString());
