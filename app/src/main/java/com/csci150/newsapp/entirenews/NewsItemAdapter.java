@@ -33,6 +33,7 @@ import io.realm.Realm;
  */
 public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHolder> {
     private static final String TAG = "NewsItemAdapter";
+    private static final long CLICK_TIME_INTERVAL = 900;
     private static final int DEFAULT_SIZE = 12;
     private static final int ITEM_NEWS_LOAD = -1;
 
@@ -183,6 +184,13 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         holder.ivSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // to prevent spamming the button
+                long now = System.currentTimeMillis();
+                if (now - holder.mLastClickTime < CLICK_TIME_INTERVAL)
+                    return;
+                holder.mLastClickTime = now;
+
                 if (holder.mItem.isSaved()) {
                     holder.ivSave.setImageResource(R.drawable.ic_star_24dp);
 
@@ -312,13 +320,16 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        final View mView;
+        private long mLastClickTime = System.currentTimeMillis();
+
+        private final View mView;
         private final TextView tvTitle, tvSubtitle, tvViews, tvSaves, tvDate;
         private final ImageView ivCover;
         private final ImageButton ivSave;
         private final View vBody;
         private NewsItem mItem;
         private int position;
+
 
         ViewHolder(View view) {
             super(view);

@@ -84,5 +84,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_half"
             android:text="Android About Page" />
+
+        <Button
+            android:id="@+id/btnN3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_half"
+            android:text="NewsPaper3k" />
+        <Button
+            android:id="@+id/btnNA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_half"
+            android:text="NewsApi.org" />
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.csci150.newsapp.entirenews;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,6 +30,12 @@ public class LibActivity extends BaseActivity implements View.OnClickListener {
 
         Button btAAP = findViewById(R.id.btnAAP);
         btAAP.setOnClickListener(this);
+
+        Button btN3 = findViewById(R.id.btnN3);
+        btAAP.setOnClickListener(this);
+
+        Button btNA = findViewById(R.id.btnNA);
+        btAAP.setOnClickListener(this);
     }
 
     @Override
@@ -57,6 +62,14 @@ public class LibActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.btnAAP:
                 browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/medyo/android-about-page"));
+                startActivity(browserIntent);
+                break;
+            case R.id.btnN3:
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/codelucas/newspaper"));
+                startActivity(browserIntent);
+                break;
+            case R.id.btnNA:
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://newsapi.org/"));
                 startActivity(browserIntent);
                 break;
         }

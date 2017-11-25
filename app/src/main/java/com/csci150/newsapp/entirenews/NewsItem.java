@@ -26,6 +26,7 @@ public class NewsItem extends RealmObject {
     private String cover;
     private String article;
     private String slug;
+    private String url;
     private int saves;
     private int views;
     /*
@@ -117,6 +118,14 @@ public class NewsItem extends RealmObject {
 
     public void setViews(int views) {
         this.views = views;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
     /*
     public RealmList<RealmString> getKeywords() {

@@ -2,6 +2,7 @@ package com.csci150.newsapp.entirenews.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -236,5 +237,15 @@ public class Utils {
             print(TAG, "Couldn't determine whether the device has a navigation bar");
             return hasNavigationBarBackup(resources);
         }
+    }
+
+    public static void share(final String TAG, final Context context, final String name, final String title, final String url) {
+        print(TAG, "Share()");
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, title);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, url);
+        sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(Intent.createChooser(sharingIntent, name));
     }
 }

@@ -16,6 +16,8 @@
         <item quantity="other">%d saves</item>
     </plurals>
 
+    <string name="share">Share</string>
+
     <string-array name="list_sources_names">
         <item>BBC News</item>
         <item>Bloomberg</item>
@@ -209,28 +211,14 @@
 
     <string name="pref_title_sync_frequency">Choose notifications interval</string>
     <string-array name="pref_notifications_interval_titles">
-        <item>Never</item>
         <item>Every 6 Hours</item>
         <item>Every 12 Hours</item>
         <item>Every day</item>
     </string-array>
     <string-array name="pref_notifications_interval_values">
-        <item>-1</item>
         <item>6</item>
         <item>12</item>
         <item>24</item>
-    </string-array>
-
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
-
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
     </string-array>
 
     <string-array name="multi_select_list_preference_default_value" />
@@ -253,5 +241,7 @@
     <string name="pref_sample_summary">See what a notification looks like</string>
 
     <string name="font_name">fonts/angltrr.ttf</string>
+
+    <string name="description">An app, that will show current and recent news from all over the world. A nice, clean and simple user interface that is easy to use. Will show user live news feed from various and trusted news sources.\n(Powered by Newspaper3k and NewsApi)</string>
 
 </resources>

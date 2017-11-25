@@ -11,6 +11,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +38,8 @@ public class ScrollingActivity extends Activity implements
         NotifyingScrollView.OnScrollChangedListener,
         ViewTreeObserver.OnGlobalLayoutListener {
     private static final String TAG = "ScrollingActivity";
+    private static final long CLICK_TIME_INTERVAL = 900;
+    private long mLastClickTime = System.currentTimeMillis();
 
     public final static String RESULT_EXTRA_NEWS_ID = "RESULT_EXTRA_NEWS_ID";
     public final static String RESULT_EXTRA_NEWS_SAVED = "RESULT_EXTRA_NEWS_SAVED";
@@ -51,6 +54,7 @@ public class ScrollingActivity extends Activity implements
 
     private FourThreeImageView ivCover;
     private ConstraintLayout mLayout;
+    private ImageButton ibShare;
     //private FabToggle fab2;
     private ElasticDragDismissFrameLayout draggableFrame;
     private ElasticDragDismissFrameLayout.SystemChromeFader chromeFader;
@@ -82,6 +86,13 @@ public class ScrollingActivity extends Activity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // to prevent spamming the button
+                long now = System.currentTimeMillis();
+                if (now - mLastClickTime < CLICK_TIME_INTERVAL)
+                    return;
+                mLastClickTime = now;
+
                 if (newsItem.isSaved()) {
                     fab.setImageResource(R.drawable.ic_star_white_24dp);
                     Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(),
@@ -102,6 +113,16 @@ public class ScrollingActivity extends Activity implements
                 }
             }
         });
+
+        ibShare = findViewById(R.id.ib_share);
+        ibShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.share(TAG, getApplicationContext(), getString(R.string.share),
+                        newsItem.getTitle(), newsItem.getUrl());
+            }
+        });
+
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //fab2 = findViewById(R.id.fab2);
         ivCover = findViewById(R.id.iv_cover);
@@ -137,16 +158,13 @@ public class ScrollingActivity extends Activity implements
 
             newsItem = RealmController.with(this).getNewsItem(id);
             bindNews(true, true);
-
-            Utils.print(TAG, "AAA " + id);
+            //Utils.print(TAG, "AAA " + id);
         } else if (intent.hasExtra(EXTRA_NEWS_ITEM)) {
             newsItem = Parcels.unwrap(intent.getParcelableExtra(EXTRA_NEWS_ITEM));
             bindNews(true, false);
-
-            Utils.print(TAG, "BBB " + newsItem.getTitle());
+            //Utils.print(TAG, "BBB " + newsItem.getTitle());
         } else {
-
-            Utils.print(TAG, "CCC " + newsItem.isSaved());
+            Utils.print(TAG, "No news to show");
         }
     }
 
@@ -190,6 +208,26 @@ public class ScrollingActivity extends Activity implements
         else
             fab.setImageResource(R.drawable.ic_star_white_24dp);
 
+        String views;
+        if (isLocal)
+            views = getResources()
+                    .getQuantityString(R.plurals.views, (newsItem.getViews()),
+                            (newsItem.getViews()));
+        else
+            views = getResources()
+                    .getQuantityString(R.plurals.views, (newsItem.getViews() + 1),
+                            (newsItem.getViews()) + 1);
+        tvViews.setText(views);
+
+        if (newsItem.getSaves() > 0) {
+            String saves = getResources()
+                    .getQuantityString(R.plurals.saves, newsItem.getSaves(), newsItem.getSaves());
+            tvSaves.setText(saves);
+            tvSaves.setVisibility(View.VISIBLE);
+        } else {
+            tvSaves.setVisibility(View.GONE);
+        }
+
         if (isLocal)
             bindNews(newsItem, isLocal);
         else
@@ -201,20 +239,6 @@ public class ScrollingActivity extends Activity implements
         if (!isLocal)
             newsItem.setSaved(defaultSaved);
         tvArticle.setText(newsItem.getArticle());
-
-        tvViews.setVisibility(View.VISIBLE);
-        String views = getResources()
-                .getQuantityString(R.plurals.views, newsItem.getViews(), newsItem.getViews());
-        tvViews.setText(views);
-
-        if (newsItem.getSaves() > 0) {
-            tvSaves.setVisibility(View.VISIBLE);
-            String saves = getResources()
-                    .getQuantityString(R.plurals.saves, newsItem.getSaves(), newsItem.getSaves());
-            tvSaves.setText(saves);
-        } else {
-            tvSaves.setVisibility(View.GONE);
-        }
     }
 
     private void getNews(final String id) {
