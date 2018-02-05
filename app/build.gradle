@@ -7,13 +7,13 @@ ext.versions = [
         'buildTools'    : '26.0.2',
         'glide'         : '4.1.1',
         'retrofit'      : '2.3.0',
-        'supportLibrary': '27.0.0',
+        'supportLibrary': '26.0.0',
         'realm'         : '0.87.5'
 ]
 
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+    compileSdkVersion 26
+    buildToolsVersion '26.0.3'
     defaultConfig {
         applicationId "com.csci150.newsapp.entirenews"
         minSdkVersion versions.minimumSdk
@@ -31,29 +31,23 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:design:${versions.supportLibrary}"
     implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
     implementation "com.android.support:support-v13:${versions.supportLibrary}"
     implementation "com.android.support:support-v4:${versions.supportLibrary}"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
-
     implementation "com.github.bumptech.glide:glide:${versions.glide}"
     annotationProcessor "com.github.bumptech.glide:compiler:${versions.glide}"
-
     implementation "io.realm:realm-android:${versions.realm}"
     annotationProcessor "io.realm:realm-android:${versions.realm}"
-
     implementation 'org.parceler:parceler-api:1.1.9'
     annotationProcessor 'org.parceler:parceler:1.1.9'
-
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'net.danlew:android.joda:2.9.9'
     implementation 'com.github.medyo:android-about-page:1.2'
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
