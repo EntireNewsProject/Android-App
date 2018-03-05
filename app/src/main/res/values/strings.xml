@@ -6,7 +6,7 @@
     <string name="action_privacy">Privacy Policy</string>
     <string name="action_lib">Libraries We Use</string>
     <string name="activity_signup">Sign Up</string>
-    <string name="activity_login">Login</string>
+    <string name="activity_login">Log In</string>
 
     <plurals name="views">
         <item quantity="one">%d view</item>

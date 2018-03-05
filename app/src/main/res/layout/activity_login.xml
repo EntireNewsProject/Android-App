@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/activity_login"
-        android:textSize="35dp"
+        android:textSize="36sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         android:shadowColor="@color/text_shadow"
@@ -23,7 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginEnd="@dimen/margin_full_half"
+        android:layout_marginStart="@dimen/margin_full_half">
         <android.support.design.widget.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
@@ -44,14 +46,16 @@
                 android:layout_width="match_parent"
                 android:id="@+id/password"
                 android:hint="Password"
-                android:inputType="textVisiblePassword"
+                android:inputType="textPassword"
                 android:layout_marginBottom="20dp"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button
+            android:textSize="16sp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:text="Log In"
+            android:background="@drawable/rounded_buttons"
             android:id="@+id/login"
             android:textColor="@color/colorPrimary"/>
 
