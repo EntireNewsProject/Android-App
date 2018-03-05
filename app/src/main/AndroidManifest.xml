@@ -73,7 +73,8 @@
         <activity android:name=".LibActivity" />
         <activity android:name=".PrivatePolicyActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".IntroActivity"></activity>
+        <activity android:name=".IntroActivity" />
+        <activity android:name=".SignupActivity"></activity>
     </application>
 
 </manifest>
