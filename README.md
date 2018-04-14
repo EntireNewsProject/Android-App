@@ -70,7 +70,7 @@ Free Libries used in this project:
 License
 ----
 
-2017 FSU License
+2018 FSU License
 
 **Made with love from Fresno, CA**  💗
 

@@ -8,36 +8,48 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     tools:context="com.csci150.newsapp.entirenews.SignupActivity">
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/activity_login"
+        android:text="@string/activity_signup"
         android:textSize="36sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         android:shadowColor="@color/text_shadow"
         android:shadowDx="1"
         android:shadowDy="1"
-        android:shadowRadius="2" />
+        android:shadowRadius="2"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:orientation="vertical"
         android:layout_marginEnd="@dimen/margin_full_half"
-        android:layout_marginStart="@dimen/margin_full_half">
+        android:layout_marginStart="@dimen/margin_full_half"
+        android:layout_marginTop="150dp"
+        android:orientation="vertical">
+     <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/name"
+            android:hint="User Name"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="20dp"/>
+     </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
             <EditText
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:id="@+id/name"
-                android:hint="User Name"
-                android:inputType="textPersonName"
+                android:id="@+id/Email"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
                 android:layout_marginBottom="20dp"/>
         </android.support.design.widget.TextInputLayout>
-
         <android.support.design.widget.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
@@ -50,13 +62,22 @@
                 android:layout_marginBottom="20dp"/>
         </android.support.design.widget.TextInputLayout>
 
+        <!--Button
+            android:id ="@+id/push_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rounded Corners Button"
+            android:background="@drawable/button_bg_rounded_corners"
+            android:padding="15dp"
+            /-->
+
         <Button
             android:textSize="16sp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:text="Log In"
+            android:text="Sign Up"
             android:background="@drawable/rounded_buttons"
-            android:id="@+id/login"
+            android:id="@+id/sign_up"
             android:textColor="@color/colorPrimary"/>
 
     </LinearLayout>
