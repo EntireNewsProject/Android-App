@@ -14,7 +14,7 @@
         android:layout_marginEnd="@dimen/margin_full"
         android:layout_marginTop="@dimen/margin_full"
         android:minHeight="115dp"
-        android:src="@drawable/sample"
+        android:src="@drawable/error"
         android:transitionName="@string/transition_news"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

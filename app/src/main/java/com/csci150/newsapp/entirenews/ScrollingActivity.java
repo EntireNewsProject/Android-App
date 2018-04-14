@@ -97,18 +97,26 @@ public class ScrollingActivity extends Activity implements
                     fab.setImageResource(R.drawable.ic_star_white_24dp);
                     Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(),
                             getString(R.string.response_unsaved));
-                    realm.beginTransaction();
-                    newsItem.setSaved(!newsItem.isSaved());
-                    realm.commitTransaction();
+                    try {
+                        realm.beginTransaction();
+                        newsItem.setSaved(!newsItem.isSaved());
+                        realm.commitTransaction();
+                    } catch (Exception ignored) {
+                        realm.commitTransaction();
+                    }
                     isRemoved = true;
                 } else {
                     fab.setImageResource(R.drawable.ic_star_white_solid_24dp);
                     Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(),
                             getString(R.string.response_saved));
                     newsItem.setSaved(!newsItem.isSaved());
-                    realm.beginTransaction();
-                    realm.copyToRealm(newsItem);
-                    realm.commitTransaction();
+                    try {
+                        realm.beginTransaction();
+                        realm.copyToRealm(newsItem);
+                        realm.commitTransaction();
+                    } catch (Exception ignored) {
+                        realm.commitTransaction();
+                    }
                     isRemoved = false;
                 }
             }
@@ -177,7 +185,7 @@ public class ScrollingActivity extends Activity implements
         createMap();
         Glide.with(this)
                 .load(newsItem.getCover())
-                .apply(new RequestOptions().centerCrop().error(R.drawable.sample))
+                .apply(new RequestOptions().centerCrop().error(R.drawable.error))
                 .into(ivCover);
 
         if (postponeEnterTransition) postponeEnterTransition();
@@ -283,16 +291,16 @@ public class ScrollingActivity extends Activity implements
 
     void setResultAndFinish() {
         //content.setBackgroundColor(getResources().getColor(R.color.transparent));
-        if (isRemoved) {
+        if (isRemoved)
             RealmController.with(getApplication()).deleteNewsItems(newsItem.get_id());
-        } else {
-            final Intent resultData = new Intent();
-            if (newsItem.isSaved() != defaultSaved) {
-                resultData.putExtra(RESULT_EXTRA_NEWS_ID, newsItem.get_id());
-                resultData.putExtra(RESULT_EXTRA_NEWS_SAVED, newsItem.isSaved());
-            }
-            setResult(RESULT_OK, resultData);
+        //} else {
+        final Intent resultData = new Intent();
+        if (newsItem.isSaved() != defaultSaved) {
+            resultData.putExtra(RESULT_EXTRA_NEWS_ID, newsItem.get_id());
+            resultData.putExtra(RESULT_EXTRA_NEWS_SAVED, newsItem.isSaved());
         }
+        setResult(RESULT_OK, resultData);
+        // }
         finishAfterTransition();
     }
 

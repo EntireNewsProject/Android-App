@@ -170,7 +170,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         Glide.with(host)
                 .load(holder.mItem.getCover())
                 // TODO change err
-                .apply(new RequestOptions().centerCrop().error(R.drawable.sample))
+                .apply(new RequestOptions().centerCrop().error(R.drawable.error))
                 .into(holder.ivCover);
 
         holder.ivCover.setBackground(new ColorDrawable(Color.DKGRAY));

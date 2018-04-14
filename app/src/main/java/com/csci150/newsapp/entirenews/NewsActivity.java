@@ -76,11 +76,10 @@ public class NewsActivity extends BaseActivity implements View.OnClickListener {
     }
 
     void bindNews(final boolean postponeEnterTransition) {
-        //final Resources res = getResources();
         createMap();
         Glide.with(this)
                 .load(newsItem.getCover())
-                .apply(new RequestOptions().centerCrop().error(R.drawable.sample))
+                .apply(new RequestOptions().centerCrop().error(R.drawable.error))
                 .into(ivCover);
 
         if (postponeEnterTransition) postponeEnterTransition();
