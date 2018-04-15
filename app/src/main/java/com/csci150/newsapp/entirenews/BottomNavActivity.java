@@ -1,15 +1,18 @@
 package com.csci150.newsapp.entirenews;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class BottomNavActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private Fragment fragment;
+    private FragmentManager fragmentManager;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -17,19 +20,21 @@ public class BottomNavActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_all_news:
-                    mTextMessage.setText(R.string.title_all_news);
-                    return true;
+
+                    break;
                 case R.id.navigation_recommended:
-                    mTextMessage.setText(R.string.title_recommended);
-                    return true;
+
+                    break;
                 case R.id.navigation_trending:
-                    mTextMessage.setText(R.string.title_trending);
-                    return true;
+
+                    break;
                 case R.id.navigation_saved:
-                    mTextMessage.setText(R.string.title_saved);
-                    return true;
+
+                    break;
             }
-            return false;
+            final FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.main_container, fragment).commit();
+            return true;
         }
     };
 
@@ -38,10 +43,10 @@ public class BottomNavActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_nav);
 
-        mTextMessage = findViewById(R.id.message);
+        fragmentManager = getFragmentManager();
+
         BottomNavigationView navigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
-
 }
