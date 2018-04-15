@@ -245,5 +245,11 @@
     <string name="font_name">fonts/angltrr.ttf</string>
 
     <string name="description">An app, that will show current and recent news from all over the world. A nice, clean and simple user interface that is easy to use. Will show user live news feed from various and trusted news sources.\n(Powered by Newspaper3k and NewsApi)</string>
+    <string name="title_activity_bottom_nav">BottomNavActivity</string>
+
+    <string name="title_all_news">All sources</string>
+    <string name="title_recommended">Recommended</string>
+    <string name="title_trending">Trending</string>
+    <string name="title_saved">Saved</string>
 
 </resources>

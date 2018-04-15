@@ -42,6 +42,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:${versions.glide}", {
         exclude group: "com.android.support"
     })
+    implementation 'com.android.support:design:26.1.0'
     annotationProcessor "com.github.bumptech.glide:compiler:${versions.glide}"
     implementation "io.realm:realm-android:${versions.realm}"
     annotationProcessor "io.realm:realm-android:${versions.realm}"
@@ -49,7 +50,7 @@ dependencies {
     annotationProcessor 'org.parceler:parceler:1.1.9'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'net.danlew:android.joda:2.9.9'
-    implementation('com.github.medyo:android-about-page:1.2' , {
+    implementation('com.github.medyo:android-about-page:1.2', {
         exclude group: "com.android.support"
     })
     testImplementation 'junit:junit:4.12'
