@@ -45,6 +45,7 @@ public class BottomNavActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_nav);
+        Utils.print(TAG, "onCreate");
 
         fragmentManager = getFragmentManager();
 
@@ -58,5 +59,17 @@ public class BottomNavActivity extends AppCompatActivity {
             transaction.replace(R.id.main_container, AllNewsFragment.newInstance(), null)
                     .commit();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Utils.print(TAG, "onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Utils.print(TAG, "onPause");
     }
 }

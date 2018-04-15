@@ -2,10 +2,13 @@ package com.csci150.newsapp.entirenews;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.csci150.newsapp.entirenews.utils.Utils;
 
 
 /**
@@ -14,6 +17,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class AllNewsFragment extends Fragment {
+    private final String TAG = "AllNewsFragment";
 
     public AllNewsFragment() {
         // Required empty public constructor
@@ -32,13 +36,39 @@ public class AllNewsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.print(TAG, "onCreate");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Utils.print(TAG, "onCreateView");
         return inflater.inflate(R.layout.fragment_all_news, container, false);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Utils.print(TAG, "onResume");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Utils.print(TAG, "onPause");
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Utils.print(TAG, "onAttach");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Utils.print(TAG, "onDetach");
+    }
 }
