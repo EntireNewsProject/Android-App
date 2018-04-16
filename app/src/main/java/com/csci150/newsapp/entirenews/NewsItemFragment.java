@@ -432,6 +432,4 @@ public class NewsItemFragment extends Fragment implements
             }
         });
     }
-
-
 }

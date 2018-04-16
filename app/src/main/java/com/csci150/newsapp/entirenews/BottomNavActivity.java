@@ -23,16 +23,16 @@ public class BottomNavActivity extends AppCompatActivity implements OnFragmentIn
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_all_news:
-                    fragment = NewsItemFragment.newInstance(1);
+                    fragment = AllNewsFragment.newInstance();
                     break;
                 case R.id.navigation_recommended:
-                    fragment = AllNewsFragment.newInstance();
+                    fragment = NewsItemFragment.newInstance(1);
                     break;
                 case R.id.navigation_trending:
-                    fragment = AllNewsFragment.newInstance();
+                    fragment = NewsItemFragment.newInstance(2);
                     break;
                 case R.id.navigation_saved:
-                    fragment = AllNewsFragment.newInstance();
+                    fragment = SavedFragment.newInstance();
                     break;
             }
             final FragmentTransaction transaction = fragmentManager.beginTransaction();

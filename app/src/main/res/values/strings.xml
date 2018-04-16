@@ -58,6 +58,7 @@
     <string name="save">Save</string>
     <string name="saved">Saved</string>
     <string name="views">120 Views</string>
+    <string name="saves">120 Saves</string>
     <string name="date">October 2, 2017</string>
 
     <string name="response_saved">News saved for offline reading.</string>
