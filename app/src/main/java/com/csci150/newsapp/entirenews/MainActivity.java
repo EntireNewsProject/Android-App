@@ -229,7 +229,7 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
             mTabsChoicesSelected = new ArrayList<>();
         }
 
-        public Fragment getFragment(final int position) {
+        Fragment getFragment(final int position) {
             final WeakReference<Fragment> wr = instantiatedFragments.get(position);
             if (wr != null) {
                 return wr.get();

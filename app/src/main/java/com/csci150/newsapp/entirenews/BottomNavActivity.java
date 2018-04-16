@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.csci150.newsapp.entirenews.utils.Utils;
 
-public class BottomNavActivity extends AppCompatActivity {
+public class BottomNavActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     private final String TAG = "BottomNavActivity";
 
     private Fragment fragment;
@@ -23,7 +23,7 @@ public class BottomNavActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_all_news:
-                    fragment = AllNewsFragment.newInstance();
+                    fragment = NewsItemFragment.newInstance(1);
                     break;
                 case R.id.navigation_recommended:
                     fragment = AllNewsFragment.newInstance();
@@ -71,5 +71,15 @@ public class BottomNavActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Utils.print(TAG, "onPause");
+    }
+
+    @Override
+    public void showSnackBar(int resId) {
+
+    }
+
+    @Override
+    public void showSnackBar(String msg) {
+
     }
 }

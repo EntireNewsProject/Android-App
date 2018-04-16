@@ -1,6 +1,7 @@
 package com.csci150.newsapp.entirenews;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toolbar;
 
 import com.csci150.newsapp.entirenews.utils.ApiInterface;
 import com.csci150.newsapp.entirenews.utils.ApiPrefs;
@@ -42,15 +44,17 @@ public class NewsItemFragment extends Fragment implements
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_PARAM_SOURCE = "param-source";
+    private static final String ARG_PARAM_TYPE = "param-type";
 
     private ApiPrefs mApiPrefs;
     private Context mContext;
-    private int mPage = 1;
+    private int mPage = 1, mType = 0;
     private String mSource;
     private int mColumnCount;
     private List<NewsItem> mItems;
     private boolean connected = true;
 
+    protected Toolbar toolbar;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LinearLayout layoutEmpty, layoutNoInternet, layoutError, layoutNoSaved;
@@ -64,6 +68,14 @@ public class NewsItemFragment extends Fragment implements
      * fragment (e.g. upon screen orientation changes).
      */
     public NewsItemFragment() {
+    }
+
+    public static NewsItemFragment newInstance(int type) {
+        NewsItemFragment fragment = new NewsItemFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_PARAM_TYPE, type);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     public static NewsItemFragment newInstance(String source) {
@@ -96,14 +108,21 @@ public class NewsItemFragment extends Fragment implements
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT, 1);
-            mSource = getArguments().getString(ARG_PARAM_SOURCE, "default");
+            mType = getArguments().getInt(ARG_PARAM_TYPE, 0);
+            mSource = getArguments().getString(ARG_PARAM_SOURCE, "bbc-news");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_newsitem_list, container, false);
+        View view;
+        if (mType == 0)
+            view = inflater.inflate(R.layout.fragment_newsitem_list, container, false);
+        else {
+            view = inflater.inflate(R.layout.fragment_newsitem_list_with_toolbar, container, false);
+            toolbar = view.findViewById(R.id.toolbar);
+        }
         mRecyclerView = view.findViewById(R.id.list);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
         // Set the adapter
@@ -118,6 +137,8 @@ public class NewsItemFragment extends Fragment implements
         // if (!Utils.hasNavigationBar(TAG, getResources()))
         //     mRecyclerView.setPadding(0, 0, 0, 0);
 
+        if (mType != 0 && toolbar != null)
+            setupToolbar(false, true);
         setupSwipeLayout();
         setupRecyclerView();
         checkConnectivity();
@@ -393,4 +414,24 @@ public class NewsItemFragment extends Fragment implements
         Utils.print(TAG, "changeSave()");
         mAdapter.changeSaved(id, value);
     }
+
+    protected void setupToolbar(boolean showTitle, boolean homeAsUp) {
+        getActivity().setActionBar(toolbar);
+
+        ActionBar actionBar = getActivity().getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(showTitle);
+            actionBar.setDisplayHomeAsUpEnabled(homeAsUp);
+            actionBar.setDisplayShowHomeEnabled(homeAsUp);
+        }
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+    }
+
+
 }
