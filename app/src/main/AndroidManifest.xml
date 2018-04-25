@@ -21,8 +21,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.Home">
-        </activity>
+            android:theme="@style/AppTheme.Home"></activity>
         <activity
             android:name=".NewsActivity"
             android:label="@string/app_name"
@@ -69,17 +68,17 @@
         <activity android:name=".PrivatePolicyActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".IntroActivity" />
-        <activity android:name=".SignupActivity" />
-        <activity
-            android:name=".BottomNavActivity"
-            android:label="@string/title_activity_bottom_nav"
-            android:theme="@style/AppTheme.Home">
+        <activity android:name=".SignupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".BottomNavActivity"
+            android:label="@string/title_activity_bottom_nav"
+            android:theme="@style/AppTheme.Home"></activity>
     </application>
 
 </manifest>

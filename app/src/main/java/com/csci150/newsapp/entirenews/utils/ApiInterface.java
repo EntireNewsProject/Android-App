@@ -38,13 +38,13 @@ public interface ApiInterface {
             @Query("savecheck") boolean save);
 
     @FormUrlEncoded
-    @POST("login/token")
+    @POST("user/login")
     Call<Ping> login(
             @NonNull @Field("username") String username,
             @NonNull @Field("password") String password);
 
     @FormUrlEncoded
-    @POST("register")
+    @POST("user/register")
     Call<Ping> register(
             @NonNull @Field("email") RequestBody email,
             @NonNull @Field("password") RequestBody password,
