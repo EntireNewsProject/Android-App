@@ -76,14 +76,14 @@ public class SignupActivity extends DataActivity implements View.OnClickListener
                 Utils.print(TAG, "onResponse()");
                 Utils.print(TAG, "URL: " + response.raw().request().url());
                 Utils.print(TAG, "Status Code: " + response.code());
-
                 if (response.isSuccessful()) {
                     onMessage(response.body().getMessage());
                     //TODO start login, close this one
                     onBackPressed();
                 } else {
+                    //TODO get error message from server
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
-                    Utils.showSnackbar(mCoordinatorLayout, mContext, response.body().getMessage(), true);
+                    Utils.showSnackbar(mCoordinatorLayout, mContext, "Registration failed, please try again", true);
                 }
             }
 

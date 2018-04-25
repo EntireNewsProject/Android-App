@@ -27,8 +27,8 @@ public class ApiPrefs {
     private ApiInterface api;
 
     private ApiPrefs(Context context) {
-        prefs = context.getApplicationContext().getSharedPreferences(APP_PREF, Context
-                .MODE_PRIVATE);
+        prefs = context.getApplicationContext()
+                .getSharedPreferences(APP_PREF, Context.MODE_PRIVATE);
     }
 
     public static ApiPrefs get(Context context) {
