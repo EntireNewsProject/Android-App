@@ -67,6 +67,5 @@ public abstract class BaseActivity extends Activity {
                 .setStartDelay(300)
                 .setDuration(900)
                 .setInterpolator(AnimUtils.getFastOutSlowInInterpolator(this));
-
     }
 }

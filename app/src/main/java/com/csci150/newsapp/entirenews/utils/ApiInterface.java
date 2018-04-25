@@ -2,12 +2,12 @@ package com.csci150.newsapp.entirenews.utils;
 
 import android.support.annotation.NonNull;
 
+import com.csci150.newsapp.entirenews.Login;
 import com.csci150.newsapp.entirenews.NewsItem;
-import com.csci150.newsapp.entirenews.Ping;
+import com.csci150.newsapp.entirenews.Register;
 
 import java.util.List;
 
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -39,16 +39,16 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("user/login")
-    Call<Ping> login(
+    Call<Login> login(
             @NonNull @Field("username") String username,
             @NonNull @Field("password") String password);
 
     @FormUrlEncoded
     @POST("user/register")
-    Call<Ping> register(
-            @NonNull @Field("email") RequestBody email,
-            @NonNull @Field("password") RequestBody password,
-            @NonNull @Field("username") RequestBody username,
-            @NonNull @Field("fullName") RequestBody firstName);
+    Call<Register> register(
+            @NonNull @Field("email") String email,
+            @NonNull @Field("password") String password,
+            @NonNull @Field("username") String username,
+            @NonNull @Field("fullName") String firstName);
 
 }
