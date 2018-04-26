@@ -36,6 +36,10 @@ public interface ApiInterface {
 
     @GET("news/{id}")
     Call<NewsItem> getNews(
+            @NonNull @Path("id") String id);
+
+    @GET("news/{id}")
+    Call<NewsItem> getNews(
             @Header("Authorization") String token,
             @NonNull @Path("id") String id);
 

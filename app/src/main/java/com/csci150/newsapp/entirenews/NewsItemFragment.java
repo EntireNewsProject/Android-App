@@ -333,8 +333,12 @@ public class NewsItemFragment extends Fragment implements
 
     private void getNews(final String id) {
         Utils.print(TAG, "getNews(id: " + id + ")");
-        getApi().getNews(id).enqueue(new Callback<NewsItem>() {
-
+        Call<NewsItem> call;
+        if (mApiPrefs.isLoggedIn())
+            call = getApi().getNews(id);
+        else
+            call = getApi().getNews(mApiPrefs.getAccessToken(), id);
+        call.enqueue(new Callback<NewsItem>() {
             @Override
             public void onResponse(@NonNull Call<NewsItem> call, @NonNull Response<NewsItem> response) {
                 Utils.print(TAG, "onResponse()");

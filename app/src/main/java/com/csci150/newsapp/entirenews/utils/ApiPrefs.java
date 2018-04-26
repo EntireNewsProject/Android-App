@@ -1,5 +1,6 @@
 package com.csci150.newsapp.entirenews.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
@@ -83,6 +84,7 @@ public class ApiPrefs {
         return isLoggedIn;
     }
 
+    @SuppressLint("ApplySharedPref")
     public void login(User user, String token) {
         if (!TextUtils.isEmpty(token)) {
             accessToken = token;
@@ -97,7 +99,7 @@ public class ApiPrefs {
             editor.putString(KEY_USER_USERNAME, userUsername);
             editor.putString(KEY_USER_EMAIL, userEmail);
             editor.putInt(KEY_USER_TYPE, userType);
-            editor.apply();
+            editor.commit();
         }
     }
 

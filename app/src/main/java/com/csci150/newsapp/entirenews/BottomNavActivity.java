@@ -1,21 +1,31 @@
 package com.csci150.newsapp.entirenews;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.csci150.newsapp.entirenews.utils.ApiPrefs;
 import com.csci150.newsapp.entirenews.utils.Utils;
 
-public class BottomNavActivity extends AppCompatActivity implements OnFragmentInteractionListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class BottomNavActivity extends Activity implements OnFragmentInteractionListener {
     private final String TAG = "BottomNavActivity";
 
     private Fragment fragment;
     private FragmentManager fragmentManager;
+    //public ApiInterface api;
+    private ApiPrefs mAppPrefs;
+    private ConstraintLayout mLayout;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,6 +58,7 @@ public class BottomNavActivity extends AppCompatActivity implements OnFragmentIn
         Utils.print(TAG, "onCreate");
 
         fragmentManager = getFragmentManager();
+        mAppPrefs = ApiPrefs.get(this);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
@@ -59,12 +70,60 @@ public class BottomNavActivity extends AppCompatActivity implements OnFragmentIn
             transaction.replace(R.id.main_container, AllNewsFragment.newInstance(), null)
                     .commit();
         }
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String message = bundle.getString("message", null);
+            String token = bundle.getString("token", null);
+            String fullName = bundle.getString("fullName", "");
+            String username = bundle.getString("username", null);
+            String email = bundle.getString("email", null);
+            int type = bundle.getInt("type", 0);
+            if (message != null)
+                Utils.showSnackbar(mLayout, getApplicationContext(), message);
+            if (token != null && username != null && email != null) {
+                User user = new User(fullName, username, email, type);
+                mAppPrefs.login(user, token);
+            }
+        }
+    }
+
+    private void ping() {
+        Utils.print(TAG, "ping(token)");
+        mAppPrefs.getApi().ping(mAppPrefs.getAccessToken()).enqueue(new Callback<Ping>() {
+            @Override
+            public void onResponse(@NonNull Call<Ping> call, @NonNull Response<Ping> response) {
+                Utils.print(TAG, "onResponse()");
+                Utils.print(TAG, "URL: " + response.raw().request().url());
+                Utils.print(TAG, "Status Code: " + response.code());
+                if (response.isSuccessful()) {
+                    mAppPrefs.login(response.body().getUser(), response.body().getToken());
+                    updateUi();
+                } else {
+                    Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
+                    updateUi();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Ping> call, @NonNull Throwable t) {
+                Utils.print(TAG, "onFailure()", Log.ERROR);
+                Utils.print(TAG, t.toString(), Log.ERROR);
+                updateUi();
+            }
+        });
+    }
+
+    private void updateUi() {
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Utils.print(TAG, "onResume");
+        if (mAppPrefs.isLoggedIn()) ping();
+        else updateUi();
     }
 
     @Override

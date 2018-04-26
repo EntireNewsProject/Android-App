@@ -80,6 +80,10 @@ public class LoginActivity extends DataActivity implements View.OnClickListener 
                     Bundle bundle = new Bundle();
                     bundle.putString("message", response.body().getMessage());
                     bundle.putString("token", response.body().getToken());
+                    bundle.putString("username", response.body().getUser().getUsername());
+                    bundle.putString("email", response.body().getUser().getEmail());
+                    bundle.putInt("type", response.body().getUser().getType());
+                    bundle.putString("fullName", response.body().getUser().getFullName());
                     intent.putExtras(bundle);
                     startActivity(intent);
                     finish();

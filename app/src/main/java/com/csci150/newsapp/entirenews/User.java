@@ -8,6 +8,17 @@ import com.google.gson.annotations.SerializedName;
  * A listing app, where you can find everything in one place.
  */
 public class User {
+
+    User() {
+    }
+
+    User(String fullName, String username, String email, Integer type) {
+        this.fullName = fullName;
+        this.username = username;
+        this.email = email;
+        this.type = type;
+    }
+
     @SerializedName("_id")
     @Expose
     private String id;
