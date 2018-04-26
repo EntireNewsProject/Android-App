@@ -12,9 +12,25 @@ public class Login {
 
     @SerializedName("message")
     @Expose
-    public String message;
+    private String message;
     @SerializedName("token")
     @Expose
-    public String token;
+    private String token;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }
 

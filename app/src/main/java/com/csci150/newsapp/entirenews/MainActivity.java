@@ -94,6 +94,14 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
         }
         //tabLayout.post(tabLayoutConfig);
         //Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(), R.string.response_saved);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String message = bundle.getString("message", null);
+            if (message != null)
+                Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(), message);
+        }
+
     }
 
     private Runnable tabLayoutConfig = new Runnable() {
@@ -130,7 +138,7 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
                 String id = data.getStringExtra(ScrollingActivity.RESULT_EXTRA_NEWS_ID);
                 boolean value = data.getBooleanExtra(ScrollingActivity.RESULT_EXTRA_NEWS_SAVED, false);
                 if (id != null) {
-                    Utils.print(TAG, "Saved changed: "+value);
+                    Utils.print(TAG, "Saved changed: " + value);
                     Fragment fragment = mPagerAdapter.getFragment(tabLayout.getSelectedTabPosition());
                     if (fragment != null && fragment instanceof NewsItemFragment) {
                         ((NewsItemFragment) fragment).changeSave(id, value);

@@ -1,5 +1,6 @@
 package com.csci150.newsapp.entirenews;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -77,9 +78,12 @@ public class SignupActivity extends DataActivity implements View.OnClickListener
                 Utils.print(TAG, "URL: " + response.raw().request().url());
                 Utils.print(TAG, "Status Code: " + response.code());
                 if (response.isSuccessful()) {
-                    onMessage(response.body().getMessage());
-                    //TODO start login, close this one
-                    onBackPressed();
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("message", response.body().getMessage());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
                 } else {
                     //TODO get error message from server
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
