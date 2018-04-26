@@ -25,6 +25,7 @@ public class NewsItem extends RealmObject {
     private String source;
     private String cover;
     private String article;
+    private String summary;
     private String slug;
     private String url;
     private int saves;
@@ -150,6 +151,14 @@ public class NewsItem extends RealmObject {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }
 

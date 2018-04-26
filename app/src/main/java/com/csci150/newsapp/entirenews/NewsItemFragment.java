@@ -299,7 +299,8 @@ public class NewsItemFragment extends Fragment implements
                     else
                         getNews(mSource, mPage = 1);
                 else {
-                    if (mListener != null) mListener.showSnackBar(R.string.response_fail);
+                    if (mListener != null)
+                        mListener.showSnackBar(R.string.response_fail);
                     //Utils.showSnackbar(mCoordinatorLayout, mContext, getString(R.string.response_fail));
                     if (mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing())
                         mSwipeRefreshLayout.setRefreshing(false);
@@ -326,7 +327,8 @@ public class NewsItemFragment extends Fragment implements
                     getNews(mSource, mPage = 1);
                 } else {
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
-                    mListener.showSnackBar("Please login to view this content. Thank you.");
+                    if (mListener != null)
+                        mListener.showSnackBar("Please login to view this content. Thank you.");
                 }
             }
 
@@ -336,7 +338,8 @@ public class NewsItemFragment extends Fragment implements
                 Utils.print(TAG, t.toString(), Log.ERROR);
                 if (mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing())
                     mSwipeRefreshLayout.setRefreshing(false);
-                mListener.showSnackBar(R.string.response_error);
+                if (mListener != null)
+                    mListener.showSnackBar(R.string.response_error);
             }
         });
     }
@@ -364,7 +367,9 @@ public class NewsItemFragment extends Fragment implements
                     int size = response.body().size();
                     if (page == 1) {
                         if (size == 0) {
-                            mListener.showSnackBar("Recommendations not found. Please try again later. Thank you.");
+                            if (
+                                    mListener != null)
+                                mListener.showSnackBar("Recommendations not found. Please try again later. Thank you.");
                         } else {
                             List<NewsItem> items = response.body();
                             for (int i = 0; i < size; i++)
@@ -385,10 +390,13 @@ public class NewsItemFragment extends Fragment implements
                     }
                 } else {
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
-                    if (response.code() == 404)
-                        mListener.showSnackBar("Recommendations not found. Please try again later. Thank you.");
-                    else
-                        mListener.showSnackBar("Please login to view this content. Thank you.");
+                    if (response.code() == 404) {
+                        if (mListener != null)
+                            mListener.showSnackBar("Recommendations not found. Please try again later. Thank you.");
+                    } else {
+                        if (mListener != null)
+                            mListener.showSnackBar("Please login to view this content. Thank you.");
+                    }
                 }
             }
 
@@ -398,7 +406,8 @@ public class NewsItemFragment extends Fragment implements
                 Utils.print(TAG, t.toString(), Log.ERROR);
                 if (mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing())
                     mSwipeRefreshLayout.setRefreshing(false);
-                mListener.showSnackBar(R.string.response_error);
+                if (mListener != null)
+                    mListener.showSnackBar(R.string.response_error);
             }
         });
     }
