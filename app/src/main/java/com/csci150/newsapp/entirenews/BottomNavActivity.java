@@ -26,10 +26,10 @@ public class BottomNavActivity extends AppCompatActivity implements OnFragmentIn
                     fragment = AllNewsFragment.newInstance();
                     break;
                 case R.id.navigation_recommended:
-                    fragment = NewsItemFragment.newInstance(1);
+                    fragment = NewsItemFragment.newInstance(1, "recommended");
                     break;
                 case R.id.navigation_trending:
-                    fragment = NewsItemFragment.newInstance(2);
+                    fragment = NewsItemFragment.newInstance(2, "trending");
                     break;
                 case R.id.navigation_saved:
                     fragment = SavedFragment.newInstance();

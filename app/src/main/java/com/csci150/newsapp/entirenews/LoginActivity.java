@@ -34,9 +34,6 @@ public class LoginActivity extends DataActivity implements View.OnClickListener 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
 
-        etUsername.setText("thunder");
-        etPassword.setText("123456");
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String message = bundle.getString("message", null);
@@ -82,6 +79,7 @@ public class LoginActivity extends DataActivity implements View.OnClickListener 
                     Intent intent = new Intent(mContext, MainActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("message", response.body().getMessage());
+                    bundle.putString("token", response.body().getToken());
                     intent.putExtras(bundle);
                     startActivity(intent);
                     finish();

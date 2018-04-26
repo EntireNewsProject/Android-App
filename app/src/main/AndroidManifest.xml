@@ -66,19 +66,20 @@
         </activity>
         <activity android:name=".LibActivity" />
         <activity android:name=".PrivatePolicyActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".IntroActivity" />
+        <activity android:name=".SignupActivity"></activity>
+        <activity
+            android:name=".BottomNavActivity"
+            android:label="@string/title_activity_bottom_nav"
+            android:theme="@style/AppTheme.Home">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IntroActivity" />
-        <activity android:name=".SignupActivity"></activity>
-        <activity
-            android:name=".BottomNavActivity"
-            android:label="@string/title_activity_bottom_nav"
-            android:theme="@style/AppTheme.Home"></activity>
     </application>
 
 </manifest>

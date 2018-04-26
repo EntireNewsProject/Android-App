@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.csci150.newsapp.entirenews.Login;
 import com.csci150.newsapp.entirenews.NewsItem;
+import com.csci150.newsapp.entirenews.Ping;
 import com.csci150.newsapp.entirenews.Register;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -23,6 +25,10 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
+    @GET("user/ping")
+    Call<Ping> ping(
+            @Header("Authorization") String token);
+
     @GET("news")
     Call<List<NewsItem>> getNews(
             @NonNull @Query("source") String source,
@@ -30,6 +36,7 @@ public interface ApiInterface {
 
     @GET("news/{id}")
     Call<NewsItem> getNews(
+            @Header("Authorization") String token,
             @NonNull @Path("id") String id);
 
     @GET("news/{id}/save")

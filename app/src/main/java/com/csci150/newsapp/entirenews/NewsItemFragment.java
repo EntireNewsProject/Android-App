@@ -70,10 +70,11 @@ public class NewsItemFragment extends Fragment implements
     public NewsItemFragment() {
     }
 
-    public static NewsItemFragment newInstance(int type) {
+    public static NewsItemFragment newInstance(int type, String source) {
         NewsItemFragment fragment = new NewsItemFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM_TYPE, type);
+        args.putString(ARG_PARAM_SOURCE, source);
         fragment.setArguments(args);
         return fragment;
     }
