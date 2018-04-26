@@ -2,10 +2,10 @@ package com.csci150.newsapp.entirenews.utils;
 
 import android.support.annotation.NonNull;
 
+import com.csci150.newsapp.entirenews.DefaultMsg;
 import com.csci150.newsapp.entirenews.Login;
 import com.csci150.newsapp.entirenews.NewsItem;
 import com.csci150.newsapp.entirenews.Ping;
-import com.csci150.newsapp.entirenews.Register;
 
 import java.util.List;
 
@@ -27,6 +27,10 @@ public interface ApiInterface {
 
     @GET("user/ping")
     Call<Ping> ping(
+            @Header("Authorization") String token);
+
+    @GET("news/refresh")
+    Call<DefaultMsg> refresh(
             @Header("Authorization") String token);
 
     @GET("news/{type}")
@@ -57,7 +61,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("user/register")
-    Call<Register> register(
+    Call<DefaultMsg> register(
             @NonNull @Field("email") String email,
             @NonNull @Field("password") String password,
             @NonNull @Field("username") String username,

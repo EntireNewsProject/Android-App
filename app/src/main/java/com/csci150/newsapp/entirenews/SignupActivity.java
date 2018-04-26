@@ -71,9 +71,9 @@ public class SignupActivity extends DataActivity implements View.OnClickListener
 
     private void register(String fullName, String username, String email, String password) {
         Utils.print(TAG, "register()");
-        getApi().register(email, password, username, fullName).enqueue(new Callback<Register>() {
+        getApi().register(email, password, username, fullName).enqueue(new Callback<DefaultMsg>() {
             @Override
-            public void onResponse(@NonNull Call<Register> call, @NonNull Response<Register> response) {
+            public void onResponse(@NonNull Call<DefaultMsg> call, @NonNull Response<DefaultMsg> response) {
                 Utils.print(TAG, "onResponse()");
                 Utils.print(TAG, "URL: " + response.raw().request().url());
                 Utils.print(TAG, "Status Code: " + response.code());
@@ -92,7 +92,7 @@ public class SignupActivity extends DataActivity implements View.OnClickListener
             }
 
             @Override
-            public void onFailure(@NonNull Call<Register> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<DefaultMsg> call, @NonNull Throwable t) {
                 Utils.print(TAG, "onFailure()", Log.ERROR);
                 Utils.print(TAG, t.toString(), Log.ERROR);
                 Utils.showSnackbar(mCoordinatorLayout, mContext, R.string.response_fail, true);

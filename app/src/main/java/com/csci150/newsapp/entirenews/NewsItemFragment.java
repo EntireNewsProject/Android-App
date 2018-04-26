@@ -293,7 +293,11 @@ public class NewsItemFragment extends Fragment implements
             @Override
             public void onRefresh() {
                 connected = Utils.isInternetConnected(mContext);
-                if (connected) getNews(mSource, mPage = 1);
+                if (connected)
+                    if (mType == 1)
+                        refreshRec();
+                    else
+                        getNews(mSource, mPage = 1);
                 else {
                     if (mListener != null) mListener.showSnackBar(R.string.response_fail);
                     //Utils.showSnackbar(mCoordinatorLayout, mContext, getString(R.string.response_fail));
@@ -306,6 +310,35 @@ public class NewsItemFragment extends Fragment implements
 
     protected OnListInteractionListener getListener() {
         return this;
+    }
+
+    private void refreshRec() {
+        Utils.print(TAG, "refreshRec()");
+        if (mSwipeRefreshLayout != null && !mSwipeRefreshLayout.isRefreshing())
+            mSwipeRefreshLayout.setRefreshing(true);
+        getApi().refresh(mApiPrefs.getAccessToken()).enqueue(new Callback<DefaultMsg>() {
+            @Override
+            public void onResponse(@NonNull Call<DefaultMsg> call, @NonNull Response<DefaultMsg> response) {
+                Utils.print(TAG, "onResponse()");
+                Utils.print(TAG, "URL: " + response.raw().request().url());
+                Utils.print(TAG, "Status Code: " + response.code());
+                if (response.isSuccessful()) {
+                    getNews(mSource, mPage = 1);
+                } else {
+                    Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
+                    mListener.showSnackBar("Please login to view this content. Thank you.");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DefaultMsg> call, @NonNull Throwable t) {
+                Utils.print(TAG, "onFailure(getNews(source))", Log.ERROR);
+                Utils.print(TAG, t.toString(), Log.ERROR);
+                if (mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing())
+                    mSwipeRefreshLayout.setRefreshing(false);
+                mListener.showSnackBar(R.string.response_error);
+            }
+        });
     }
 
     private void getNews(final String source, final int page) {
@@ -352,7 +385,10 @@ public class NewsItemFragment extends Fragment implements
                     }
                 } else {
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
-                    mListener.showSnackBar("Please login to view this content. Thank you.");
+                    if (response.code() == 404)
+                        mListener.showSnackBar("Recommendations not found. Please try again later. Thank you.");
+                    else
+                        mListener.showSnackBar("Please login to view this content. Thank you.");
                 }
             }
 
@@ -362,9 +398,7 @@ public class NewsItemFragment extends Fragment implements
                 Utils.print(TAG, t.toString(), Log.ERROR);
                 if (mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing())
                     mSwipeRefreshLayout.setRefreshing(false);
-                // TODO
-                //if (isAdded() && getActivity() != null)
-                //    showError(true, R.string.response_error);
+                mListener.showSnackBar(R.string.response_error);
             }
         });
     }

@@ -34,7 +34,7 @@ public class LoginActivity extends DataActivity implements View.OnClickListener 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
 
-        etUsername.setText("thunder");
+        etUsername.setText("kishan");
         etPassword.setText("123456");
 
         Bundle bundle = getIntent().getExtras();

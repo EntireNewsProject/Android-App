@@ -46,6 +46,7 @@ public class ApiPrefs {
         prefs = context.getApplicationContext()
                 .getSharedPreferences(APP_PREF, Context.MODE_PRIVATE);
         accessToken = prefs.getString(KEY_ACCESS_TOKEN, null);
+        Utils.print("-----------",accessToken+"");
         isLoggedIn = !TextUtils.isEmpty(accessToken);
         if (isLoggedIn) {
             userFullName = prefs.getString(KEY_USER_FULL_NAME, null);
@@ -95,6 +96,7 @@ public class ApiPrefs {
             userEmail = user.getEmail();
 
             SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(KEY_ACCESS_TOKEN, accessToken);
             editor.putString(KEY_USER_FULL_NAME, userFullName);
             editor.putString(KEY_USER_USERNAME, userUsername);
             editor.putString(KEY_USER_EMAIL, userEmail);
@@ -115,6 +117,8 @@ public class ApiPrefs {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString(KEY_ACCESS_TOKEN, accessToken);
             editor.putString(KEY_USER_FULL_NAME, userFullName);
+            editor.putString(KEY_USER_USERNAME, userUsername);
+            editor.putString(KEY_USER_EMAIL, userEmail);
             editor.putInt(KEY_USER_TYPE, userType);
             editor.apply();
             return true;

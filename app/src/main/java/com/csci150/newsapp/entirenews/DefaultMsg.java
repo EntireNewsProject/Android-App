@@ -7,7 +7,7 @@ package com.csci150.newsapp.entirenews;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Register {
+public class DefaultMsg {
 
     @SerializedName("message")
     @Expose

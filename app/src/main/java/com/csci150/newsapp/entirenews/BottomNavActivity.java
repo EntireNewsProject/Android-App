@@ -90,9 +90,6 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
         }
     }
 
-
-
-
     private void ping() {
         Utils.print(TAG, "ping(token)");
         mAppPrefs.getApi().ping(mAppPrefs.getAccessToken()).enqueue(new Callback<Ping>() {
