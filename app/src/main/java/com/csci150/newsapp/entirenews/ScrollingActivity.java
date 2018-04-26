@@ -251,7 +251,7 @@ public class ScrollingActivity extends Activity implements
 
     private void getNews(final String id) {
         Utils.print(TAG, "getNews(id: " + id + ")");
-        getApi().getNews(id).enqueue(new Callback<NewsItem>() {
+        getApi().getNews(mApiPrefs.getAccessToken(), id).enqueue(new Callback<NewsItem>() {
 
             @Override
             public void onResponse(@NonNull Call<NewsItem> call, @NonNull Response<NewsItem> response) {

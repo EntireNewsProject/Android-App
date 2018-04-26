@@ -6,8 +6,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -25,7 +25,7 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
     private FragmentManager fragmentManager;
     //public ApiInterface api;
     private ApiPrefs mAppPrefs;
-    private ConstraintLayout mLayout;
+    private CoordinatorLayout mCoordinatorLayout;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -36,7 +36,7 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
                     fragment = AllNewsFragment.newInstance();
                     break;
                 case R.id.navigation_recommended:
-                    fragment = NewsItemFragment.newInstance(1, "recommended");
+                    fragment = NewsItemFragment.newInstance(1, "recommendations");
                     break;
                 case R.id.navigation_trending:
                     fragment = NewsItemFragment.newInstance(2, "trending");
@@ -60,6 +60,7 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
         fragmentManager = getFragmentManager();
         mAppPrefs = ApiPrefs.get(this);
 
+        mCoordinatorLayout = findViewById(R.id.coordinator_layout);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -80,7 +81,7 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
             String email = bundle.getString("email", null);
             int type = bundle.getInt("type", 0);
             if (message != null)
-                Utils.showSnackbar(mLayout, getApplicationContext(), message);
+                Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(), message);
             if (token != null && username != null && email != null) {
                 User user = new User(fullName, username, email, type);
                 mAppPrefs.login(user, token);

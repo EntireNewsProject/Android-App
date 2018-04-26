@@ -29,14 +29,15 @@ public interface ApiInterface {
     Call<Ping> ping(
             @Header("Authorization") String token);
 
+    @GET("news/{type}")
+    Call<List<NewsItem>> getRec(
+            @Header("Authorization") String token,
+            @NonNull @Path("type") String type);
+
     @GET("news")
     Call<List<NewsItem>> getNews(
             @NonNull @Query("source") String source,
             @Query("page") int page);
-
-    @GET("news/{id}")
-    Call<NewsItem> getNews(
-            @NonNull @Path("id") String id);
 
     @GET("news/{id}")
     Call<NewsItem> getNews(

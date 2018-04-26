@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +16,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -99,6 +103,7 @@ public class NewsItemFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (mContext == null)
             mContext = getActivity().getApplicationContext();
         Utils.print(TAG, "onCreate()");
@@ -172,6 +177,45 @@ public class NewsItemFragment extends Fragment implements
         connected = isCon;
         // TODO
         //showConnectedOrDisconnected();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_scrolling, menu);
+        if (mApiPrefs.isLoggedIn()) {
+            MenuItem item = menu.getItem(0);
+            item.setTitle(mApiPrefs.getUserUsername() + " (Logout)");
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.action_login:
+                if (mApiPrefs.isLoggedIn()) {
+                    //logout
+                    item.setTitle("Log in");
+                    mApiPrefs.logout();
+                    onRefresh();
+                } else {
+                    //login
+                    intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+                break;
+            case R.id.action_settings:
+                intent = new Intent(mContext, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_about:
+                intent = new Intent(mContext, AboutActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onRefresh() {
@@ -268,8 +312,13 @@ public class NewsItemFragment extends Fragment implements
         Utils.print(TAG, "getNews(source: " + source + ")");
         if (page == 1 && mSwipeRefreshLayout != null && !mSwipeRefreshLayout.isRefreshing())
             mSwipeRefreshLayout.setRefreshing(true);
-        getApi().getNews(source, page).enqueue(new Callback<List<NewsItem>>() {
-
+        Call<List<NewsItem>> call;
+        if (mType > 0) {
+            Utils.print(TAG, "TOKEN: " + mApiPrefs.getAccessToken());
+            call = getApi().getRec(mApiPrefs.getAccessToken(), source);
+        } else
+            call = getApi().getNews(source, page);
+        call.enqueue(new Callback<List<NewsItem>>() {
             @Override
             public void onResponse(@NonNull Call<List<NewsItem>> call,
                                    @NonNull Response<List<NewsItem>> response) {
@@ -282,13 +331,9 @@ public class NewsItemFragment extends Fragment implements
                     int size = response.body().size();
                     if (page == 1) {
                         if (size == 0) {
-                            // TODO error
-                            //if (mType == ITEM_LOVED) showNoLoved(true);
-                            //else showEmptyList(true);
+                            //TODO
+                            //onMessage("Recommendations not found. Please try again later. Thank you.");
                         } else {
-                            // TODO
-                            //hideStubs();
-
                             List<NewsItem> items = response.body();
                             for (int i = 0; i < size; i++)
                                 if (RealmController.with(getActivity()).getNewsItem(items.get(i).get_id()) != null)
@@ -306,15 +351,10 @@ public class NewsItemFragment extends Fragment implements
                             //Utils.showSnackbar(mCoordinatorLayout, mContext, R.string.response_cross_limit);
                         }
                     }
-                } else
-
-                {
+                } else {
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
-                    // TODO
-                    //if (isAdded() && getActivity() != null)
-                    //if (response.code() == 401)
-                    //    showError(true, R.string.response_login);
-                    //else showError(true, R.string.response_error);
+                    //TODO
+                    //onMessage("Please login to view this content. Thank you.");
                 }
             }
 
@@ -333,12 +373,7 @@ public class NewsItemFragment extends Fragment implements
 
     private void getNews(final String id) {
         Utils.print(TAG, "getNews(id: " + id + ")");
-        Call<NewsItem> call;
-        if (mApiPrefs.isLoggedIn())
-            call = getApi().getNews(id);
-        else
-            call = getApi().getNews(mApiPrefs.getAccessToken(), id);
-        call.enqueue(new Callback<NewsItem>() {
+        getApi().getNews(mApiPrefs.getAccessToken(), id).enqueue(new Callback<NewsItem>() {
             @Override
             public void onResponse(@NonNull Call<NewsItem> call, @NonNull Response<NewsItem> response) {
                 Utils.print(TAG, "onResponse()");

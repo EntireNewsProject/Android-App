@@ -14,7 +14,6 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -67,15 +66,6 @@ public class Utils {
 
     public static void print(final String title, final String message) {
         print(title, message, Log.DEBUG);
-    }
-
-    public static void showSnackbar(final ConstraintLayout layout, final Context context, final String message) {
-        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_SHORT);
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.buttonSnackbar));
-        View snackbarView = snackbar.getView();
-        snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.bgSnackbar));
-        ((TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
-        snackbar.show();
     }
 
     public static void showSnackbar(final CoordinatorLayout layout, final Context context, final String message) {
