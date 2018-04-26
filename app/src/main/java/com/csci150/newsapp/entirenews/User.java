@@ -7,10 +7,13 @@ import com.google.gson.annotations.SerializedName;
  * Created by Shifatul Islam (Denocyte) on 4/25/2018 5:39 PM.
  * A listing app, where you can find everything in one place.
  */
-class User {
+public class User {
     @SerializedName("_id")
     @Expose
     private String id;
+    @SerializedName("fullName")
+    @Expose
+    private String fullName;
     @SerializedName("username")
     @Expose
     private String username;
@@ -64,4 +67,11 @@ class User {
         this.type = type;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 }
