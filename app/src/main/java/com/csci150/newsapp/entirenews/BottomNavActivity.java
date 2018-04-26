@@ -34,6 +34,7 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
             switch (item.getItemId()) {
                 case R.id.navigation_all_news:
                     fragment = AllNewsFragment.newInstance();
+                    //fragment = NewsItemFragment.newInstance(2, "trending");
                     break;
                 case R.id.navigation_recommended:
                     fragment = NewsItemFragment.newInstance(1, "recommendations");
@@ -89,6 +90,9 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
         }
     }
 
+
+
+
     private void ping() {
         Utils.print(TAG, "ping(token)");
         mAppPrefs.getApi().ping(mAppPrefs.getAccessToken()).enqueue(new Callback<Ping>() {
@@ -135,11 +139,11 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
 
     @Override
     public void showSnackBar(int resId) {
-
+        Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(), resId);
     }
 
     @Override
     public void showSnackBar(String msg) {
-
+        Utils.showSnackbar(mCoordinatorLayout, getApplicationContext(), msg);
     }
 }

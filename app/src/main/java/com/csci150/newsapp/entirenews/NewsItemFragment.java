@@ -103,7 +103,6 @@ public class NewsItemFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         if (mContext == null)
             mContext = getActivity().getApplicationContext();
         Utils.print(TAG, "onCreate()");
@@ -128,6 +127,7 @@ public class NewsItemFragment extends Fragment implements
         else {
             view = inflater.inflate(R.layout.fragment_newsitem_list_with_toolbar, container, false);
             toolbar = view.findViewById(R.id.toolbar);
+            setHasOptionsMenu(true);
         }
         mRecyclerView = view.findViewById(R.id.list);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
@@ -331,8 +331,7 @@ public class NewsItemFragment extends Fragment implements
                     int size = response.body().size();
                     if (page == 1) {
                         if (size == 0) {
-                            //TODO
-                            //onMessage("Recommendations not found. Please try again later. Thank you.");
+                            mListener.showSnackBar("Recommendations not found. Please try again later. Thank you.");
                         } else {
                             List<NewsItem> items = response.body();
                             for (int i = 0; i < size; i++)
@@ -353,8 +352,7 @@ public class NewsItemFragment extends Fragment implements
                     }
                 } else {
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
-                    //TODO
-                    //onMessage("Please login to view this content. Thank you.");
+                    mListener.showSnackBar("Please login to view this content. Thank you.");
                 }
             }
 
