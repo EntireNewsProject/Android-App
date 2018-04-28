@@ -30,6 +30,7 @@ public class LoginActivity extends DataActivity implements View.OnClickListener 
         mCoordinatorLayout = findViewById(R.id.coordinator_layout);
 
         Button btLogin = findViewById(R.id.btLogIn);
+        Button btRegister = findViewById(R.id.btSignUp);
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
@@ -45,6 +46,7 @@ public class LoginActivity extends DataActivity implements View.OnClickListener 
         }
 
         btLogin.setOnClickListener(this);
+        btRegister.setOnClickListener(this);
     }
 
     @Override
@@ -65,8 +67,13 @@ public class LoginActivity extends DataActivity implements View.OnClickListener 
             case R.id.btLogIn:
                 String username = etUsername.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
-
                 login(username, password);
+                break;
+            case R.id.btSignUp:
+                Intent intent = new Intent(mContext, SignupActivity.class);
+                startActivity(intent);
+                finish();
+                break;
         }
     }
 

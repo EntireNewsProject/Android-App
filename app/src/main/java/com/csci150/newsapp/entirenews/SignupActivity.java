@@ -28,7 +28,9 @@ public class SignupActivity extends DataActivity implements View.OnClickListener
         Utils.print(TAG, "onCreate()");
 
         mCoordinatorLayout = findViewById(R.id.coordinator_layout);
+
         Button btRegister = findViewById(R.id.btSignUp);
+        Button btLogin = findViewById(R.id.btLogIn);
 
         etFullName = findViewById(R.id.etFullName);
         etEmail = findViewById(R.id.etEmail);
@@ -37,6 +39,7 @@ public class SignupActivity extends DataActivity implements View.OnClickListener
         etConfirmPassword = findViewById(R.id.etCPassword);
 
         btRegister.setOnClickListener(this);
+        btLogin.setOnClickListener(this);
     }
 
     @Override
@@ -65,6 +68,11 @@ public class SignupActivity extends DataActivity implements View.OnClickListener
                     register(fullName, username, email, password);
                 else
                     onMessage("Confirm password don't match. Please try again.");
+                break;
+            case R.id.btLogIn:
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }
