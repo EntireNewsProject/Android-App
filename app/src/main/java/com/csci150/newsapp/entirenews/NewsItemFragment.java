@@ -206,6 +206,11 @@ public class NewsItemFragment extends Fragment implements
                     getActivity().finish();
                 }
                 break;
+            case R.id.action_register:
+                intent = new Intent(mContext, SignupActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                break;
             case R.id.action_settings:
                 intent = new Intent(mContext, SettingsActivity.class);
                 startActivity(intent);
