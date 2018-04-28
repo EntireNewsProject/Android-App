@@ -59,7 +59,7 @@ public class ScrollingActivity extends Activity implements
     //private FabToggle fab2;
     private ElasticDragDismissFrameLayout draggableFrame;
     private ElasticDragDismissFrameLayout.SystemChromeFader chromeFader;
-    private TextView tvTitle, tvArticle, tvViews, tvSaves, tvDate, tvSource;
+    private TextView tvTitle, tvArticle, tvSummary, tvViews, tvSaves, tvDate, tvSource;
     private Map<String, String> mSources = new HashMap<>();
 
     private Realm realm;
@@ -127,8 +127,12 @@ public class ScrollingActivity extends Activity implements
         ibShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.share(TAG, getApplicationContext(), getString(R.string.share),
-                        newsItem.getTitle(), newsItem.getUrl());
+                try {
+                    Utils.share(TAG, getApplicationContext(), getString(R.string.share),
+                            newsItem.getTitle(), newsItem.getUrl());
+                } catch (Exception ignored) {
+                }
+
             }
         });
 
@@ -137,6 +141,7 @@ public class ScrollingActivity extends Activity implements
         ivCover = findViewById(R.id.iv_cover);
         tvTitle = findViewById(R.id.tv_title);
         tvArticle = findViewById(R.id.tv_article);
+        tvSummary = findViewById(R.id.tv_summary);
         tvViews = findViewById(R.id.tv_views);
         tvSaves = findViewById(R.id.tv_saves);
         tvDate = findViewById(R.id.tv_date);
@@ -247,10 +252,13 @@ public class ScrollingActivity extends Activity implements
         newsItem = item;
         if (!isLocal)
             newsItem.setSaved(defaultSaved);
-        if (TextUtils.isEmpty(newsItem.getSummary()) || newsItem.getSummary().length() <= newsItem.getTitle().length())
-            tvArticle.setText(newsItem.getArticle());
-        else
-            tvArticle.setText(newsItem.getSummary());
+        if (!TextUtils.isEmpty(newsItem.getSummary()) && newsItem.getSummary().length() > newsItem.getTitle().length()) {
+            String summary = "Summary: " + newsItem.getSummary();
+            tvSummary.setText(summary);
+        } else {
+            tvSummary.setVisibility(View.GONE);
+        }
+        tvArticle.setText(newsItem.getArticle());
     }
 
     private void getNews(final String id) {

@@ -151,6 +151,20 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_views" />
 
                     <TextView
+                        android:id="@+id/tv_summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_full"
+                        android:layout_marginTop="@dimen/margin_full"
+                        android:background="@color/date_color"
+                        android:lineSpacingExtra="@dimen/margin_one"
+                        android:padding="@dimen/margin_forth"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_date"
+                        tools:text="@string/large_text" />
+
+                    <TextView
                         android:id="@+id/tv_article"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -158,7 +172,7 @@
                         android:lineSpacingExtra="@dimen/margin_one"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_date"
+                        app:layout_constraintTop_toBottomOf="@id/tv_summary"
                         tools:text="@string/large_text" />
 
                     <View
