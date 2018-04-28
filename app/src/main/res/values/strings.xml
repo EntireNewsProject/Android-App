@@ -7,6 +7,7 @@
     <string name="action_lib">Libraries We Use</string>
     <string name="activity_signup">Sign Up</string>
     <string name="activity_login">Log In</string>
+    <string name="activity_login_reg">Log In/Register</string>
 
     <plurals name="views">
         <item quantity="one">%d view</item>

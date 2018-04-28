@@ -348,7 +348,7 @@ public class NewsItemFragment extends Fragment implements
         Call<List<NewsItem>> call;
         if (mType > 0) {
             Utils.print(TAG, "TOKEN: " + mApiPrefs.getAccessToken());
-            call = getApi().getRec(mApiPrefs.getAccessToken(), source);
+            call = getApi().getRec(mApiPrefs.getAccessToken(), source, page);
         } else
             call = getApi().getNews(source, page);
         call.enqueue(new Callback<List<NewsItem>>() {

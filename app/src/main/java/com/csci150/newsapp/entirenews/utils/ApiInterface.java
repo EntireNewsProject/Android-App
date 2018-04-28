@@ -36,7 +36,8 @@ public interface ApiInterface {
     @GET("news/{type}")
     Call<List<NewsItem>> getRec(
             @Header("Authorization") String token,
-            @NonNull @Path("type") String type);
+            @NonNull @Path("type") String type,
+            @Query("page") int page);
 
     @GET("news")
     Call<List<NewsItem>> getNews(
