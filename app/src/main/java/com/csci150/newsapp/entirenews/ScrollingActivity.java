@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -246,7 +247,10 @@ public class ScrollingActivity extends Activity implements
         newsItem = item;
         if (!isLocal)
             newsItem.setSaved(defaultSaved);
-        tvArticle.setText(newsItem.getArticle());
+        if (TextUtils.isEmpty(newsItem.getSummary()) || newsItem.getSummary().length() <= newsItem.getTitle().length())
+            tvArticle.setText(newsItem.getArticle());
+        else
+            tvArticle.setText(newsItem.getSummary());
     }
 
     private void getNews(final String id) {

@@ -6,6 +6,7 @@
     <string name="action_privacy">Privacy Policy</string>
     <string name="action_lib">Libraries We Use</string>
     <string name="activity_signup">Sign Up</string>
+    <string name="activity_reg">Register</string>
     <string name="activity_login">Log In</string>
     <string name="activity_login_reg">Log In/Register</string>
 
