@@ -196,7 +196,7 @@ public class NewsItemFragment extends Fragment implements
             case R.id.action_login:
                 if (mApiPrefs.isLoggedIn()) {
                     //logout
-                    item.setTitle("Log in");
+                    item.setTitle(R.string.activity_login_reg);
                     mApiPrefs.logout();
                     onRefresh();
                 } else {
