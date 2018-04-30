@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toolbar;
 
@@ -62,6 +63,7 @@ public class NewsItemFragment extends Fragment implements
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LinearLayout layoutEmpty, layoutNoInternet, layoutError, layoutNoSaved;
+    private ImageView ivSad;
 
     protected NewsItemAdapter mAdapter;
     private OnFragmentInteractionListener mListener;
@@ -131,6 +133,7 @@ public class NewsItemFragment extends Fragment implements
         }
         mRecyclerView = view.findViewById(R.id.list);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        ivSad = view.findViewById(R.id.iv_sad);
         // Set the adapter
         //mRecyclerView.setAdapter(new NewsItemAdapter(getActivity(), DummyContent.ITEMS, mListener));
         return view;
@@ -315,6 +318,7 @@ public class NewsItemFragment extends Fragment implements
 
     private void refreshRec() {
         Utils.print(TAG, "refreshRec()");
+        mSwipeRefreshLayout.setVisibility(View.VISIBLE);
         if (mSwipeRefreshLayout != null && !mSwipeRefreshLayout.isRefreshing())
             mSwipeRefreshLayout.setRefreshing(true);
         getApi().refresh(mApiPrefs.getAccessToken()).enqueue(new Callback<DefaultMsg>() {
@@ -327,8 +331,11 @@ public class NewsItemFragment extends Fragment implements
                     getNews(mSource, mPage = 1);
                 } else {
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
-                    if (mListener != null)
+                    if (mListener != null) {
                         mListener.showSnackBar("Please login to view this content. Thank you.");
+                        if(ivSad!=null) ivSad.setVisibility(View.VISIBLE);
+                        mSwipeRefreshLayout.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -346,6 +353,7 @@ public class NewsItemFragment extends Fragment implements
 
     private void getNews(final String source, final int page) {
         Utils.print(TAG, "getNews(source: " + source + ")");
+        mSwipeRefreshLayout.setVisibility(View.VISIBLE);
         if (page == 1 && mSwipeRefreshLayout != null && !mSwipeRefreshLayout.isRefreshing())
             mSwipeRefreshLayout.setRefreshing(true);
         Call<List<NewsItem>> call;
@@ -367,9 +375,11 @@ public class NewsItemFragment extends Fragment implements
                     int size = response.body().size();
                     if (page == 1) {
                         if (size == 0) {
-                            if (
-                                    mListener != null)
+                            if (mListener != null) {
                                 mListener.showSnackBar("Recommendations not found. Please try again later. Thank you.");
+                               if(ivSad!=null) ivSad.setVisibility(View.VISIBLE);
+                                mSwipeRefreshLayout.setVisibility(View.GONE);
+                            }
                         } else {
                             List<NewsItem> items = response.body();
                             for (int i = 0; i < size; i++)
@@ -391,11 +401,17 @@ public class NewsItemFragment extends Fragment implements
                 } else {
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
                     if (response.code() == 404) {
-                        if (mListener != null)
+                        if (mListener != null) {
                             mListener.showSnackBar("Recommendations not found. Please try again later. Thank you.");
+                            if(ivSad!=null)ivSad.setVisibility(View.VISIBLE);
+                            mSwipeRefreshLayout.setVisibility(View.GONE);
+                        }
                     } else {
-                        if (mListener != null)
+                        if (mListener != null) {
                             mListener.showSnackBar("Please login to view this content. Thank you.");
+                            if(ivSad!=null)ivSad.setVisibility(View.VISIBLE);
+                            mSwipeRefreshLayout.setVisibility(View.GONE);
+                        }
                     }
                 }
             }
