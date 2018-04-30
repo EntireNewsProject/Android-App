@@ -95,7 +95,7 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
         mAppPrefs.getApi().ping(mAppPrefs.getAccessToken()).enqueue(new Callback<Ping>() {
             @Override
             public void onResponse(@NonNull Call<Ping> call, @NonNull Response<Ping> response) {
-                Utils.print(TAG, "onResponse()");
+                Utils.print(TAG, "onResponse(ping)");
                 Utils.print(TAG, "URL: " + response.raw().request().url());
                 Utils.print(TAG, "Status Code: " + response.code());
                 if (response.isSuccessful()) {
@@ -109,7 +109,7 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
 
             @Override
             public void onFailure(@NonNull Call<Ping> call, @NonNull Throwable t) {
-                Utils.print(TAG, "onFailure()", Log.ERROR);
+                Utils.print(TAG, "onFailure(ping)", Log.ERROR);
                 Utils.print(TAG, t.toString(), Log.ERROR);
                 updateUi();
             }
