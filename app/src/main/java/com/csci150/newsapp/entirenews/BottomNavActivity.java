@@ -104,7 +104,7 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
                 } else {
                     Utils.print(TAG, "ServerResponse: " + response.message(), Log.ERROR);
                     updateUi();
-                    mAppPrefs.logout();
+                    //mAppPrefs.logout();
                 }
             }
 
@@ -113,7 +113,7 @@ public class BottomNavActivity extends Activity implements OnFragmentInteraction
                 Utils.print(TAG, "onFailure(ping)", Log.ERROR);
                 Utils.print(TAG, t.toString(), Log.ERROR);
                 updateUi();
-                mAppPrefs.logout();
+                //mAppPrefs.logout();
             }
         });
     }
