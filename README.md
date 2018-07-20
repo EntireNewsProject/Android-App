@@ -25,6 +25,8 @@ Main goal: Design an app with current responsive user interface (with interactiv
     - Java / Kotlin & XML
     - Python
     - MongoDB Syntax
+    - JavaScript
+    - Node.js
 - IDE
     - Android Studio (version 3+ & Java JDK 8+)
     - PyCharm (with Python 3+)
