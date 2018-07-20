@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiPrefs {
     private static final String APP_PREF = "ENTIRENEWS_PREF";
-    private static final String URL_BASE = "http://entirenews.tk:3000/";
+    private static final String URL_BASE = "http://entirenews.tk/";
     private static final String URL_API = URL_BASE + "api/";
 
     private static final String KEY_ACCESS_TOKEN = "KEY_ACCESS_TOKEN";
